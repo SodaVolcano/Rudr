@@ -18,6 +18,10 @@
 |gradient asthetic | 3 | 4|
 |light mode + dark mode | 5 | 3|
 |parallax scrolling | 3 | 2|
-
+|pixel planet| 7 | 3 |
+|pixel galaxy| 7 | 3 |
+|menu button| 4 | 9 |
+|reviews| 3 | 4 |
+|social media icons| 3 | 3 |
 
 

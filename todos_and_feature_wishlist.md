@@ -6,6 +6,8 @@ List of features in order of MOST important to LEAST
 - [ ] **Define unique service - what is the purpose of our web application?**
 - [ ] Starting a chat session
 - [ ] Login & account authentication - need DB
+    - keep access to pevious partners
+    - conversation history
 - [ ] View chat history - need DB
 
 
