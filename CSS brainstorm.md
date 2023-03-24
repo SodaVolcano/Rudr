@@ -2,6 +2,9 @@
 - https://yoha.com.sg/student-hostel-singapore/evans/
 - https://chat.openai.com/chat
 
+## Other Links ##
+- https://deep-fold.itch.io/pixel-planet-generator
+- https://deep-fold.itch.io/space-background-generator
 
 ## Website Features ##
 | **Feature** | **Difficulty** | **Importance** |
