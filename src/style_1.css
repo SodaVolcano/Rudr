@@ -1,0 +1,114 @@
+body {
+    background-color: #13005A;
+    color: #03C988;
+}
+
+
+
+/* ======================== Custom Classes ================================== */
+
+/* Navigation --------------------------------------------------------------- */
+header-nav {
+
+}
+
+/* Wraps footer nav and notes */
+footer-content {
+
+}
+
+footer-nav {
+
+}
+
+footer-notes {
+
+}
+
+
+/* Wraps every non-header and non-footer elements --------------------------- */
+main-content-container {
+
+}
+
+/* Top page - first part of homepage seen in the viewport ------------------- */
+
+top-page-container {
+
+}
+
+top-page-header {
+
+}
+
+top-page-slogan {
+
+}
+
+top-page-text {
+
+}
+
+top-page-foreground-image {
+
+}
+
+top-page-background-image {
+
+}
+
+top-page-button {
+
+}
+
+/* Remaining content of the page after top page ----------------------------- */
+
+tab-content-container {
+
+}
+
+/* Text blocks - displays title, paragraph on left and image on right */
+text-content-container {
+
+}
+
+text-content {
+
+}
+
+text-content-image {
+
+}
+
+/* Review blocks - show multiple reviews */
+review-content-container {
+
+}
+
+/* A single review, quote coming out of an avatar */
+review {
+
+}
+
+review-content-profile {
+
+}
+
+review-content-text {
+
+}
+
+
+/* Misc. widget classes ----------------------------------------------------- */
+
+account-login-signup {
+
+}
+
+company-logo {
+
+}
+
+social-links {
+
+}

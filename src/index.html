@@ -8,29 +8,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>INSERT_WEBSITE_TITLE</title>
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="./style_1.css">
+
 </head>
 
 <body>
 
   <header>
     <!-- Nagivation menu -->
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <a href="#">Home</a>
-          </li>
-          <li>
-            <a href="#">Chat</a>
-          </li>
-          <li>
-            <a href="#">About Us</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
+    <nav class="header-nav">
+      <ul>
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>
+          <a href="#">Chat</a>
+        </li>
+        <li>
+          <a href="#">About Us</a>
+        </li>
+      </ul>
+    </nav>
     <!-- Account login/sign-up -->
-    <div>
+    <div class="account-login-signup">
       <button>Login</button>
       <button>Sign Up</button>
     </div>
@@ -39,73 +45,77 @@
   <main>
 
     <!-- ========== Top banner area ========== -->
-    <div>
-      <!-- Banner header -->
-      <div>
-        <!-- Company logo -->
-        <div>
-          <a href="#">
-            <img src="company logo" alt="INSERT_COMPANY_NAME Logo">
-          </a>
+    <div class="main-content-container">
+      <div class="top-page-container">
+        <!-- Banner header -->
+        <div class="top-page-header">
+          <!-- Company logo -->
+          <div class="company-logo">
+            <a href="#">
+              <img src="company logo" alt="INSERT_COMPANY_NAME Logo">
+            </a>
+          </div>
+          <!-- Social Media Links -->
+          <div class="social-links">
+            <a href="#">
+              <img src="Social media image 1">
+            </a>
+            <a href="#">
+              <img src="Social media image 2">
+            </a>
+          </div>
         </div>
-        <!-- Social Media Links -->
-        <div>
-          <a href="#">
-            <img src="Social media image 1">
-          </a>
-          <a href="#">
-            <img src="Social media image 2">
-          </a>
-        </div>
-      </div>
 
-      <!-- Background image -->
-      <div style="background-image: url(background);"></div>
+        <!-- Background image -->
+        <div class="top-page-background-image">
+          <img src="some background image" alt="">
+        </div>
 
-      <!-- Banner Text-->
-      <div>
-        <!-- Slogan -->
-        <div>
-          <h1>Our Company's Very Epic Slogan.</h1>
+        <!-- Banner Text-->
+        <div class="top-page-text">
+          <!-- Slogan -->
+          <div class="top-page-slogan">
+            <h1>Our Company's Very Epic Slogan.</h1>
+          </div>
+          <!-- Banner buttons -->
+          <div class="top-page-buttons">
+            <button>Start chatting now!</button>
+          </div>
         </div>
-        <!-- Banner buttons -->
-        <div>
-          <button>Start chatting now!</button>
+        <!-- Banner image -->
+        <div class="top-page-foreground-image">
+          <img src="image of chat idk" alt="Insert alt here">
         </div>
-      </div>
-      <!-- Banner image -->
-      <div>
-        <img src="image of chat idk" alt="Insert alt here">
       </div>
     </div>
 
     <!-- ========== Content ========== -->
-    <div>
+    <div class="tab-content-container">
 
       <!-- What we do -->
-      <div>
-        <div>
+      <div class="text-content-container">
+        <div class="text-content">
           <h2>Cyber Dating in the New Age</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc lectus velit, accumsan ac tempus eget, varius nec nulla. Duis eu leo lacinia dolor cursus rhoncus. Integer finibus sagittis ligula, id rhoncus enim iaculis at. Mauris sit amet tincidunt libero, non rutrum massa. Maecenas porttitor elit vitae justo lobortis convallis. Praesent dictum nisl a velit porta rhoncus. Phasellus semper velit in nulla faucibus, nec convallis tellus condimentum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam eu arcu eget sem fermentum auctor. Donec porttitor massa non ullamcorper vulputate. Pellentesque posuere vehicula ex, ut cursus nunc semper id. Quisque venenatis nulla quis neque ultricies maximus. Sed semper mi elementum, fermentum ante congue, porttitor augue. Curabitur at lectus ut sapien suscipit scelerisque eu sed odio. Donec fringilla sem venenatis, posuere dui maximus, pharetra purus.
           </p>
         </div>
         <!-- content image -->
-        <div>
+        <div class="text-content-image">
           <img src="image of the current cyber age" alt="">
         </div>
       </div>
 
       <!-- Customer testimonies -->
-      <div>
+      <div class="review-content-container">
         <!-- First review -->
-        <div>
+        <div class="review">
           <!-- Customer's photo-->
-          <div>
+          <div class="review-content-profile">
             <img src="image of customer 1" alt="">
           </div>
           <!-- Customer's review, in speech bubble -->
-          <div>
+          <div class="review-content-text">
             <p>
               Nullam iaculis finibus condimentum. Vestibulum bibendum pellentesque eros, et elementum nisi viverra nec. Vestibulum libero orci, auctor sed urna at, sodales rhoncus quam. Aliquam rhoncus risus malesuada finibus accumsan. Aenean ipsum justo, convallis et eros quis, vestibulum sodales dolor. Quisque varius sapien sit amet felis maximus malesuada. 
             </p>
@@ -113,11 +123,11 @@
           </div>
         </div>
         <!-- Second review -->
-        <div>
-          <div>
+        <div class="review-content-profile">
+          <div class="review-content-profile">
             <img src="image of customer 2" alt="">
           </div>
-          <div>
+          <div class="review-content-text">
             <p>
             Interdum et malesuada fames ac ante ipsum primis in faucibus. Morbi facilisis lectus nec tristique tempor. Suspendisse nisl mi, efficitur in libero non, lobortis finibus nisl. Duis vel ipsum vitae sapien lacinia mattis vitae vel nisi. Etiam tempus mi vitae ipsum viverra efficitur. Donec ornare ut nunc sed lacinia. Pellentesque ac lectus nec tellus varius sodales. Donec dictum mi odio, sed euismod nunc lobortis vitae.
             </p>
@@ -131,32 +141,31 @@
 
   <footer>
     <!-- Footer content -->
-    <div>
+    <div class="footer-content">
       <!-- Top navigation menu again -->
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <a href="#">Home</a>
-            </li>
-            <li>
-              <a href="#">Chat</a>
-            </li>
-            <li>
-              <a href="#">About Us</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <nav class="footer-nav">
+        <ul>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">Chat</a>
+          </li>
+          <li>
+            <a href="#">About Us</a>
+          </li>
+        </ul>
+      </nav>
+       
       <!-- Company Logo -->
-      <div>
+      <div class="company-logo">
         <a href="#">
           <img src="#" alt="INSERT_COMPANY_NAME Logo">
         </a>
       </div>
     </div>
     <!-- Footer Notes -->
-    <div>
+    <div class="footer-notes">
         <p>@ 2087 INSERT_COMPANY_NAME. All rights reserved.</p>
     </div>
   </footer>
