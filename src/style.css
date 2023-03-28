@@ -7,7 +7,6 @@ body {
 
 /* Top part of the page that greets the user */
 .top-banner {
-    border: 2px solid white;
     height: 80vh;
     width: 100%;
     padding: 35px;
