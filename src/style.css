@@ -1,6 +1,14 @@
-/* HEADER STYLE */
+/* BACKGROUND */ 
+body {
+    background-color: rgb(6, 3, 19);
+    font-size: 20px;
+    color: aliceblue;
+}
+
+
+/* ======================= HEADER STYLE ======================================= */
 header {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -50,7 +58,41 @@ header {
   font-weight: bold;
 }
 
-/* BACKGROUND */ 
-body {
-  background-color: black;
+/* =========================== Top banner ======================== */
+
+
+/* Top part of the page that greets the user */
+.top-banner {
+    height: 80vh;
+    width: 100%;
+    padding: 35px;
+    align-items: center;      /* Align vertically */
+    justify-content: center;  /* Align horizontally */
+    flex-direction: column;  
+
+    /* Fade to black at bottom */
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(6, 3, 19, 1)), url("https://wallpapers.com/images/featured/y3r21iaunx6u3tml.jpg");
+    background-position: center;
+    background-size: cover;
+    display: flex;
+}
+
+/* Box container for the banner text */
+.top-banner-inner {
+    width: auto;
+    height: auto;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.banner-slogan {
+    font-size: 5rem;
+    margin: 0 auto;
+}
+
+.banner-byline {
+    font-size: 1.5rem;
+    margin: 0 auto;
 }
