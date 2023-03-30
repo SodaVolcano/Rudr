@@ -77,14 +77,23 @@ header {
     display: flex;
 }
 
+
 /* Box container for the banner text */
 .top-banner-inner {
     width: auto;
     height: auto;
-    display: block;
-    justify-content: center;
-    align-items: center;
+    display: contents;
     margin: 0 auto;
+    position: relative;
+}
+
+.top-banner-inner img {
+    max-height: 220px;
+    position: absolute;      /* Remove from normal flow - don't affect title alignment */
+    transform: translateY(100%);
+    margin: 0 auto;
+    left: 0;
+    right: 0;
 }
 
 .banner-slogan {
