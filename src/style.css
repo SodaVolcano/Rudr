@@ -105,12 +105,14 @@ header {
   height: 120px;
 }
 
+/* Dynamic Hover (I still think this is cooler) */
 /*
 .social-media-icons a:hover {
   opacity: 1;
 }
 */
 
+/* Lame Hover */
 .sidebar:hover a {
     opacity: 1;
 }
