@@ -97,16 +97,22 @@ header {
   transition: transform 0.3s ease;
 }
 
-.social-media-icons a:hover {
-  opacity: 1;
-}
-
 .social-media-icons i:hover {
   transform: scale(1.2);
 }
 
 .sidebar:hover {
   height: 120px;
+}
+
+/*
+.social-media-icons a:hover {
+  opacity: 1;
+}
+*/
+
+.sidebar:hover a {
+    opacity: 1;
 }
 
 .sidebar span {
