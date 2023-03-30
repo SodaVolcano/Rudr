@@ -19,6 +19,7 @@ header {
   padding: 0 1rem;
   background-color: transparent;
   z-index: 999;
+  user-select: none;
 }
 
 
@@ -143,33 +144,38 @@ header {
 /* =========================== Top banner ======================== */
 /* Top part of the page that greets the user */
 .top-banner {
-  height: 80vh;
-  width: 100%;
-  padding: 35px;
-  align-items: center; /* Align vertically */
-  justify-content: center; /* Align horizontally */
-  flex-direction: column;
+    user-select: none;
+    height: 80vh;
+    width: 100%;
+    padding: 35px;
+    align-items: center;      /* Align vertically */
+    justify-content: center;  /* Align horizontally */
+    flex-direction: column;  
 
-  /* Fade to black at bottom */
-  background-image: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0),
-      rgba(6, 3, 19, 1)
-    ),
-    url("https://wallpapers.com/images/featured/y3r21iaunx6u3tml.jpg");
-  background-position: center;
-  background-size: cover;
-  display: flex;
+    /* Fade to black at bottom */
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(6, 3, 19, 1)), url("https://wallpapers.com/images/featured/y3r21iaunx6u3tml.jpg");
+    background-position: center;
+    background-size: cover;
+    display: flex;
 }
+
 
 /* Box container for the banner text */
 .top-banner-inner {
-  width: auto;
-  height: auto;
-  display: block;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
+    width: auto;
+    height: auto;
+    display: contents;
+    margin: 0 auto;
+    position: relative;
+}
+
+.top-banner-inner img {
+    max-height: 220px;
+    position: absolute;      /* Remove from normal flow - don't affect title alignment */
+    transform: translateY(100%);
+    margin: 0 auto;
+    left: 0;
+    right: 0;
 }
 
 .banner-slogan {
