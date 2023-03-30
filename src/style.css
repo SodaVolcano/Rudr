@@ -1,8 +1,64 @@
+/* BACKGROUND */ 
 body {
     background-color: rgb(6, 3, 19);
     font-size: 20px;
     color: aliceblue;
 }
+
+
+/* ======================= HEADER STYLE ======================================= */
+header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  background-color: transparent;
+  z-index: 999;
+}
+
+
+/* LOGO STYLE */
+.site-logo img {
+  height: 6rem;
+  cursor: pointer;
+  transition: transform 0.15s ease-in-out;
+}
+
+.site-logo img:hover {
+  transform: scale(1.1);
+}
+
+/* LINK STYLE */
+.navbar-nav {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.navbar-nav li {
+  margin-left: 2rem;
+  margin-right: 0;
+}
+
+.navbar-nav li a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.navbar-nav li a:hover {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* =========================== Top banner ======================== */
 
 
 /* Top part of the page that greets the user */
