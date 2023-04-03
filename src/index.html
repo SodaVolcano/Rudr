@@ -8,26 +8,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>L0VE</title>
 
-  <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <!-- Latest compiled Javascript-->
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="./style.css">
 
 </head>
 
 <body>
-
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent container-fluid">
       <div class="container-fluid">
         <!-- logo -->
         <div class="d-flex justify-content-start">
-          <a class="navbar-brand site-logo mt-2" href="index.html">
-            <img src="./images/robo.png" alt="Logo" class="img-fluid">
+          <a class="navbar-brand site-logo mt-2" href="index.html" draggable="false">
+            <img src="./images/robo.png" alt="Logo" class="img-fluid" draggable="false">
           </a>
         </div>
 
@@ -35,24 +36,36 @@
         <div class="d-flex justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <li>
-              <a href="about.html">About Us</a>
+              <a href="about.html" draggable="false">About Us</a>
             </li>
             <li>
-              <a href="chat.html">Start Chatting</a>
+              <a href="chat.html" draggable="false">Start Chatting</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
+    
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="social-media-icons">
+        <a href="#"><i class="fa fa-facebook" style="color: #ffffff;"></i></a>
+        <a href="#"><i class="fa fa-twitter" style="color: #ffffff;"></i></a>
+        <a href="#"><i class="fa fa-instagram" style="color: #ffffff;"></i></a>
+        </div>
+    </div>
   </header>  
+
   <main>
     <div class="top-banner">
       <div class="top-banner-inner">
-        <h1 class="banner-slogan">INSERT SLOGAN HERE</h1>
-        <h2 class="banner-byline">WE do something idk our website is very functionally cool.</h2>
+        <h1 class="banner-slogan align-centre">INSERT SLOGAN HERE</h1>
+        <h2 class="banner-byline align-centre">WE do something idk our website is very functionally cool.</h2>
+        <img src="./images/robo.png" alt="Animated robot that greets user visiting the site." class="img-fluid" draggable="false">
       </div>
     </div>
   </main>
+
   <footer>
 
   </footer>
