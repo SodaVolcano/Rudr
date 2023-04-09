@@ -3,6 +3,7 @@
 ## Authors
 - Cohen Rafiq
 - Tin Chi Pang
+- Martin Evans 23621647
 
 ## Purpose
 This is INSERT_NAME_HERE, a fictitious website set in the future that aims 
