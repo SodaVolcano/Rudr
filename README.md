@@ -26,21 +26,30 @@ so if you are a robot seeking love, then uhhh maybe go look elsewhere.
 
 
 ## Running the Web Application
-> On localhost
-### INIT
-- Setup a python virtual environment to a directory of your choice
-    + Use python -m venv /path/to/your/directory/virtualenv
-- Activate your virtual environment with depending on your cmd outlet
-    + POSIX
-        - Shell: source <venv>/bin/activate
+### Setting up the Virtual Environment
+It's recommended that you use a virtual environment to manage the Python dependencies, there are two ways to accomplish this
+1. Using conda/mamba, this is recommended as it is the easiest. Simply run below to install the required packages specified by `requirements.txt` into the created virtual environment named `myEnv`
+```bash
+$ conda create --name myEnv --file requirements.txt
+```
+2. Using the `venv` module, first create the directory for the virtual environment
+```bash
+$ python -m venv /path/to/your/directory/myEnv
+```
+- Then,activate your virtual environment
+    - On POSIX
+        - Shell: `source <venv>/bin/activate`
         - suffix of activate depends on shell see:
             - https://docs.python.org/3/library/venv.html
-    + WINDOWS
-        - CMD:<venv>\Scripts\activate.bat
-        - PS: <venv>\Scripts\Activate.ps1
-  
-- Once activated venv, install requirements
-    + pip install -r path/to/requirements.txt
+    - On WINDOWS
+        - CMD: `<venv>\Scripts\activate.bat`
+        - PS: `<venv>\Scripts\Activate.ps1`
+    
+- Once activated your virtual environment, install requirements
+```bash
+(venv) $ pip install -r path/to/requirements.txt
+```
+
 
 ## Running Unit Testing
 > How to run unit tests and validations
