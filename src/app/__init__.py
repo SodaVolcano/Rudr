@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+from flask_migrate import Migrate
 
 from config import config
 
@@ -18,6 +19,8 @@ def create_app(config_name: str = "default") -> Flask:
     bootstrap.init_app(app)
     db.init_app(app)
 
+    # flask db migration
+    migrate = Migrate(app,db)
     from .main import main as main_blueprint
 
     app.register_blueprint(main_blueprint)
