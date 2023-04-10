@@ -1,8 +1,6 @@
 name: auto-format
 
-on: 
-    pull:
-    push:
+on: push
 
 
 jobs:
