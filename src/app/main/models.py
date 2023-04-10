@@ -16,13 +16,25 @@ class Users(UserMixin, db.Model):
     #Encrypted password
     password_hash = db.Column(db.String(128))
 
+    # Relationship
+    messages = db.relationship('Messages', backref='author', lazy='dynamic')
+
+    
     def __repr__(self):
         return '<User {}>'.format(self.username)
     
 class Messages(db.Model):
+    # Message ID
     id = db.Column(db.Integer, primary_key=True)
+
+    # Actual message
     body = db.Column(db.String(140))
+    
+    # Emotion attached to message
+    emotion = db.Colum(db.String(30))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    # Author of message
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
