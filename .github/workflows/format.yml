@@ -16,9 +16,6 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
-              with:
-                  lfs: true
-                  token: ${{ secrets.ACCESS_TOKEN }}
 
             - name: black
               uses: lgeiger/black-action@v1.0.1
@@ -33,6 +30,5 @@ jobs:
               run:
                   git config --global user.name ${{ github.actor }} 
                   git config --global user.email <${{ github.actor }}@users.noreply.github.com>
-                  git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
                   git commit -am "Automated changes"
                   git push
