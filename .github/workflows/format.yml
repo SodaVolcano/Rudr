@@ -29,5 +29,6 @@ jobs:
 
             - name: Push changes
               run:
-                  git commit -am "Automated changes"
+                  git add .
+                  git commit -m "Automated changes"
                   git push
