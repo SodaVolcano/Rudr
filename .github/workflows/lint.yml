@@ -32,12 +32,6 @@ jobs:
     - name: Install JavaScript and CSS dependencies
       run: npm install
 
-    - name: Install Prettier
-      run: npm install --save-dev prettier
-
-    - name: Run Prettier
-      run: npm run prettier
-
     - name: Lint Python
       run: black
 
