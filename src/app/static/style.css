@@ -136,7 +136,6 @@ header {
 /* Top part of the page that greets the user */
 .top-banner {
     user-select: none;
-    /*height: 80vh;*/
     width: 100%;
     padding: 35px;
     padding-top: 120px;
@@ -161,14 +160,11 @@ header {
     align-items: center;
 }
 
-.top-banner-inner img {
+.banner-image {
+  max-height: 700px;
   display: inline-block;
   max-width: 100%;
   height: auto;
-}
-
-.banner-image {
-  max-height: 700px;
 }
 
 .banner-slogan {
