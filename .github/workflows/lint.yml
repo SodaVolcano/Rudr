@@ -33,7 +33,7 @@ jobs:
       run: npm install
 
     - name: Lint Python
-      run: black
+      run: black ./src
 
     - name: Lint JavaScript
       run: npm run lint:js
