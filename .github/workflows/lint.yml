@@ -30,7 +30,7 @@ jobs:
       run: pip install black
 
     - name: Install JavaScript and CSS dependencies
-      run: npm ci
+      run: npm install
 
     - name: Install Prettier
       run: npm install --save-dev prettier
