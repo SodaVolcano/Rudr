@@ -3,8 +3,9 @@ name: auto-format
 on: push
 
 permissions:
-    actions: read
-    checks: read
+    actions: write
+    checks: write
+    contents: read
 
 
 jobs:
