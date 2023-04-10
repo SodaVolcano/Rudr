@@ -5,7 +5,7 @@ on: push
 permissions:
     actions: write
     checks: write
-    contents: read write
+    contents: write
 
 
 jobs:
