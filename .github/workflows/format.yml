@@ -1,10 +1,13 @@
 name: auto-format
 
-on: pull_request
+on: 
+    pull_request
+    push
 
 
 jobs:
   format:
+    name: Format Code
     runs-on: ubuntu-latest
 
     steps:
