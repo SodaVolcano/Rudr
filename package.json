@@ -4,7 +4,8 @@
   "description": "## Authors - Cohen Rafiq 23348918 - Tin Chi Pang 23301921 - Martin Evans 23621647",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write 'src/**/*.{js,py,css,md,html,ts}"
   },
   "repository": {
     "type": "git",
