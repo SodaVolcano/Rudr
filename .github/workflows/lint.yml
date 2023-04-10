@@ -1,5 +1,8 @@
 name: Lint
 
+runs:
+    using: 'node16'
+
 on:
   push:
     branches:
