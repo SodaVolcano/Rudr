@@ -3,10 +3,10 @@ name: Lint
 on:
   push:
     branches:
-      - main
+      - tinchi/linting
   pull_request:
     branches:
-      - main
+      - tinchi/linting
 
 jobs:
   build:
