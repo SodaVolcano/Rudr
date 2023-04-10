@@ -1,8 +1,8 @@
 import flask
 
-def      x  (s):
-  return 2
+
+def x(s):
+    return 2
 
 
-print('a')
-
+print("a")
