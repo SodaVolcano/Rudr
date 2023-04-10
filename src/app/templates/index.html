@@ -16,7 +16,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="../static/style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
@@ -27,7 +27,7 @@
         <!-- logo -->
         <div class="d-flex justify-content-start">
           <a class="navbar-brand site-logo mt-2" href="index" draggable="false">
-            <img src="../static/Logo2.png" alt="Logo" class="img-fluid" draggable="false">
+            <img src="{{ url_for('static', filename='Logo2.png') }}" alt="Logo" class="img-fluid" draggable="false">
           </a>
         </div>
 
@@ -35,10 +35,10 @@
         <div class="d-flex justify-content-end" id="navbarNav">
           <ul class="navbar-nav">
             <li>
-              <a href="about" draggable="false">About Us</a>
+              <a href="{{ url_for('.about') }}" draggable="false">About Us</a>
             </li>
             <li>
-              <a href="chat" draggable="false">Start Chatting</a>
+              <a href="#" draggable="false">Start Chatting</a>
             </li>
           </ul>
         </div>
@@ -60,7 +60,7 @@
       <div class="top-banner-inner">
         <h1 class="banner-slogan align-centre">INSERT SLOGAN HERE</h1>
         <h2 class="banner-byline align-centre">WE do something idk our website is very functionally cool.</h2>
-        <img src="../static/robo.png" alt="Animated robot that greets user visiting the site." class="img-fluid" draggable="false">
+        <img src="{{ url_for('static', filename='robo.png') }}" alt="Animated robot that greets user visiting the site." class="img-fluid" draggable="false">
       </div>
     </div>
   </main>
