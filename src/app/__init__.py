@@ -24,6 +24,9 @@ def create_app(config_name: str = "default") -> Flask:
     
     from .main import main as main_blueprint
 
+    # for flask db init!
+    from .main import models
+
     app.register_blueprint(main_blueprint)
 
     return app

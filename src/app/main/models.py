@@ -1,7 +1,6 @@
 from app import db
 from datetime import datetime
 from flask_login import UserMixin
-from flask_sqlalchemy import SQLAlchemy
 
 
 class Users(UserMixin, db.Model):
@@ -31,11 +30,11 @@ class Messages(db.Model):
     body = db.Column(db.String(140))
     
     # Emotion attached to message
-    emotion = db.Colum(db.String(30))
+    emotion = db.Column(db.String(30))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     # Author of message
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
