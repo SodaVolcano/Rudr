@@ -11,7 +11,6 @@ class Config:
     """Settings common to all configurations"""
 
     SECRET_KEY = os.environ.get("SECRET_KEY") or "you-will-never-guess"
-
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     @staticmethod
