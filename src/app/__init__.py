@@ -19,9 +19,8 @@ def create_app(config_name: str = "default") -> Flask:
 
     bootstrap.init_app(app)
     db.init_app(app)
-    migrate.init_app(app,db)
+    migrate.init_app(app, db)
 
-    
     from .main import main as main_blueprint
 
     # for flask db init!
