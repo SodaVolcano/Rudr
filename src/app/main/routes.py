@@ -8,9 +8,8 @@ from .models import Users
 from app import db
 
 
-
-@main.route("/", methods=['GET','POST'])
-@main.route("/index", methods=['GET','POST'])
+@main.route("/", methods=["GET", "POST"])
+@main.route("/index", methods=["GET", "POST"])
 def index():
     login_form = LoginForm()
     register_form = RegisterForm()
@@ -35,9 +34,9 @@ def index():
 
         # Login user
         login_user(user, remember=register_form.remember_me.data)
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('main.index')
+        next_page = request.args.get("next")
+        if not next_page or url_parse(next_page).netloc != "":
+            next_page = url_for("main.index")
         return redirect(next_page)
     return render_template("index.html", login=login_form, register=register_form)
 
