@@ -6,16 +6,16 @@ from . import main
 from .forms import LoginForm, RegisterForm
 from .models import Users
 from app import db
-from
 
 
 @main.route("/", methods=["GET", "POST"])
 @main.route("/index", methods=["GET", "POST"])
 def index():
+    """
     login_form = LoginForm()
-    register_form = RegisterForm()
     if login_form.validate_on_submit():
         # parse login information
+        flash("Logged in: " + login_form.username.data + ", " + login_form.password.data)
         user = Users.query.filter_by(username=login_form.username.data).first()
         if user is None or not user.check_password(login_form.password.data):
             flash("Invalid username or password")
@@ -24,12 +24,13 @@ def index():
         next_page = request.args.get("next")
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("index")
-        return redirect(next_page)
-
+        return redirect(next_page) """
+    register_form = RegisterForm()
     if register_form.validate_on_submit():
         # parse registration information
-        user = Users(username=register_form.username, email=register_form.email)
-        user.set_password(register_form.password)
+        flash("Logged in: " + register_form.username.data + ", " + register_form.password.data)
+        user = Users(username=register_form.username.data, email=register_form.email.data)
+        user.set_password(register_form.password.data)
         
         db.session.add(user)
         db.session.commit()
@@ -40,7 +41,8 @@ def index():
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("main.index")
         return redirect(next_page)
-    return render_template("index.html", login=login_form, register=register_form)
+    
+    return render_template("index.html", register=register_form)
 
 
 @main.route("/about")
