@@ -38,12 +38,9 @@ $ mamba create --name my-env --file requirements.txt
 $ python -m venv /path/to/your/directory/my-env
 ```
 - To activate your `venv` virtual environment...
-    - On Unix shell, run
-```bash
-$ source <venv>/bin/activate
-```
-    - Note that suffix of activate depends on shell see:
-        - https://docs.python.org/3/library/venv.html
+    - On Unix shell, run `$ source <venv>/bin/activate`
+        - Note that suffix of activate depends on shell see:
+            - https://docs.python.org/3/library/venv.html
     - On WINDOWS...
         - CMD: `<venv>\Scripts\activate.bat`
         - PS: `<venv>\Scripts\Activate.ps1`
@@ -54,9 +51,9 @@ $ source <venv>/bin/activate
 ```
 
 ### Running the Test Server
-- In the command line, run
+- In the command line, **from the top-most directory**, run
 ```bash
-(my-env) $ flask --app flasky.py run --debug
+(my-env) $ flask --app ./src/flasky.py run --debug
 ```
 - Then, open the output link in your browser
 
