@@ -25,10 +25,12 @@ class Users(UserMixin, db.Model):
     def __repr__(self):
         return "<User {}>".format(self.username)
 
+
 # For login manager
 @login.user_loader
 def load_user(id):
     return Users.query.get(int(id))
+
 
 class Messages(db.Model):
     # Message ID
