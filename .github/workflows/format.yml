@@ -1,7 +1,9 @@
 name: auto-format
 
-on: push
-
+on: 
+    push:
+        branches-ignore:
+            - master
 permissions:
     actions: write
     checks: write
