@@ -30,10 +30,17 @@ def index():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
         # parse registration information
-        flash("Logged in: " + register_form.username.data + ", " + register_form.password.data)
-        user = Users(username=register_form.username.data, email=register_form.email.data)
+        flash(
+            "Logged in: "
+            + register_form.username.data
+            + ", "
+            + register_form.password.data
+        )
+        user = Users(
+            username=register_form.username.data, email=register_form.email.data
+        )
         user.set_password(register_form.password.data)
-        
+
         db.session.add(user)
         db.session.commit()
 
