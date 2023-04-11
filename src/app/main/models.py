@@ -9,9 +9,6 @@ class Users(UserMixin, db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
 
-    # Ideally, images should be stored in a third party service if scaled.
-    profile_picture = db.Column(db.LargeBinary)
-
     #Encrypted password
     password_hash = db.Column(db.String(128))
 
@@ -33,9 +30,12 @@ class Messages(db.Model):
 
     # Actual message
     body = db.Column(db.String(140))
+    speakerID = db.Column()
     
     # Emotion attached to message
     emotion = db.Column(db.String(30))
+
+    # Index of emotion
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     # Author of message
