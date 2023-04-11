@@ -28,18 +28,51 @@
   <form action="" method="post" novalidate>
     {{ login.hidden_tag() }}
     <p>
-        {{ login.username.label }}<br>
-        {{ login.username(size=32) }}
+      {{ login.username.label }}<br>
+      {{ login.username(size=32) }}
+      {% for error in login.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
     </p>
     <p>
-        {{ login.password.label }}<br>
-        {{ login.password(size=32) }}
+      {{ login.password.label }}<br>
+      {{ login.password(size=32) }}
+      {% for error in login.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
     </p>
     <p>{{ login.remember_me() }} {{ login.remember_me.label }}</p>
     <p>{{ login.submit() }}</p>
-</form>
+  </form>
+
+  <form action="" method="post" novalidate>
+    {{ register.hidden_tag() }}
+    <p>
+      {{ register.username.label }}<br>
+      {{ register.username(size=32) }}
+      {% for error in register.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ register.password.label }}<br>
+      {{ register.password(size=32) }}
+      {% for error in register.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+      <p>
+        {{ register.email.label }}<br>
+        {{ register.email(size=32) }}
+        {% for error in register.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+      </p>
+    </p>
+    <p>{{ register.remember_me() }} {{ register.remember_me.label }}</p>
+    <p>{{ register.submit() }}</p>
+  </form>
 
 
-  
+
 </main>
 {% endblock %}

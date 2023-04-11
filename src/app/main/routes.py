@@ -19,7 +19,7 @@ def index():
         user = Users.query.filter_by(username=login_form.username.data).first()
         if user is None or not user.check_password(login_form.password.data):
             flash("Invalid username or password")
-            return redirect(url_for("login"))
+            return redirect(url_for("main.index"))
         login_user(user, remember=login_form.remember_me.data)
         next_page = request.args.get("next")
         if not next_page or url_parse(next_page).netloc != "":
