@@ -8,22 +8,21 @@ from .models import Users
 from app import db
 
 
-
 @main.route("/")
 @main.route("/index")
 def index():
     login_form = LoginForm()
-    register_form  = RegisterForm()
+    register_form = RegisterForm()
     if login_form.validate_on_submit():
         # parse login information
         user = Users.query.filter_by(username=login_form.username.data).first()
         if user is None or not user.check_password(login_form.password.data):
-            flash('Invalid username or password')
-            return redirect(url_for('login'))
+            flash("Invalid username or password")
+            return redirect(url_for("login"))
         login_user(user, remember=login_form.remember_me.data)
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
+        next_page = request.args.get("next")
+        if not next_page or url_parse(next_page).netloc != "":
+            next_page = url_for("index")
         return redirect(next_page)
 
     if register_form.validate_on_submit():
@@ -35,18 +34,20 @@ def index():
 
         # Login user
         login_user(user, remember=register_form.remember_me.data)
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
+        next_page = request.args.get("next")
+        if not next_page or url_parse(next_page).netloc != "":
+            next_page = url_for("index")
         return redirect(next_page)
-    return render_template("index.html", login=login_form, register=register_form)    
+    return render_template("index.html", login=login_form, register=register_form)
+
 
 @main.route("/about")
 def about():
     return render_template("about_us.html")
 
+
 # To logout user
-@main.route('/logout')
+@main.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for("index"))
