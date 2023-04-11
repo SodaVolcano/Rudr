@@ -6,7 +6,7 @@ from . import main
 @main.route("/")
 @main.route("/index")
 def index():
-    return render_template("test.html")
+    return render_template("index.html")
 
 
 @main.route("/about")
