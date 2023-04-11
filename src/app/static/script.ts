@@ -1,9 +1,8 @@
-function sucessful(response) {
-    console.log(typeof(response));
-    if (response.status === 'success') {
+function sucessful(response: any) {
+    if (response.status === 'OK') {
         // Update chat interface with new message
-        $('#chatbox').append(`<p>${response.message}</p>`);
-        $('#msg-chatbox').val('');  // Clear message box
+        $('#message-log').append(`<p>${response.message}</p>`);
+        $('#chatbox-content').val('');  // Clear message box
     }
     else {
         // idk man
@@ -16,8 +15,7 @@ function handle_error() {
 
 function handle_message(event: Event) {
     event.preventDefault();  // Prevent default form submission from browser
-    let message = $('#msg-chatbox').val();
-
+    let message = $('#chatbox-content').val();
     // Send AJAX POST request to Flask route
     $.ajax({
         url: '/chat',
@@ -29,6 +27,10 @@ function handle_message(event: Event) {
     })
 }
 
-$(document).ready(function() {
-    $('#msg-chatbox').on('submit', handle_message);
-})
+
+function main() {
+    const chatbox = $('#chatbox')[0];
+    chatbox.addEventListener('submit', handle_message);
+}
+
+window.onload = main;

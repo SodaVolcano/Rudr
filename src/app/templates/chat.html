@@ -9,13 +9,19 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <title>INSERT_WEBSITE_TITLE About Us</title>
   <script src="{{ url_for('static', filename='script.js')  }}"></script>
+  <script>
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
 </head>
 
 <body>
-  <form method="POST">
+  <div id="message-log">
+  
+  </div>
+  <form method="POST" id="chatbox">
     {{ chatbox.hidden_tag() }}
-    {{ chatbox.message.label }} {{ chatbox.message(id="msg-chatbox") }}
-    {{ chatbox.submit() }}
+    {{ chatbox.message.label }} {{ chatbox.message(id="chatbox-content") }}
+    {{ chatbox.submit(id="chatbox-submit") }}
   </form>
 
 </body>
