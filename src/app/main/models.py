@@ -1,4 +1,4 @@
-from app import db
+from app import db, login
 from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -25,6 +25,10 @@ class Users(UserMixin, db.Model):
     def __repr__(self):
         return "<User {}>".format(self.username)
 
+# For login manager
+@login.user_loader
+def load_user(id):
+    return Users.query.get(int(id))
 
 class Messages(db.Model):
     # Message ID

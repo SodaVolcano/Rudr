@@ -42,6 +42,21 @@
             <li>
               <a href="#" draggable="false">Start Chatting</a>
             </li>
+            <li>
+              <a href="#" draggable="false">Start Chatting</a>
+            </li>
+            {% if current_user.is_anonymous %}
+            <li>
+              <button id="login-button">Login</button>
+            </li>
+            <li>
+              <button id="signin-button">Sign In</button>
+            </li>
+            {% else %}
+            <li>
+              <a href="{{ url_for('logout') }}">Sign In</a>
+            </li>
+            {% endif %}
           </ul>
         </div>
       </div>
