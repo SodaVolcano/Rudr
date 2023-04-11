@@ -11,7 +11,7 @@ from app import db
 @main.route("/", methods=["GET", "POST"])
 @main.route("/index", methods=["GET", "POST"])
 def index():
-    """
+    # Login Popup 
     login_form = LoginForm()
     if login_form.validate_on_submit():
         # parse login information
@@ -24,7 +24,9 @@ def index():
         next_page = request.args.get("next")
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("index")
-        return redirect(next_page) """
+        return redirect(next_page)
+    
+    # Register Popup
     register_form = RegisterForm()
     if register_form.validate_on_submit():
         # parse registration information
@@ -42,7 +44,7 @@ def index():
             next_page = url_for("main.index")
         return redirect(next_page)
     
-    return render_template("index.html", register=register_form)
+    return render_template("index.html", login=login_form, register=register_form)
 
 
 @main.route("/about")
