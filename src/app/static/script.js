@@ -1,5 +1,5 @@
 "use strict";
-function sucessful(response) {
+function handleServerResponse(response) {
     if (response.status === 'OK') {
         // Update chat interface with new message
         $('#message-log').append(`<p>${response.message}</p>`);
@@ -7,11 +7,16 @@ function sucessful(response) {
     }
     else {
         // idk man
+        alert("ERROR YOUR MICOSOFT GOT H4CKED!!!");
     }
 }
 function handle_error() {
 }
-function handle_message(event) {
+/**
+ * Package user input as JSON and send to Flask route
+ * @param event
+ */
+function handleChatboxSubmission(event) {
     event.preventDefault(); // Prevent default form submission from browser
     let message = $('#chatbox-content').val();
     // Send AJAX POST request to Flask route
@@ -20,12 +25,15 @@ function handle_message(event) {
         method: 'POST',
         data: { message: message },
         dataType: 'json',
-        success: sucessful,
+        success: handleServerResponse,
         error: handle_error,
     });
 }
+/**
+ * Initialise event listeners etc when the window loads
+ */
 function main() {
     const chatbox = $('#chatbox')[0];
-    chatbox.addEventListener('submit', handle_message);
+    chatbox.addEventListener('submit', handleChatboxSubmission);
 }
 window.onload = main;
