@@ -24,5 +24,22 @@
         class="img-fluid" draggable="false">
     </div>
   </div>
+
+  <form action="" method="post" novalidate>
+    {{ login.hidden_tag() }}
+    <p>
+        {{ login.username.label }}<br>
+        {{ login.username(size=32) }}
+    </p>
+    <p>
+        {{ login.password.label }}<br>
+        {{ login.password(size=32) }}
+    </p>
+    <p>{{ login.remember_me() }} {{ login.remember_me.label }}</p>
+    <p>{{ login.submit() }}</p>
+</form>
+
+
+  
 </main>
 {% endblock %}
