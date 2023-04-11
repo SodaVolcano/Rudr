@@ -24,14 +24,21 @@ def index():
         next_page = request.args.get("next")
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("index")
-        return redirect(next_page) """
+        return redirect(next_page)"""
     register_form = RegisterForm()
     if register_form.validate_on_submit():
         # parse registration information
-        flash("Logged in: " + register_form.username.data + ", " + register_form.password.data)
-        user = Users(username=register_form.username.data, email=register_form.email.data)
+        flash(
+            "Logged in: "
+            + register_form.username.data
+            + ", "
+            + register_form.password.data
+        )
+        user = Users(
+            username=register_form.username.data, email=register_form.email.data
+        )
         user.set_password(register_form.password.data)
-        
+
         db.session.add(user)
         db.session.commit()
 
@@ -41,7 +48,7 @@ def index():
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("main.index")
         return redirect(next_page)
-    
+
     return render_template("index.html", register=register_form)
 
 

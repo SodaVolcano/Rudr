@@ -3,6 +3,7 @@ from datetime import datetime
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 # For login manager
 @login.user_loader
 def load_user(id):
@@ -29,8 +30,6 @@ class Users(UserMixin, db.Model):
 
     def __repr__(self):
         return "<User {}>".format(self.username)
-
-
 
 
 class Messages(db.Model):
