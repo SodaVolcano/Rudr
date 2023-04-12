@@ -43,21 +43,18 @@
               <a href="{{ url_for('.about') }}" draggable="false">About Us</a>
             </li>
             <li>
-              <a draggable="false">Start Chatting</a>
-            </li>
-            <li>
-              <a draggable="false">Start Chatting</a>
+              <a href="{{ url_for('.chat') }}" draggable="false">Start Chatting</a>
             </li>
             {% if current_user.is_anonymous %}
             <li>
-              <a id="open-loginform" href="#">Login Form</a>
+              <a id="open-loginform">Login Form</a>
             </li>
             <li>
-              <a id="open-registerform" href="#">Sign In</a>
+              <a id="open-registerform">Sign In</a>
             </li>
             {% else %}
             <li>
-              <a href="{{ url_for('main.logout') }}">logout</a>
+              <a href="{{ url_for('.logout') }}" draggable="false">logout</a>
             </li>
             {% endif %}
           </ul>
