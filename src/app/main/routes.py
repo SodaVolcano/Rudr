@@ -1,5 +1,5 @@
 """ Route and view function definitions for the main blueprint """
-from flask import render_template, redirect, url_for, request, jsonify
+from flask import render_template, request, jsonify
 from . import main
 from .forms import ChatInputForm
 
