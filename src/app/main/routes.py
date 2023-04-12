@@ -13,27 +13,35 @@ from app import db
 @main.route("/index", methods=["GET", "POST"])
 def index():
     # Login Popup
-    # Login Popup
     login_form = LoginForm()
-    if login_form.validate_on_submit():
-        # parse login information
-        flash(
-            "Logged in: " + login_form.username.data + ", " + login_form.password.data
-        )
-        login(login_form)
-    # Register Popup
     register_form = RegisterForm()
-    if register_form.validate_on_submit():
-        # parse registration information
-        flash(
-            "Logged in: "
-            + register_form.username.data
-            + ", "
-            + register_form.password.data
-        )
-        signup(register_form)
-        # Login user
-        login(register_form)
+
+    if request.method == 'POST':
+        if login_form.validate_on_submit():
+            # parse login information
+            flash(
+                "Logged in: "
+                + login_form.username.data
+                + ", "
+                + login_form.password.data
+            )
+            login(login_form)
+            return redirect(url_for('.index')) # Redirect to clear POST data
+
+        # Register Popup
+        if register_form.validate_on_submit():
+            # parse registration information
+            flash(
+                "Logged in: "
+                + register_form.username.data
+                + ", "
+                + register_form.password.data
+            )
+            if not current_user.is_authenticated:
+                signup(register_form)
+                # Login user
+                login(register_form)
+                return redirect(url_for('.index')) # Redirect to clear POST data
     return render_template("index.html", login=login_form, register=register_form)
 
 
@@ -50,7 +58,7 @@ def signup(register_form: RegisterForm):
 
     db.session.add(user)
     db.session.commit()
-    return redirect(url_for("main.index"))
+    return redirect(url_for(".index"))
 
 
 # To logout user
@@ -59,11 +67,11 @@ def login(login_form: FlaskForm):
     user = Users.query.filter_by(username=login_form.username.data).first()
     if user is None or not user.check_password(login_form.password.data):
         flash("Invalid username or password")
-        return redirect(url_for("main.index"))
+        return redirect(url_for(".index"))
     login_user(user, remember=login_form.remember_me.data)
     next_page = request.args.get("next")
     if not next_page or url_parse(next_page).netloc != "":
-        next_page = url_for("main.index")
+        next_page = url_for(".index")
     return redirect(next_page)
 
 
@@ -71,4 +79,4 @@ def login(login_form: FlaskForm):
 @main.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("main.index"))
+    return redirect(url_for(".index"))

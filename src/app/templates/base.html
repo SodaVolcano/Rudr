@@ -43,14 +43,14 @@
               <a href="{{ url_for('.about') }}" draggable="false">About Us</a>
             </li>
             <li>
-              <a href="{{ url_for('.chat') }}" draggable="false">Start Chatting</a>
+              <a href="#" draggable="false">Start Chatting</a>
             </li>
             {% if current_user.is_anonymous %}
             <li>
               <a id="open-loginform">Login Form</a>
             </li>
             <li>
-              <a id="open-registerform">Sign In</a>
+              <a id="open-registerform">Sign Up</a>
             </li>
             {% else %}
             <li>
@@ -86,6 +86,13 @@
           {% endfor %}
         </p>
         <p>
+          <label for="password2" style="color: black;">Repeat Password:</label><br>
+          {{ register.password2(size=32) }}
+          {% for error in register.password2.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>
           <label for="email" style="color: black;">Email:</label><br>
           {{ register.email(size=32) }}
           {% for error in register.email.errors %}
@@ -106,14 +113,14 @@
         <p>
           <label for="username" style="color: black;">Username:</label><br>
           {{ login.username(size=32) }}
-          {% for error in register.username.errors %}
+          {% for error in login.username.errors %}
           <span style="color: red;">[{{ error }}]</span>
           {% endfor %}
         </p>
         <p>
           <label for="password" style="color: black;">Password:</label><br>
           {{ login.password(size=32) }}
-          {% for error in register.password.errors %}
+          {% for error in login.password.errors %}
           <span style="color: red;">[{{ error }}]</span>
           {% endfor %}
         </p>
@@ -157,6 +164,10 @@
 
 
 
+    if (window.history.replaceState) {
+      window.history.replaceState(null, null, window.location.href)
+    }
+    
   </script>
 </body>
 
