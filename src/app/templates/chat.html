@@ -18,11 +18,10 @@
   <div id="message-log">
   
   </div>
-  <form method="POST" id="chatbox">
-    {{ chatbox.hidden_tag() }}
-    {{ chatbox.message.label }} {{ chatbox.message(id="chatbox-content") }}
-    {{ chatbox.submit(id="chatbox-submit") }}
-  </form>
+  <div>
+    <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
+    <button id="chatbox-submit">Send</button>
+  </div>
 
 </body>
 

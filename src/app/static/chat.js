@@ -8,10 +8,10 @@ let typingDelay = MAX_TYPING_DELAY; // miliseconds
  * Initialise event listeners etc when the window loads
  */
 function main() {
-    const chatbox = $('#chatbox')[0];
-    chatbox.addEventListener('submit', QueueMessage);
-    chatbox.addEventListener('submit', function () {
-        console.log(typingDelay);
+    $('#chatbox-submit')[0].addEventListener('click', QueueMessage);
+    $('#chatbox-content')[0].addEventListener('keydown', function (event) {
+        if (event.key === 'Enter')
+            QueueMessage(event);
     });
     $.post("/init_chatbot").done(checkBotInit);
     // Reset timer when user types in chatbox
@@ -27,13 +27,13 @@ function recieveBotReply(response) {
         throw new Error("Failed to recieve bot reply");
     console.log("recieved bot reply");
     // Display each message with a random delay - simulates bot typing
-    let delay = (Math.floor(Math.random() * 10) + 1) * 150;
+    let delay = (Math.floor(Math.random() * 10) + 1) * 50;
     for (let message of response.messages) {
         console.log(`Bot message delay: ${delay}`);
         setTimeout(displayMessage, delay, message, false);
         // Timeout is async so message order is not guaranteed, hence
         // Delay is added to the previous message's delay
-        delay += (Math.floor(Math.random() * 10) + 1) * 150;
+        delay += (Math.floor(Math.random() * 10) + 1) * 50;
     }
 }
 function checkBotInit(response) {
@@ -70,8 +70,8 @@ function sendQueuedMessages() {
         success: recieveBotReply,
         error: function () { throw new Error("Failed to send messages to server"); }
     });
+    console.log(`message list sent to server ${messageQueue}}`);
     messageQueue.length = 0;
-    console.log("message list sent to server");
 }
 /**
  * Called when the user submits a message, queue it but don't send
@@ -87,16 +87,16 @@ function QueueMessage(event) {
     displayMessage(message, true);
     $('#chatbox-content').val(''); // Clear message box
     messageQueue.push(message);
-    console.log("Message queued");
+    console.log(`Message queued ${message}}`);
     resetTimer();
 }
 /**
  */
 function resetTimer() {
-    console.log("Resetting timer");
     clearTimeout(typingTimer);
     // Exponentially dercrease the typing delay, models bot's attention span
     // If user spams messages, bot will respond instead of freezing
     typingDelay = MAX_TYPING_DELAY / (2 ** messageQueue.length - 1);
     typingTimer = setTimeout(sendQueuedMessages, typingDelay);
+    console.log(`New typing delay: ${typingDelay}ms`);
 }

@@ -1,7 +1,6 @@
 """ Route and view function definitions for the main blueprint """
 from flask import render_template, request, jsonify, session
 from . import main
-from .forms import ChatInputForm
 from .chatbot import ChatbotAgent, ChatbotMediator
 
 import json
@@ -20,8 +19,7 @@ def about():
 
 @main.route("/chat", methods=["GET"])
 def chat():
-    chatbox = ChatInputForm()
-    return render_template("chat.html", chatbox=chatbox)
+    return render_template("chat.html")
 
 
 @main.route("/process-msg", methods=["POST"])

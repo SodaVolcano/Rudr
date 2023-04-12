@@ -20,10 +20,3 @@ class RegisterForm(FlaskForm):
     # For login purposes, as it should login upon validation
     remember_me = BooleanField("Remember Me")
     submit = SubmitField("Sign In")
-
-
-class ChatInputForm(FlaskForm):
-    message = StringField(
-        "Message", validators=[DataRequired(), Length(min=0, max=MAX_MSG_LENGTH)]
-    )
-    submit = SubmitField("Send")
