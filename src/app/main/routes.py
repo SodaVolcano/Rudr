@@ -13,6 +13,7 @@ from app import db
 @main.route("/index", methods=["GET", "POST"])
 def index():
     # Login Popup
+    # Login Popup
     login_form = LoginForm()
     if login_form.validate_on_submit():
         # parse login information
