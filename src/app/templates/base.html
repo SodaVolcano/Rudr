@@ -9,11 +9,14 @@
   <title>L0VE</title>
 
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
   <!-- Latest compiled Javascript-->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
+    crossorigin="anonymous"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
@@ -40,17 +43,17 @@
               <a href="{{ url_for('.about') }}" draggable="false">About Us</a>
             </li>
             <li>
-              <a href="#" draggable="false">Start Chatting</a>
+              <a draggable="false">Start Chatting</a>
             </li>
             <li>
-              <a href="#" draggable="false">Start Chatting</a>
+              <a draggable="false">Start Chatting</a>
             </li>
             {% if current_user.is_anonymous %}
             <li>
-              <button id="login-button">Login</button>
+              <a id="open-loginform" href="#">Login Form</a>
             </li>
             <li>
-              <button id="signin-button">Sign In</button>
+              <a id="open-registerform" href="#">Sign In</a>
             </li>
             {% else %}
             <li>
@@ -61,16 +64,103 @@
         </div>
       </div>
     </nav>
-  </header>  
+  </header>
 
-  {% block content %} 
-  
+  {% block content %}
+
   {% endblock %}
+  <div class="register_overlay" id="register_overlay">
+    <div class="popup">
+      <form action="" method="post" novalidate>
+        <a id="close-registerform">X</a>
+        {{ register.hidden_tag() }}
+        <p>
+          <label for="username" style="color: black;">Username:</label><br>
+          {{ register.username(size=32) }}
+          {% for error in register.username.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>
+          <label for="password" style="color: black;">Password:</label><br>
+          {{ register.password(size=32) }}
+          {% for error in register.password.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>
+          <label for="email" style="color: black;">Email:</label><br>
+          {{ register.email(size=32) }}
+          {% for error in register.email.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>{{ register.remember_me() }} <label for="remember_me" style="color: black;">Remember Me?</label><br></p>
+        <p>{{ register.submit() }}</p>
+      </form>
+    </div>
+  </div>
 
- 
+  <div class="login_overlay" id="login_overlay">
+    <div class="popup">
+      <form action="" method="post" novalidate>
+        <a id="close-loginform">X</a>
+        {{ login.hidden_tag() }}
+        <p>
+          <label for="username" style="color: black;">Username:</label><br>
+          {{ login.username(size=32) }}
+          {% for error in register.username.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>
+          <label for="password" style="color: black;">Password:</label><br>
+          {{ login.password(size=32) }}
+          {% for error in register.password.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>{{ login.remember_me() }} <label for="remember_me" style="color: black;">Remember Me?</label><br></p>
+        <p>{{ login.submit() }}</p>
+      </form>
+    </div>
+  </div>
+
+
+
   <footer>
 
   </footer>
+  <script>
+    var registerOverlay = document.getElementById('register_overlay');
+    var openRegisterForm = document.getElementById('open-registerform');
+    var closeRegisterForm = document.getElementById('close-registerform');
 
+    // Add event listeners to the elements
+    openRegisterForm.addEventListener('click', function () {
+      registerOverlay.style.display = 'flex';
+    });
+
+    closeRegisterForm.addEventListener('click', function () {
+      registerOverlay.style.display = 'none';
+    })
+
+    var loginOverlay = document.getElementById('login_overlay');
+    var openLoginForm = document.getElementById('open-loginform');
+    var closeLoginForm = document.getElementById('close-loginform');
+
+    // Add event listeners to the elements
+    openLoginForm.addEventListener('click', function () {
+      loginOverlay.style.display = 'flex';
+    });
+
+    closeLoginForm.addEventListener('click', function () {
+      loginOverlay.style.display = 'none';
+    });
+
+
+
+  </script>
 </body>
+
 </html>

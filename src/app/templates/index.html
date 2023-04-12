@@ -29,43 +29,9 @@
   <hr>
   <hr>
 
-  <form action="" method="post" novalidate>
-    {{ register.hidden_tag() }}
-    <p>
-      {{ register.username.label }}<br>
-      {{ register.username(size=32) }}
-      {% for error in register.username.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    <p>
-      {{ register.password.label }}<br>
-      {{ register.password(size=32) }}
-      {% for error in register.password.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    <p>
-      {{ register.email.label }}<br>
-      {{ register.email(size=32) }}
-      {% for error in register.password.errors %}
-      <span style="color: red;">[{{ error }}]</span>
-      {% endfor %}
-    </p>
-    </p>
-    <p>{{ register.remember_me() }} {{ register.remember_me.label }}</p>
-    <p>{{ register.submit() }}</p>
-  </form>
+  
 
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
-
+  
 
 </main>
 {% endblock %}
