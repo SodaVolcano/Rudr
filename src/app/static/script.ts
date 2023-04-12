@@ -1,26 +1,53 @@
+/**
+ * Recieve response from the server
+ * @param response JSON object containing the response from the server
+ */
 function handleServerResponse(response: any) {
-    if (response.status === 'OK') {
-    // Update chat interface with new message
-        $('#message-log').append(`<p>${response.message}</p>`);
-        $('#chatbox-content').val('');  // Clear message box
-    }
-    else {
-        // idk ma
-        handleError();
-    }
+    if (response.status === 'OK')
+        displayMessage(response.message, false);
+    else
+        handleError();   // idk man
 }
 
+/**
+ * idk
+ */
 function handleError() {
     alert("Your micosoft got h4cked!!! SO CRINGE!");
 }
 
 /**
- * Package user input as JSON and send to Flask route
+ * Append a message to the chat HTML element
+ * @param message string of the message to display
+ * @param sender  whether the message was sent by the user or the bot
+ */
+function displayMessage(message: string, isFromUser: boolean) {
+    let cssClass = "";
+
+    if (isFromUser)
+        cssClass = "msg-user";
+    else
+        cssClass = "msg-bot";
+
+    $('#message-log').append(
+        `<div class="${cssClass}"><p>${message}</p></div>`
+    );
+}
+
+/**
+ * Package user message as JSON and send to Flask route
  * @param event 
  */
 function handleChatboxSubmission(event: Event) {
-event.preventDefault();  // Prevent default form submission from browser
+    event.preventDefault();  // Prevent default form submission from browser
     let message = $('#chatbox-content').val();
+
+    if (typeof(message) !== 'string')
+        throw new Error("Message is not a string");
+
+    displayMessage(message, true);
+    $('#chatbox-content').val('');  // Clear message box
+
     // Send AJAX POST request to Flask route
     $.ajax({
         url: '/chat',
