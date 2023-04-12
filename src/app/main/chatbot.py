@@ -28,6 +28,7 @@ class ChatbotMediator:
     @staticmethod
     def __structure_reply(reply: str) -> list[str]:
         """Structure the reply from the chatbot, e.g. split by period"""
+        # TODO: split by period, !, ?, etc but keep them in the reply
         return [s.strip() for s in reply.split(".")]
 
 
@@ -59,7 +60,9 @@ class ChatbotAgent:
         n_replies = random.randint(1, 3)
         lines = open(self.random_answers_path, "r").readlines()
         reply = f"(ID: {self.id})"
+        i = 0
         for _ in range(n_replies):
-            reply += ". " + random.choice(lines)
+            reply += f". {i} {random.choice(lines)}"
+            i += 1
         # Include bot ID for debugging
         return reply

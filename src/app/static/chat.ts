@@ -21,7 +21,6 @@ function main() {
     $('#chatbox-content').on('keydown', resetTimer);
 }
 
-
 /**
  * Handle the bot response from the server
  * @param response JSON object containing the response from the server
@@ -30,14 +29,24 @@ function recieveBotReply(response: any) {
     if (response.status !== 'OK')
         throw new Error("Failed to recieve bot reply");
 
-    displayMessage(response.messages, false);
+    console.log("recieved bot reply");
+    // Display each message with a random delay - simulates bot typing
+    let delay = (Math.floor(Math.random() * 10) + 1) * 150;
+    for (let message of response.messages) {
+        console.log(`Bot message delay: ${delay}`);
+        setTimeout(displayMessage, delay, message, false)
+        // Timeout is async so message order is not guaranteed, hence
+        // Delay is added to the previous message's delay
+        delay += (Math.floor(Math.random() * 10) + 1) * 150;
+    }
+
 }
 
 function checkBotInit(response: any) {
     if (response.status !== 'OK')
         throw new Error("Failed to initialise bot");
 
-    console.log(`SUCCESS: Bot initialised with id ${response.bot_id}/`);
+    console.log(`SUCCESS: Bot initialised with id ${response.bot_id}`);
 }
 /**
  * Append a message to the chat HTML element
@@ -75,6 +84,7 @@ function sendQueuedMessages() {
         error: function() {throw new Error("Failed to send messages to server")}
     })
     messageQueue.length = 0;
+    console.log("message list sent to server");
 }
 
 /**
@@ -95,17 +105,19 @@ function QueueMessage(event: Event) {
     $('#chatbox-content').val('');  // Clear message box
 
     messageQueue.push(message);
+    console.log("Message queued");
+
     resetTimer();
 }
 
 /**
  */
 function resetTimer() {
-    clearTimeout(typingTimer);
+    console.log("Resetting timer");
 
+    clearTimeout(typingTimer);
     // Exponentially dercrease the typing delay, models bot's attention span
     // If user spams messages, bot will respond instead of freezing
     typingDelay = MAX_TYPING_DELAY / (2 ** messageQueue.length - 1);
-
     typingTimer = setTimeout(sendQueuedMessages, typingDelay);
 }
