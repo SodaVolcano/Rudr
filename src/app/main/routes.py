@@ -4,6 +4,8 @@ from . import main
 from .forms import ChatInputForm
 from .chatbot import ChatbotAgent, ChatbotMediator
 
+import json
+
 
 @main.route("/")
 @main.route("/index")
@@ -24,18 +26,20 @@ def chat():
 
 @main.route("/process-msg", methods=["POST"])
 def process_msg():
-    message = request.form.get("message")
-    if message is None:
+    messages = request.form.get("messages")
+    print(messages)
+    if messages is None:
         return jsonify({"status": "ERROR", "message": "No message provided"}), 400
     if "chatbot" not in session:
         return jsonify({"status": "ERROR", "message": "Chatbot not initialized"}), 400
 
-    reply = ChatbotMediator.prompt_chatbot(message, session["chatbot"])
-    return jsonify({"status": "OK", "message": reply})
+    messages = json.loads(messages)
+    reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
+    return jsonify({"status": "OK", "messages": reply})
 
 
 @main.route("/init_chatbot", methods=["POST"])
 def init_chatbot():
     """Initialize the chatbot agent when user starts new session"""
-    session["chatbot"] = ChatbotAgent("echo")
+    session["chatbot"] = ChatbotAgent("random")
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})

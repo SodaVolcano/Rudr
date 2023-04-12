@@ -11,17 +11,24 @@ class ChatbotMediator:
         pass
 
     @staticmethod
-    def prompt_chatbot(prompt: str, bot: "ChatbotAgent") -> str:
+    def prompt_chatbot(prompts: list[str], bot: "ChatbotAgent") -> list[str]:
         """Prompt the chatbot with the given prompt"""
-        prompt_structured = ChatbotMediator.__generate_prompt(prompt, bot)
-        return bot.prompt(prompt_structured)
+        prompt_structured = ChatbotMediator.__generate_prompt(prompts, bot)
+        reply = bot.prompt(prompt_structured)
+
+        return ChatbotMediator.__structure_reply(reply)
 
     @staticmethod
-    def __generate_prompt(message: str, bot: "ChatbotAgent") -> str:
+    def __generate_prompt(messages: list[str], bot: "ChatbotAgent") -> str:
         """Generate a structured prompt for the chatbot"""
         # get personality info and memory etc from bot and add to prompt
         # ... for now, do nothing
-        return message
+        return str(messages)
+
+    @staticmethod
+    def __structure_reply(reply: str) -> list[str]:
+        """Structure the reply from the chatbot, e.g. split by period"""
+        return [s.strip() for s in reply.split(".")]
 
 
 class ChatbotAgent:
@@ -49,6 +56,10 @@ class ChatbotAgent:
     def __random_reply(self) -> str:
         """Return a random reply from the chatbot, for debugging purposes"""
         sleep(random.uniform(0.25, 3.5))
+        n_replies = random.randint(1, 3)
         lines = open(self.random_answers_path, "r").readlines()
+        reply = f"(ID: {self.id})"
+        for _ in range(n_replies):
+            reply += ". " + random.choice(lines)
         # Include bot ID for debugging
-        return random.choice(lines) + f" (ID: {self.id})"
+        return reply
