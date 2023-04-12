@@ -11,11 +11,13 @@ from app import db
 @main.route("/", methods=["GET", "POST"])
 @main.route("/index", methods=["GET", "POST"])
 def index():
-    # Login Popup 
+    # Login Popup
     login_form = LoginForm()
     if login_form.validate_on_submit():
         # parse login information
-        flash("Logged in: " + login_form.username.data + ", " + login_form.password.data)
+        flash(
+            "Logged in: " + login_form.username.data + ", " + login_form.password.data
+        )
         user = Users.query.filter_by(username=login_form.username.data).first()
         if user is None or not user.check_password(login_form.password.data):
             flash("Invalid username or password")
@@ -25,7 +27,7 @@ def index():
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("index")
         return redirect(next_page)
-    
+
     # Register Popup
     register_form = RegisterForm()
     if register_form.validate_on_submit():
@@ -50,7 +52,7 @@ def index():
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for("main.index")
         return redirect(next_page)
-    
+
     return render_template("index.html", login=login_form, register=register_form)
 
 
