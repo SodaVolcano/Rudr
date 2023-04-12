@@ -1,17 +1,17 @@
 function handleServerResponse(response: any) {
     if (response.status === 'OK') {
-        // Update chat interface with new message
+    // Update chat interface with new message
         $('#message-log').append(`<p>${response.message}</p>`);
         $('#chatbox-content').val('');  // Clear message box
     }
     else {
-        // idk man
-        alert("ERROR YOUR MICOSOFT GOT H4CKED!!!");
+        // idk ma
+        handleError();
     }
 }
 
-function handle_error() {
-
+function handleError() {
+    alert("Your micosoft got h4cked!!! SO CRINGE!");
 }
 
 /**
@@ -19,7 +19,7 @@ function handle_error() {
  * @param event 
  */
 function handleChatboxSubmission(event: Event) {
-    event.preventDefault();  // Prevent default form submission from browser
+event.preventDefault();  // Prevent default form submission from browser
     let message = $('#chatbox-content').val();
     // Send AJAX POST request to Flask route
     $.ajax({
@@ -28,7 +28,7 @@ function handleChatboxSubmission(event: Event) {
         data: {message: message},
         dataType: 'json',
         success: handleServerResponse,
-        error: handle_error,
+        error: handleError,
     })
 }
 

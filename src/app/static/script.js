@@ -7,10 +7,11 @@ function handleServerResponse(response) {
     }
     else {
         // idk man
-        alert("ERROR YOUR MICOSOFT GOT H4CKED!!!");
+        handleError();
     }
 }
-function handle_error() {
+function handleError() {
+    alert("Your micosoft got h4cked!!! SO CRINGE!");
 }
 /**
  * Package user input as JSON and send to Flask route
@@ -26,7 +27,7 @@ function handleChatboxSubmission(event) {
         data: { message: message },
         dataType: 'json',
         success: handleServerResponse,
-        error: handle_error,
+        error: handleError,
     });
 }
 /**
