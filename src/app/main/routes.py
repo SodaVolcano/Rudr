@@ -16,7 +16,7 @@ def index():
     login_form = LoginForm()
     register_form = RegisterForm()
 
-    if request.method == 'POST':
+    if request.method == "POST":
         if login_form.validate_on_submit():
             # parse login information
             flash(
@@ -26,7 +26,7 @@ def index():
                 + login_form.password.data
             )
             login(login_form)
-            return redirect(url_for('.index')) # Redirect to clear POST data
+            return redirect(url_for(".index"))  # Redirect to clear POST data
 
         # Register Popup
         if register_form.validate_on_submit():
@@ -41,7 +41,7 @@ def index():
                 signup(register_form)
                 # Login user
                 login(register_form)
-                return redirect(url_for('.index')) # Redirect to clear POST data
+                return redirect(url_for(".index"))  # Redirect to clear POST data
     return render_template("index.html", login=login_form, register=register_form)
 
 
