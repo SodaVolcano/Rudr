@@ -37,5 +37,5 @@ def process_msg():
 @main.route("/init_chatbot", methods=["POST"])
 def init_chatbot():
     """Initialize the chatbot agent when user starts new session"""
-    session["chatbot"] = ChatbotAgent()
+    session["chatbot"] = ChatbotAgent("echo")
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
