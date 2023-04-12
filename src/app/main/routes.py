@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, flash, request, session
 from werkzeug.urls import url_parse
 from flask_wtf import FlaskForm
-from flask_login import login_user, logout_user,
+from flask_login import login_user, logout_user, current_user
 from . import main
 from .forms import LoginForm, RegisterForm
 from .models import Users
@@ -62,7 +62,7 @@ def login(login_form: FlaskForm):
     login_user(user, remember=login_form.remember_me.data)
     next_page = request.args.get("next")
     if not next_page or url_parse(next_page).netloc != "":
-         next_page = url_for("main.index")
+        next_page = url_for("main.index")
     return redirect(next_page)
 
 
