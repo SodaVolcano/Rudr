@@ -1,19 +1,18 @@
 "use strict";
 /**
- * Recieve response from the server
+ * Handle the bot response from the server
  * @param response JSON object containing the response from the server
  */
-function handleServerResponse(response) {
-    if (response.status === 'OK')
-        displayMessage(response.message, false);
-    else
-        handleError(); // idk man
+function recieveBotReply(response) {
+    if (response.status !== 'OK')
+        throw new Error("Failed to recieve bot reply");
+    displayMessage(response.message, false);
 }
 /**
  * idk
  */
-function handleError() {
-    alert("Your micosoft got h4cked!!! SO CRINGE!");
+function throwError() {
+    throw new Error("Your micosoft got h4cked!!! SO CRINGE!");
 }
 /**
  * Append a message to the chat HTML element
@@ -41,13 +40,18 @@ function handleChatboxSubmission(event) {
     $('#chatbox-content').val(''); // Clear message box
     // Send AJAX POST request to Flask route
     $.ajax({
-        url: '/chat',
+        url: '/process-msg',
         method: 'POST',
         data: { message: message },
         dataType: 'json',
-        success: handleServerResponse,
-        error: handleError,
+        success: recieveBotReply,
+        error: throwError,
     });
+}
+function checkBotInit(response) {
+    if (response.status !== 'OK')
+        throw new Error("Failed to initialise bot");
+    console.log(`SUCCESS: Bot initialised with id ${response.bot_id}`);
 }
 /**
  * Initialise event listeners etc when the window loads
@@ -55,5 +59,6 @@ function handleChatboxSubmission(event) {
 function main() {
     const chatbox = $('#chatbox')[0];
     chatbox.addEventListener('submit', handleChatboxSubmission);
+    $.post("/init_chatbot").done(checkBotInit);
 }
 window.onload = main;

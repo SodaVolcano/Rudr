@@ -12,6 +12,7 @@ class Config:
 
     SECRET_KEY = os.environ.get("SECRET_KEY") or "you-will-never-guess"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SESSION_TYPE = "filesystem"  # use filesystem for session storage
 
     @staticmethod
     def init_app(app: Flask):

@@ -1,7 +1,8 @@
 """ Route and view function definitions for the main blueprint """
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, session
 from . import main
 from .forms import ChatInputForm
+from .chatbot import ChatbotAgent, ChatbotMediator
 
 
 @main.route("/")
@@ -21,8 +22,20 @@ def chat():
     return render_template("chat.html", chatbox=chatbox)
 
 
-@main.route("/chat", methods=["POST"])
-def chat_post():
+@main.route("/process-msg", methods=["POST"])
+def process_msg():
     message = request.form.get("message")
-    print(message)
-    return jsonify({"status": "OK", "message": message})
+    if message is None:
+        return jsonify({"status": "ERROR", "message": "No message provided"}), 400
+    if "chatbot" not in session:
+        return jsonify({"status": "ERROR", "message": "Chatbot not initialized"}), 400
+
+    reply = ChatbotMediator.prompt_chatbot(message, session["chatbot"])
+    return jsonify({"status": "OK", "message": reply})
+
+
+@main.route("/init_chatbot", methods=["POST"])
+def init_chatbot():
+    """Initialize the chatbot agent when user starts new session"""
+    session["chatbot"] = ChatbotAgent()
+    return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
