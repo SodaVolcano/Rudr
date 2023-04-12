@@ -24,7 +24,6 @@ def create_app(config_name: str = "default") -> Flask:
     migrate.init_app(app, db)
     session.init_app(app)
 
-
     from .main import main as main_blueprint
 
     app.register_blueprint(main_blueprint)

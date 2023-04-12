@@ -6,7 +6,6 @@ from wtforms.validators import DataRequired, Length
 MAX_MSG_LENGTH = 300
 
 
-
 class LoginForm(FlaskForm):
     username = StringField("Username", validators=[DataRequired()])
     password = PasswordField("Password", validators=[DataRequired()])
@@ -28,4 +27,3 @@ class ChatInputForm(FlaskForm):
         "Message", validators=[DataRequired(), Length(min=0, max=MAX_MSG_LENGTH)]
     )
     submit = SubmitField("Send")
-
