@@ -161,3 +161,7 @@ cython_debug/
 
 # Databases
 data-dev.sqlite
+
+#Vscode
+
+settings.json
