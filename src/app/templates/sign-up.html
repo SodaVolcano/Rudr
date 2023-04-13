@@ -1,0 +1,48 @@
+{}{% extends "base.html" %}
+
+{% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Sidebar -->
+
+
+<main>
+    <form action="" method="post" novalidate>
+        {{ register.hidden_tag() }}
+        <p>
+          <label for="username" style="color: black;">Username:</label><br>
+          {{ register.username(size=32) }}
+          {% for error in register.username.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>
+          <label for="password" style="color: black;">Password:</label><br>
+          {{ register.password(size=32) }}
+          {% for error in register.password.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>
+          <label for="password2" style="color: black;">Repeat Password:</label><br>
+          {{ register.password2(size=32) }}
+          {% for error in register.password2.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>
+          <label for="email" style="color: black;">Email:</label><br>
+          {{ register.email(size=32) }}
+          {% for error in register.email.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>{{ register.remember_me() }} <label for="remember_me" style="color: black;">Remember Me?</label><br></p>
+        <p>{{ register.submit() }}</p>
+      </form>
+
+
+</main>
+{% endblock %}

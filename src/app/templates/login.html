@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="social-media-icons">
+        <a href="#"><i class="fa fa-facebook" style="color: #ffffff;"></i></a>
+        <a href="#"><i class="fa fa-twitter" style="color: #ffffff;"></i></a>
+        <a href="#"><i class="fa fa-instagram" style="color: #ffffff;"></i></a>
+    </div>
+</div>
+</header>
+
+<main>
+    <form action="" method="post" novalidate>
+        {{ login.hidden_tag() }}
+        <p>
+            {{ login.username.label(class="formLabel") }}<br>
+            {{ login.username(size=32) }}
+            {% for error in login.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ login.password.label(class="formLabel") }}<br>
+            {{ login.password(size=32) }}
+            {% for error in login.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ login.remember_me() }} {{ login.remember_me.label(class="formLabel") }} </label><br></p>
+        <p>{{ login.submit() }}</p>
+    </form>
+</main>
+{% endblock %}
