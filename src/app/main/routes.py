@@ -21,7 +21,7 @@ def about():
 
 
 # To logout user
-@main.route("/signup")
+@main.route("/signup", methods=["GET", "POST"])
 def signup():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
