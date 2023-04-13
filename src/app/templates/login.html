@@ -16,24 +16,28 @@
 </header>
 
 <main>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label(class="formLabel") }}<br>
-            {{ form.username(size=32) }}
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label(class="formLabel") }}<br>
-            {{ form.password(size=32) }}
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label(class="formLabel") }} </label><br></p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <div class="container-fluid">
+        <div id="form" class="col-lg-12 justify-content-center border border-light">
+          <form class="loginForm" action="" method="post" novalidate>
+            {{ form.hidden_tag()}}
+            <p>
+              {{ form.username.label(class="formLabel") }}<br>
+              {{ form.username(size=32) }}
+              {% for error in form.username.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+            </p>
+            <p>
+              {{ form.password.label(class="formLabel") }}<br>
+              {{ form.password(size=32) }}
+              {% for error in form.password.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+              {% endfor %}
+            </p>
+            <p>{{ form.remember_me() }} {{ form.remember_me.label(class="formLabel") }}<br></p>
+            <p>{{ form.submit() }}</p>
+          </form>
+        </div>
+      </div>
 </main>
 {% endblock %}
