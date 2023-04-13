@@ -17,23 +17,23 @@
 
 <main>
     <form action="" method="post" novalidate>
-        {{ login.hidden_tag() }}
+        {{ form.hidden_tag() }}
         <p>
-            {{ login.username.label(class="formLabel") }}<br>
-            {{ login.username(size=32) }}
-            {% for error in login.username.errors %}
+            {{ form.username.label(class="formLabel") }}<br>
+            {{ form.username(size=32) }}
+            {% for error in form.username.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>
-            {{ login.password.label(class="formLabel") }}<br>
-            {{ login.password(size=32) }}
-            {% for error in login.password.errors %}
+            {{ form.password.label(class="formLabel") }}<br>
+            {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>{{ login.remember_me() }} {{ login.remember_me.label(class="formLabel") }} </label><br></p>
-        <p>{{ login.submit() }}</p>
+        <p>{{ form.remember_me() }} {{ form.remember_me.label(class="formLabel") }} </label><br></p>
+        <p>{{ form.submit() }}</p>
     </form>
 </main>
 {% endblock %}

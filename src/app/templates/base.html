@@ -47,10 +47,10 @@
             </li>
             {% if current_user.is_anonymous %}
             <li>
-              <a id="open-loginform">Login Form</a>
+              <a id="open-loginform" href="{{ url_for('.login') }}">Login Form</a>
             </li>
             <li>
-              <a id="open-registerform">Sign Up</a>
+              <a id="open-registerform" href="{{ url_for('.signup') }}">Sign Up</a>
             </li>
             {% else %}
             <li>
@@ -66,109 +66,11 @@
   {% block content %}
 
   {% endblock %}
-  <div class="register_overlay" id="register_overlay">
-    <div class="popup">
-      <form action="" method="post" novalidate>
-        <a id="close-registerform">X</a>
-        {{ register.hidden_tag() }}
-        <p>
-          <label for="username" style="color: black;">Username:</label><br>
-          {{ register.username(size=32) }}
-          {% for error in register.username.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>
-          <label for="password" style="color: black;">Password:</label><br>
-          {{ register.password(size=32) }}
-          {% for error in register.password.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>
-          <label for="password2" style="color: black;">Repeat Password:</label><br>
-          {{ register.password2(size=32) }}
-          {% for error in register.password2.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>
-          <label for="email" style="color: black;">Email:</label><br>
-          {{ register.email(size=32) }}
-          {% for error in register.email.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>{{ register.remember_me() }} <label for="remember_me" style="color: black;">Remember Me?</label><br></p>
-        <p>{{ register.submit() }}</p>
-      </form>
-    </div>
-  </div>
-
-  <div class="login_overlay" id="login_overlay">
-    <div class="popup">
-      <form action="" method="post" novalidate>
-        <a id="close-loginform">X</a>
-        {{ login.hidden_tag() }}
-        <p>
-          <label for="username" style="color: black;">Username:</label><br>
-          {{ login.username(size=32) }}
-          {% for error in login.username.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>
-          <label for="password" style="color: black;">Password:</label><br>
-          {{ login.password(size=32) }}
-          {% for error in login.password.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>{{ login.remember_me() }} <label for="remember_me" style="color: black;">Remember Me?</label><br></p>
-        <p>{{ login.submit() }}</p>
-      </form>
-    </div>
-  </div>
-
 
 
   <footer>
 
   </footer>
-  <script>
-    var registerOverlay = document.getElementById('register_overlay');
-    var openRegisterForm = document.getElementById('open-registerform');
-    var closeRegisterForm = document.getElementById('close-registerform');
-
-    // Add event listeners to the elements
-    openRegisterForm.addEventListener('click', function () {
-      registerOverlay.style.display = 'flex';
-    });
-
-    closeRegisterForm.addEventListener('click', function () {
-      registerOverlay.style.display = 'none';
-    })
-
-    var loginOverlay = document.getElementById('login_overlay');
-    var openLoginForm = document.getElementById('open-loginform');
-    var closeLoginForm = document.getElementById('close-loginform');
-
-    // Add event listeners to the elements
-    openLoginForm.addEventListener('click', function () {
-      loginOverlay.style.display = 'flex';
-    });
-
-    closeLoginForm.addEventListener('click', function () {
-      loginOverlay.style.display = 'none';
-    });
-
-
-
-    if (window.history.replaceState) {
-      window.history.replaceState(null, null, window.location.href)
-    }
-    
-  </script>
 </body>
 
 </html>

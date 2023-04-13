@@ -59,35 +59,3 @@ header {
     font-weight: bold;
 }
 
-/* ======================= POPUP STYLES ======================================= */
-
-.register_overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-.popup {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 4px;
-    color: black;
-}
-
-.login_overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
