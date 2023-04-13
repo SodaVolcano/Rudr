@@ -19,25 +19,28 @@ def index():
 def about():
     return render_template("about_us.html")
 
+
 # To logout user
 @main.route("/signup")
 def signup():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-            # parse registration information
-            flash(
-                "Logged in: "
-                + register_form.username.data
-                + ", "
-                + register_form.password.data
-            )
-                # Login user
-            user = Users(username=register_form.username.data, email=register_form.email.data)
-            user.set_password(register_form.password.data)
+        # parse registration information
+        flash(
+            "Logged in: "
+            + register_form.username.data
+            + ", "
+            + register_form.password.data
+        )
+        # Login user
+        user = Users(
+            username=register_form.username.data, email=register_form.email.data
+        )
+        user.set_password(register_form.password.data)
 
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for(".login"))
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for(".login"))
     return render_template("signup.html", form=register_form)
 
 
