@@ -1,28 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
+{% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-  <title>INSERT_WEBSITE_TITLE About Us</title>
-  <script src="{{ url_for('static', filename='chat.js')  }}"></script>
-  <script>
-    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-  </script>
-</head>
+{% block script %}
+<script src="{{ url_for('static', filename='chat.js')  }}">
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};  // For AJAX requests
+</script>
+{% endblock %}
 
-<body>
-  <div id="message-log">
-  
-  </div>
-  <div>
-    <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
-    <button id="chatbox-submit">Send</button>
-  </div>
+{% block title %}
+Chatroom
+{% endblock %}
 
-</body>
-
-</html>
+{% block content %}
+<div id="message-log">
+  <!-- Messages will be inserted here dynamically -->  
+</div>
+<div>
+  <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
+  <button id="chatbox-submit">Send</button>
+</div>
+{% endblock %}

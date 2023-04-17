@@ -2,6 +2,7 @@ import random
 from time import sleep
 import os.path
 from typing import Literal
+import re
 
 
 class ChatbotMediator:
@@ -28,8 +29,9 @@ class ChatbotMediator:
     @staticmethod
     def __structure_reply(reply: str) -> list[str]:
         """Structure the reply from the chatbot, e.g. split by period"""
-        # TODO: split by period, !, ?, etc but keep them in the reply
-        return [s.strip() for s in reply.split(".")]
+        # Matches whitespace preceded by any number of ., one !, or one ?
+        pattern = r"(?<=[.+!?])\s"
+        return re.split(pattern, reply)
 
 
 class ChatbotAgent:
