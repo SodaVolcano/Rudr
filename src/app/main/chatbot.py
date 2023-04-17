@@ -29,8 +29,8 @@ class ChatbotMediator:
     @staticmethod
     def __structure_reply(reply: str) -> list[str]:
         """Structure the reply from the chatbot, e.g. split by period"""
-        # Matches whitespace preceded by any number of ., one !, or one ?
-        pattern = r"(?<=[.+!?])\s"
+        # Matches whitespace preceded by any number and combo of ., !, ?
+        pattern = r"(?<=[.!?])\s"
         return re.split(pattern, reply)
 
 
@@ -63,8 +63,9 @@ class ChatbotAgent:
         lines = open(self.random_answers_path, "r").readlines()
         reply = f"(ID: {self.id})"
         i = 0
+
         for _ in range(n_replies):
-            reply += f". {i} {random.choice(lines)}"
+            reply += f"{i} {random.choice(lines)[:-1]} "  # -1 removes newline
             i += 1
         # Include bot ID for debugging
         return reply
