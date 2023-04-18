@@ -62,7 +62,7 @@ function displayMessage(message: string, isFromUser: boolean) {
     else
         cssClass = "msg-bot";
 
-    $('#chat-history').append(
+    $('#message-log').append(
         `<div class="${cssClass}"><p>${message}</p></div>`
     );
 }
