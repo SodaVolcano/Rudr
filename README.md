@@ -1,5 +1,14 @@
 # CITS3403 Web Project
 
+## **TODOS**
+- [ ] Fix hamburger expansion of navbar links
+- [ ] Robot image is too big - title should fit in centre of banner, and robot is small and below it
+- [ ] Add scrollable chatroom view
+- [ ] Save conversation history to database - TIn chi and Martin
+- [ ] Image (the gif) is too small - design of webpage should focus on images, should make it bigger
+    - [ ] suggestion: replace "login" and "sign up" into a single button, goes to sign-up if not logged in, login otherwise?
+
+
 ## Authors
 - Cohen Rafiq 23348918
 - Tin Chi Pang 23301921
