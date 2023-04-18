@@ -14,6 +14,7 @@ migrate = Migrate()
 session = Session()
 login = LoginManager()
 
+
 def create_app(config_name: str = "default") -> Flask:
     """factory function to create app instance"""
     app = Flask(__name__)

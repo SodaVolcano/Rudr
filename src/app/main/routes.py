@@ -48,7 +48,8 @@ def init_chatbot():
     """Initialize the chatbot agent when user starts new session"""
     session["chatbot"] = ChatbotAgent("random")
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
-    
+
+
 # To logout user
 @main.route("/signup", methods=["GET", "POST"])
 def signup():
