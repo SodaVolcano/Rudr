@@ -6,7 +6,7 @@
 - [ ] Add scrollable chatroom view
 - [ ] Save conversation history to database - TIn chi and Martin
 - [ ] Image (the gif) is too small - design of webpage should focus on images, should make it bigger
-    - [ ] suggestion: replace "login" and "sign up" into a single button, goes to sign-up if not logged in, login otherwise?
+    - [ ] suggestion: replace signup and login into single button, when clicked, go to sign up with extra link going to login?
 - [ ] Fix social media not appearing in homepage
 
 ## Authors
