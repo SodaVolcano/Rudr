@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block css%}
 <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
 {% endblock %}
@@ -13,6 +14,11 @@
 {% block title %}
 Chatroom
 {% endblock %}
+
+{% block header %}
+{% endblock %}
+
+
 {% block content %}
 
 <div class="chatpage-container row">
@@ -29,9 +35,11 @@ Chatroom
         <!-- Messages will be inserted here dynamically -->  
       </div>
     </div>
-    <div class="chatbox">
-      <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
-      <button id="chatbox-submit">Send</button>
+    <div class="chatbox-area">
+      <div class="chatbox">
+        <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
+        <button id="chatbox-submit"><i class="fa fa-paper-plane" style="color: #ffffff;"></i></button>
+      </div>
     </div>
   </div>
 </div>
