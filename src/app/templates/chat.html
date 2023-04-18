@@ -24,16 +24,14 @@ Chatroom
 
   <!-- The chat history, scroll bar, and text input -->
   <div class="chatroom-container col-10">
-    <div class="scrollbar">
-      <div id="chat-history">
+    <div class="scroll-bar">
+      <div id="chat-history" class="chat-history">
         <!-- Messages will be inserted here dynamically -->  
       </div>
-      <div>
-        <div class="chatbox">
-          <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
-          <button id="chatbox-submit">Send</button>
-        </div>
-      </div>
+    </div>
+    <div class="chatbox">
+      <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
+      <button id="chatbox-submit">Send</button>
     </div>
   </div>
 </div>

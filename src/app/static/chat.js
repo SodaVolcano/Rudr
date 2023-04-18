@@ -52,7 +52,7 @@ function displayMessage(message, isFromUser) {
         cssClass = "msg-user";
     else
         cssClass = "msg-bot";
-    $('#message-log').append(`<div class="${cssClass}"><p>${message}</p></div>`);
+    $('#chat-history').append(`<div class="${cssClass}"><p>${message}</p></div>`);
 }
 /**
  * Package user messages as JSON and send to Flask route

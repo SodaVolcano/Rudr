@@ -1,5 +1,5 @@
 header {
-    /*background-color: rgb(6, 3, 19);*/
+    background-color: rgb(6, 3, 19);
 }
 
 html, body {
@@ -25,14 +25,34 @@ html, body {
 }
 
 .chatroom-container {
+    display: flex;
+    flex-direction: column;
     border: 2px solid #ccc;
+    padding: 0;
+    height: 100%;
 }
 
-.scrollbar {
+.scroll-bar {
+    flex: 9;
+    overflow-y: auto;
 }
 
 .chat-history {
+    min-height: 100%;
+    border: 2px solid #22c;
+    display: flex;
+    flex-direction: column;
 }
 
 .chatbox {
+    display: flex;
+    flex-direction: row;
+    height: 10%;
+    border: 2px solid #444;
+    padding: 20px 30px;
+}
+
+.chatbox textarea {
+    flex: 1;
+    
 }
