@@ -38,7 +38,7 @@ class Messages(db.Model):
 
     # Actual message
     body = db.Column(db.String(140))
-    speakerID = db.Column(db.Integer)
+    speaker_ID = db.Column()
 
     # Emotion attached to message
     emotion = db.Column(db.String(30))

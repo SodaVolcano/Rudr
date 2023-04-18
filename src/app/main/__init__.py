@@ -8,4 +8,4 @@ from flask import Blueprint
 main = Blueprint("main", __name__)
 
 # Avoid circular imports and to register routes to main
-from . import routes
+from . import routes, models, chatbot
