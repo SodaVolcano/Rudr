@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
 {% endblock %}
 
 {% block script %}
@@ -13,16 +13,28 @@
 {% block title %}
 Chatroom
 {% endblock %}
-
 {% block content %}
-<!-- TODO: Remove this mess, this is here to prevent overlap with the navbar -->
-<br><br><br><br><br>
 
-<div id="message-log">
-  <!-- Messages will be inserted here dynamically -->  
-</div>
-<div>
-  <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
-  <button id="chatbox-submit">Send</button>
+<div class="chatpage-container row">
+  <div class="convo-list col-2">
+    <ul>
+      <!-- insert list of conversations here -->
+    </ul>
+  </div>
+
+  <!-- The chat history, scroll bar, and text input -->
+  <div class="chatroom-container col-10">
+    <div class="scrollbar">
+      <div id="chat-history">
+        <!-- Messages will be inserted here dynamically -->  
+      </div>
+      <div>
+        <div class="chatbox">
+          <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
+          <button id="chatbox-submit">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

@@ -1,0 +1,38 @@
+header {
+    /*background-color: rgb(6, 3, 19);*/
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/* FUCK YOU BOOTSTRAP */
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+.chatpage-container {
+    height: 100%;
+    width: 100%;
+}
+
+.convo-list {
+    border: 2px solid #ccc;
+}
+
+.chatroom-container {
+    border: 2px solid #ccc;
+}
+
+.scrollbar {
+}
+
+.chat-history {
+}
+
+.chatbox {
+}
