@@ -7,7 +7,7 @@
 - [ ] Save conversation history to database - TIn chi and Martin
 - [ ] Image (the gif) is too small - design of webpage should focus on images, should make it bigger
     - [ ] suggestion: replace "login" and "sign up" into a single button, goes to sign-up if not logged in, login otherwise?
-
+- [ ] Fix social media not appearing in homepage
 
 ## Authors
 - Cohen Rafiq 23348918
