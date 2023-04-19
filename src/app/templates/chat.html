@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='chat.js')  }}">
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};  // For AJAX requests
+</script>
+{% endblock %}
+
+{% block title %}
+Chatroom
+{% endblock %}
+
+{% block content %}
+<!-- TODO: Remove this mess, this is here to prevent overlap with the navbar -->
+<br><br><br><br><br>
+
+<div id="message-log">
+  <!-- Messages will be inserted here dynamically -->  
+</div>
+<div>
+  <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
+  <button id="chatbox-submit">Send</button>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Sidebar -->
+
+
+<main>
+  <div class="container-fluid">
+    <div class="row">
+      <div id="form" class="col-lg-2 offset-5 justify-content-center border border-light">
+        <form class="registerForm" action="" method="post" novalidate>
+          {{ form.hidden_tag()}}
+          <p>
+            {{ form.username.label(class="formLabel") }}<br>
+            {{ form.username(size=32) }}
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+          <p>
+            {{ form.password.label(class="formLabel") }}<br>
+            {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+          <p>
+            {{ form.password2.label(class="formLabel") }}<br>
+            {{ form.password2(size=32) }}
+            {% for error in form.password2.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+          <p>
+            {{ form.email.label(class="formLabel") }}<br>
+            {{ form.email(size=32) }}
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+          </p>
+          <p>{{ form.remember_me() }} {{ form.remember_me.label(class="formLabel") }}<br></p>
+          <p>{{ form.submit() }}</p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</main>
+{% endblock %}
