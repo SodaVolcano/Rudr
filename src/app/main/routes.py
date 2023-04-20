@@ -37,7 +37,7 @@ def process_msg():
     messages = request.form.get("messages")
 
     print(messages, file=sys.stderr)
-    print(messages, file=sys.stdout)       
+    print(messages, file=sys.stdout)
     if messages is None:
         return jsonify({"status": "ERROR", "message": "No message provided"}), 400
     if "chatbot" not in session:

@@ -36,7 +36,7 @@ class Users(UserMixin, db.Model):
     def add_user(username, email, password):
         user = Users(username=username, email=email)
         user.set_password(password)
-        
+
         db.session.add(user)
         db.session.commit()
 
