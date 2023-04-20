@@ -7,10 +7,11 @@ from flask_login import login_user, logout_user, current_user
 
 from . import main
 from .forms import LoginForm, RegisterForm
-from .models import Users, add_user
+from .models import Users, Messages
 from .chatbot import ChatbotAgent, ChatbotMediator
 
 import json
+import sys
 
 from app import db
 
@@ -34,13 +35,19 @@ def chat():
 @main.route("/process-msg", methods=["POST"])
 def process_msg():
     messages = request.form.get("messages")
-    print(messages)
+
+    print(messages, file=sys.stderr)
+    print(messages, file=sys.stdout)       
     if messages is None:
         return jsonify({"status": "ERROR", "message": "No message provided"}), 400
     if "chatbot" not in session:
         return jsonify({"status": "ERROR", "message": "Chatbot not initialized"}), 400
 
     messages = json.loads(messages)
+
+    for msg in messages:
+        Messages.add_msg(msg, "happy", current_user)
+
     reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
     return jsonify({"status": "OK", "messages": reply})
 
@@ -58,13 +65,13 @@ def signup():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
         # Generate New User
-        user = Users(
-            username=register_form.username.data, email=register_form.email.data
-        )
-        user.set_password(register_form.password.data)
 
         # Add user to database
-        add_user(user)
+        Users.add_user(
+            register_form.username.data,
+            register_form.email.data,
+            register_form.password.data,
+        )
 
         # Send to login page
         return redirect(url_for(".login"))
