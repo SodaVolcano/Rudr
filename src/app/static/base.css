@@ -7,34 +7,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ======================= SCROLL EFFECT ======================= */
-/* not sure if this should be in base.css or index.css */
-.hidden {
-  opacity: 0;
-  filter: blur(5px);
-  transform: translateX(100%);
-  transition: all 1s;
-}
 
-.show {
-  opacity: 1;
-  filter: blur(0);
-  transform: translateX(0);
-}
-
-.hidden-delay:nth-child(2) {
-  transition-delay: 100ms;
-}
-
-.hidden-delay:nth-child(3) {
-  transition-delay: 200ms;
-}
-
-@media(prefers-reduced-motion) {
-  .hidden {
-      transition: none;
-  }
-}
 
 /* ======================= HEADER STYLE ======================= */
 /* Header containing a logo and links */

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='scroll.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
-<link rel="scrolling effect" href="{{ url_for('static', filename='scroll.css') }}">
 <script src="{{ url_for('static', filename='scroll.js')  }}"> </script>
 {% endblock %}
 
