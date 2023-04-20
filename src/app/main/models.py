@@ -36,7 +36,7 @@ class Users(UserMixin, db.Model):
     def add_user(username, email, password):
         user = Users(username=username, email=email)
         user.set_password(password)
-        
+
         db.session.add(user)
         db.session.commit()
 
@@ -48,7 +48,8 @@ class Messages(db.Model):
 
     # Actual message
     body = db.Column(db.String(140))
-    speaker_ID = db.Column()
+    robot_ID = db.Column(db.Integer)
+    speaker_ID = db.Column(db.Integer)
 
     # Emotion attached to message
     emotion = db.Column(db.String(30))
@@ -63,8 +64,14 @@ class Messages(db.Model):
         return "<Post {}>".format(self.body)
         # Add new message
 
-    def add_msg(content: str, emote: str, user: Users):
-        message = Messages(body=content, emotion=emote, author=user)
+    def add_msg(content: str, emote: str, speaker: int, robotID: int, user: Users):
+        message = Messages(
+            body=content,
+            emotion=emote,
+            speaker_ID=speaker,
+            robot_ID=robotID,
+            author=user,
+        )
         # Add new message to database
         db.session.add(message)
         db.session.commit()

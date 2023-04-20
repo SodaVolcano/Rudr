@@ -29,6 +29,7 @@ def about():
 
 @main.route("/chat", methods=["GET"])
 def chat():
+    print("Arrived at chat")
     return render_template("chat.html")
 
 
@@ -36,17 +37,16 @@ def chat():
 def process_msg():
     messages = request.form.get("messages")
 
-    print(messages, file=sys.stderr)
-    print(messages, file=sys.stdout)       
     if messages is None:
         return jsonify({"status": "ERROR", "message": "No message provided"}), 400
     if "chatbot" not in session:
         return jsonify({"status": "ERROR", "message": "Chatbot not initialized"}), 400
 
     messages = json.loads(messages)
+    robotID = session['chatbot'].id
 
     for msg in messages:
-        Messages.add_msg(msg, "happy", current_user)
+        Messages.add_msg(msg, "happy", 0, robotID, current_user)
 
     reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
     return jsonify({"status": "OK", "messages": reply})
