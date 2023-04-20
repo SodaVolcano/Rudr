@@ -5,6 +5,7 @@ const MAX_TYPING_DELAY = 10000;  // miliseconds
 const messageQueue: string[] = [];
 let typingDelay = MAX_TYPING_DELAY;      // miliseconds
 
+let resizeTimeout: number | undefined;    // Timer for window resize event
 let maxChatboxHeight: number = 227.5;   // Found by trial and error
 let minChatboxHeight: number;   // Computed from CSS on load in main()
 
@@ -26,8 +27,22 @@ function main() {
     // Reset timer when user types in chatbox
     // Timer is also reset when user presses submit
     $('#chatbox-content').on('keydown', resetTimer);
-    $('#chatbox-content')[0].addEventListener('input', adjustHeight);
 
+    $('#chatbox-content')[0].addEventListener('input', adjustHeight);
+    $(window)[0].addEventListener('resize', delayWindowResize);
+}
+
+/**
+ * Delay the window resize event so it's run after bootstrap adjustment
+ * Without this, chatbox is resized but then bootstrap readjust, making
+ * it appear like the resize function didn't happen
+ */
+function delayWindowResize() {
+    // Clear existing timeout to avoid multiple resizes
+    if (resizeTimeout)
+        clearTimeout(resizeTimeout);
+    
+    resizeTimeout = setTimeout(adjustHeight, 20);
 }
 
 /**
@@ -35,7 +50,7 @@ function main() {
  */
 function adjustHeight(event: Event) {
     const chatboxArea = $('.chatbox-area')[0];
-    const textarea: HTMLTextAreaElement = <HTMLTextAreaElement>event.target;
+    const textarea: HTMLTextAreaElement = <HTMLTextAreaElement> $('#chatbox-content')[0];
     // Reset height - always adjust height from min height
     // This allows box to shrink when user deletes messages
     chatboxArea.style.height = minChatboxHeight + 'px';
