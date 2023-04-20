@@ -10,8 +10,6 @@ def load_user(id):
     return Users.query.get(int(id))
 
 
-
-
 # User Table
 class Users(UserMixin, db.Model):
     # Primary key
@@ -30,16 +28,15 @@ class Users(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
+
     def __repr__(self):
         return "<User {}>".format(self.username)
-    
 
 
 # Add new user to database
 def add_user(user: Users):
-        db.session.add(user)
-        db.session.commit()
+    db.session.add(user)
+    db.session.commit()
 
 
 # Message Table
@@ -62,19 +59,16 @@ class Messages(db.Model):
 
     def __repr__(self):
         return "<Post {}>".format(self.body)
-    
 
 
 # Add new message
 def add_msg(msg: Messages):
-        # Add new message to database
-        db.session.add(msg)
-        db.session.commit()
+    # Add new message to database
+    db.session.add(msg)
+    db.session.commit()
+
 
 # Get a certain amount of messages from the database
 def get_messages(user: Users, amount: int):
     msgs = Messages.query.filter_by(user_id=user.id).limit(amount).all()
     return msgs
-         
-
-
