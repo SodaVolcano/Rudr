@@ -41,13 +41,13 @@ header {
 }
 
 .navbar-nav li a {
-  color: white;
+  color: var(--text-colour-primary);
   text-decoration: none;
   font-size: 0.9rem;
 }
 
 .navbar-nav li a:hover {
-  color: white;
+  color: var(--text-colour-primary);
   text-decoration: none;
   font-weight: bold;
 }
@@ -62,7 +62,7 @@ header {
   height: 50px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  background-image: linear-gradient(to bottom, #bd77f5, #4f5de2);
+  background-image: var(--default-gradient);
   z-index: 998;
   overflow: hidden;
   transition: height 0.5s;
@@ -83,7 +83,7 @@ header {
   opacity: 0;
   transition: opacity 0.5s, transform 0.5s;
   text-decoration: none;
-  color: #ffffff;
+  color: var(--text-colour-primary);
 }
 
 .social-media-icons i {
@@ -112,7 +112,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--text-colour-primary);
   font-weight: bold;
   font-size: 16px;
   text-decoration: none;
@@ -137,7 +137,7 @@ header {
     flex-direction: column;  
 
     /* Fade to black at bottom */
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(6, 3, 19, 1)), url("https://wallpapers.com/images/featured/y3r21iaunx6u3tml.jpg");
+    background-image: linear-gradient(to bottom, transparent, var(--background-colour)), url("https://wallpapers.com/images/featured/y3r21iaunx6u3tml.jpg");
     background-position: center;
     background-size: cover;
     display: flex;

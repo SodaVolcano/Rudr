@@ -1,0 +1,14 @@
+/* ======================= COLOUR PALETTE ======================= */
+:root {
+    --background-colour: rgb(6, 3, 19);
+    --background-colour-alpha: rgba(var(--background-colour), 0.9);
+    --text-colour-primary: white;
+    --text-colour-secondary: #818181;
+    --text-colour-hover: #f1f1f1;
+    --primary-color: #ED7B84;
+    --secondary-color: #F92A82;
+    --light-color: #F5DBCB;
+    --gradient-colour-one: #bd77f5;
+    --gradient-colour-two: #4f5de2;
+    --default-gradient: linear-gradient(to bottom, var(--gradient-colour-one), var(--gradient-colour-two));
+  }
