@@ -5,6 +5,8 @@ const MAX_TYPING_DELAY = 10000;  // miliseconds
 const messageQueue: string[] = [];
 let typingDelay = MAX_TYPING_DELAY;      // miliseconds
 
+const MAX_CHATBOX_HEIGHT = 100;  // In pixels
+
 /**
  * Initialise event listeners etc when the window loads
  */
@@ -20,6 +22,21 @@ function main() {
     // Reset timer when user types in chatbox
     // Timer is also reset when user presses submit
     $('#chatbox-content').on('keydown', resetTimer);
+    //$('#chatbox-content')[0].addEventListener('input', adjustHeight);
+
+}
+
+/**
+ * Adjust height of the chatbox when more than 1 line is typed
+ */
+function adjustHeight(event: Event) {
+    const textarea: HTMLTextAreaElement = <HTMLTextAreaElement>$('#chatbox-content')[0];
+    // Reset to 'auto' to calculate new height
+    textarea.style.height = 'auto';
+    console.log(textarea.scrollHeight);
+    console.log(textarea.style.height);
+    //const newHeight = Math.min(textarea.scrollHeight, MAX_CHATBOX_HEIGHT);
+    //textarea.style.height = newHeight + 'px';
 }
 
 /**
@@ -92,7 +109,6 @@ function sendQueuedMessages() {
  * Called when the user submits a message, queue it but don't send
  */
 function QueueMessage(event: Event) {
-    event.preventDefault();  // Prevent default form submission from browser
     let message = $('#chatbox-content').val();
 
     if (typeof(message) !== 'string')
