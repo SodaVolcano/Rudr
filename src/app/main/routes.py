@@ -43,7 +43,7 @@ def process_msg():
         return jsonify({"status": "ERROR", "message": "Chatbot not initialized"}), 400
 
     messages = json.loads(messages)
-    robotID = session['chatbot'].id
+    robotID = session["chatbot"].id
 
     for msg in messages:
         Messages.add_msg(msg, "happy", 0, robotID, current_user)
