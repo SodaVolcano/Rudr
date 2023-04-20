@@ -49,6 +49,10 @@ def process_msg():
         Messages.add_msg(msg, "happy", 0, robotID, current_user)
 
     reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
+
+    for msg in reply:
+        Messages.add_msg(msg, "happy", 1, robotID, current_user)
+    
     return jsonify({"status": "OK", "messages": reply})
 
 
