@@ -52,7 +52,7 @@ def process_msg():
 
     for msg in reply:
         Messages.add_msg(msg, "happy", 1, robotID, current_user)
-    
+
     return jsonify({"status": "OK", "messages": reply})
 
 
