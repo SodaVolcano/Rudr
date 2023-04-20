@@ -5,12 +5,16 @@ const MAX_TYPING_DELAY = 10000;  // miliseconds
 const messageQueue: string[] = [];
 let typingDelay = MAX_TYPING_DELAY;      // miliseconds
 
-const MAX_CHATBOX_HEIGHT = 100;  // In pixels
+let maxChatboxHeight: number = 227.5;   // Found by trial and error
+let minChatboxHeight: number;   // Computed from CSS on load in main()
 
 /**
  * Initialise event listeners etc when the window loads
  */
 function main() {
+    const computedStyle = window.getComputedStyle($('.chatbox-area')[0]);
+    minChatboxHeight = parseFloat(computedStyle.height);
+
     $('#chatbox-submit')[0].addEventListener('click', QueueMessage);
     $('#chatbox-content')[0].addEventListener('keydown', function(event) {
         if (event.key === 'Enter')
@@ -22,21 +26,31 @@ function main() {
     // Reset timer when user types in chatbox
     // Timer is also reset when user presses submit
     $('#chatbox-content').on('keydown', resetTimer);
-    //$('#chatbox-content')[0].addEventListener('input', adjustHeight);
+    $('#chatbox-content')[0].addEventListener('input', adjustHeight);
 
 }
 
 /**
- * Adjust height of the chatbox when more than 1 line is typed
+ * Adjust height of the chatbox
  */
 function adjustHeight(event: Event) {
-    const textarea: HTMLTextAreaElement = <HTMLTextAreaElement>$('#chatbox-content')[0];
-    // Reset to 'auto' to calculate new height
-    textarea.style.height = 'auto';
-    console.log(textarea.scrollHeight);
-    console.log(textarea.style.height);
-    //const newHeight = Math.min(textarea.scrollHeight, MAX_CHATBOX_HEIGHT);
-    //textarea.style.height = newHeight + 'px';
+    const chatboxArea = $('.chatbox-area')[0];
+    const textarea: HTMLTextAreaElement = <HTMLTextAreaElement>event.target;
+    // Reset height - always adjust height from min height
+    // This allows box to shrink when user deletes messages
+    chatboxArea.style.height = minChatboxHeight + 'px';
+    
+    const computedStyle = window.getComputedStyle(chatboxArea);
+    const height = parseFloat(computedStyle.height);
+
+    // If at min height, textarea overflows, expand chatbox
+    if (textarea.scrollHeight > textarea.clientHeight) {
+        const newHeight = Math.min(
+            height + textarea.scrollHeight - textarea.clientHeight, 
+            maxChatboxHeight
+        );
+        chatboxArea.style.height = newHeight + 'px';
+    }
 }
 
 /**
