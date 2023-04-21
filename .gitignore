@@ -164,7 +164,7 @@ package-lock.json
 node_modules/
 package.json
 tsconfig.json
-flask_session/
+flask_session/*
 package.json
 
 # Databases

@@ -26,14 +26,15 @@
 
 </head>
 
-<body>
+<body class="background-dark foreground-bright">
+{% block header %}
   <header>
     <!-- screen overlay -->
     <div id="myNav" class="overlay">
       <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <div class="overlay-content">
-        <a href="{{ url_for('.about') }}">About Us</a>
-        <a href="#">Start Chatting</a>
+        <a href="{{ url_for('.about') }}">About</a>
+        <a href="#">Chat</a>
         <a href="#">Login</a>
         <a href="#">Sign Up</a>
       </div>
@@ -56,14 +57,14 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto justify-content-end">
             <li>
-              <a href="{{ url_for('.about') }}" draggable="false">About Us</a>
+              <a href="{{ url_for('.about') }}" draggable="false">About</a>
             </li>
             <li>
-              <a href="{{ url_for('.chat') }}" draggable="false">Start Chatting</a>
+              <a href="{{ url_for('.chat') }}" draggable="false">Chat</a>
             </li>
             {% if current_user.is_anonymous %}
             <li>
-              <a id="open-loginform" href="{{ url_for('.login') }}">Login Form</a>
+              <a id="open-loginform" href="{{ url_for('.login') }}">Login</a>
             </li>
             <li>
               <a id="open-registerform" href="{{ url_for('.signup') }}">Sign Up</a>
@@ -77,8 +78,8 @@
         </div>
       </div>
     </nav>
-    {% block header %}{% endblock %}
   </header>
+{% endblock %}
 
   {% block content %}{% endblock %}
 
