@@ -1,12 +1,30 @@
 # CITS3403 Web Project
 
-## TODO
-  - [ ] NEED to add character limit as well
+## **TODOS**
+
+### General
 - [ ] Define colour classes for bg and fg and replace all reference to colours with those classes
 - [ ] Clean up CSS style - remove CSS and JS from HTML attributes, remove uneeded CSS properties
 - [ ] Style scroll bar
+
+
+### Home
+- [ ] Robot image is too big - title should fit in centre of banner, and robot is small and below it
+- [ ] Fix hamburger expansion of navbar links
+- [ ] Image (the gif) is too small - design of webpage should focus on images, should make it bigger
+    - [ ] suggestion: replace signup and login into single button, when clicked, go to sign up with extra link going to login?
+- [ ] Fix social media not appearing in homepage
+    
+### Chatroom
 - [ ] Create text bubble
-- [ ] Make chat history area auto scroll to the bottom
+- [ ] Add scrollable chat history view
+  - [ ] Make chat history area auto scroll to the bottom
+
+
+### Other
+- [ ] Save conversation history to database - TIn chi and Martin
+
+
 
 ## Authors
 - Cohen Rafiq 23348918
