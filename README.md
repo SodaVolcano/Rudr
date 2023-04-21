@@ -1,5 +1,12 @@
 # CITS3403 Web Project
 
+## TODO
+- [ ] Define colour classes for bg and fg and replace all reference to colours with those classes
+- [ ] Clean up CSS style - remove CSS and JS from HTML attributes, remove uneeded CSS properties
+- [ ] Style scroll bar
+- [ ] Create text bubble
+- [ ] Make chat history area auto scroll to the bottom
+
 ## Authors
 - Cohen Rafiq 23348918
 - Tin Chi Pang 23301921
