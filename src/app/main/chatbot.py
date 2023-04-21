@@ -65,7 +65,10 @@ class ChatbotAgent:
         i = 0
 
         for _ in range(n_replies):
-            reply += f"{i} {random.choice(lines)[:-1]} "  # -1 removes newline
+            string = random.choice(lines).strip()
+            if string == "":
+                continue
+            reply += f"{i} {string} "
             i += 1
         # Include bot ID for debugging
         return reply

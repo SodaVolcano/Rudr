@@ -2,13 +2,13 @@
 
 from flask import render_template, redirect, url_for, flash, request, session, jsonify
 from werkzeug.urls import url_parse
-from flask_wtf import FlaskForm
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user
 
 from . import main
 from .forms import LoginForm, RegisterForm
 from .models import Users
 from .chatbot import ChatbotAgent, ChatbotMediator
+import json
 
 from app import db
 
