@@ -7,11 +7,11 @@ from flask_login import login_user, logout_user, current_user
 
 from . import main
 from .forms import LoginForm, RegisterForm
-from .models import Users, Messages
+from .models import Users, Messages, Conversations, Robot
 from .chatbot import ChatbotAgent, ChatbotMediator
 
 import json
-import sys
+import random
 
 from app import db
 
@@ -43,17 +43,34 @@ def process_msg():
         return jsonify({"status": "ERROR", "message": "Chatbot not initialized"}), 400
 
     messages = json.loads(messages)
-    robotID = session["chatbot"].id
 
     for msg in messages:
-        Messages.add_msg(msg, "happy", 0, robotID, current_user)
+        Messages.add_msg(msg, "happy", "user", session["conversation_id"])
 
     reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
 
     for msg in reply:
-        Messages.add_msg(msg, "happy", 1, robotID, current_user)
+        Messages.add_msg(msg, "happy", "robot", session["conversation_id"])
     
     return jsonify({"status": "OK", "messages": reply})
+
+@main.route("/init_conversation", methods=["POST"])
+def init_conversation():
+    """Initialize the conversation agent when user starts new session"""
+    if session["chatbot"] is None:
+        return jsonify({"status": "FAILED", "conversation_id": -1, "error": "Chatbot not initialiazed"})
+
+    conversationID = 0
+    while(Conversations.conversation_exists(Conversations,conversationID)):
+        conversationID = random.randint(0,10000)
+        
+    session["conversation_id"] = conversationID
+
+    #Add conversation to db
+
+    Conversations.add_conversation(conversationID,current_user.id,session["chatbot"].id)
+
+    return jsonify({"status": "OK", "conversation_id": session["conversation_id"], "error": "none"})
 
 
 @main.route("/init_chatbot", methods=["POST"])
