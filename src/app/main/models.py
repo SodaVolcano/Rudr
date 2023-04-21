@@ -44,10 +44,16 @@ class Users(UserMixin, db.Model):
 
 class Robot(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    character = db.Column(db.String)
-
+    name = db.Column(db.String(100))
+    profile_link = db.Column(db.String(100))
     conversations = db.relationship("Conversations", backref="robot", lazy="dynamic")
 
+    # Add new robot to database
+    def add_robot(name, profile_link):
+        robot = Robot(name=name, profile_link=profile_link)
+
+        db.session.add(robot)
+        db.session.commit()
 
 class Conversations(db.Model):
     id = db.Column(db.Integer, primary_key=True)

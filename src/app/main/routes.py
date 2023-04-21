@@ -3,7 +3,7 @@
 from flask import render_template, redirect, url_for, flash, request, session, jsonify
 from werkzeug.urls import url_parse
 from flask_wtf import FlaskForm
-from flask_login import login_user, logout_user, current_user
+from flask_login import login_user, logout_user, current_user, login_required
 
 from . import main
 from .forms import LoginForm, RegisterForm
@@ -26,7 +26,7 @@ def index():
 def about():
     return render_template("about_us.html")
 
-
+@login_required
 @main.route("/chat", methods=["GET"])
 def chat():
     print("Arrived at chat")
@@ -88,6 +88,10 @@ def init_conversation():
 def init_chatbot():
     """Initialize the chatbot agent when user starts new session"""
     session["chatbot"] = ChatbotAgent("random")
+
+    # add new robot
+    Robot.add_robot("rob","")
+
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
 
 
