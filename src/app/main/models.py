@@ -55,6 +55,7 @@ class Robot(db.Model):
         db.session.add(robot)
         db.session.commit()
 
+
 class Conversations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))

@@ -26,6 +26,7 @@ def index():
 def about():
     return render_template("about_us.html")
 
+
 @login_required
 @main.route("/chat", methods=["GET"])
 def chat():
@@ -90,7 +91,7 @@ def init_chatbot():
     session["chatbot"] = ChatbotAgent("random")
 
     # add new robot
-    Robot.add_robot("rob","")
+    Robot.add_robot("rob", "")
 
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
 
