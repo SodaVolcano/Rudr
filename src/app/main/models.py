@@ -73,7 +73,6 @@ class Conversations(db.Model):
         return conversation is not None
 
 
-
 # Message Table
 class Messages(db.Model):
     # Message ID
