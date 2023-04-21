@@ -3,11 +3,11 @@ body {
     font-size: 20px;
 }
 
-.bg-dark {
+.background-dark {
     background-color: rgb(6, 3, 19);
 }
 
-.fg-bright {
+.foreground-bright {
     color: aliceblue;
 }
 

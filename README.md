@@ -1,6 +1,7 @@
 # CITS3403 Web Project
 
 ## TODO
+  - [ ] NEED to add character limit as well
 - [ ] Define colour classes for bg and fg and replace all reference to colours with those classes
 - [ ] Clean up CSS style - remove CSS and JS from HTML attributes, remove uneeded CSS properties
 - [ ] Style scroll bar

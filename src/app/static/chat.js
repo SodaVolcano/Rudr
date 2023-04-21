@@ -1,7 +1,7 @@
 "use strict";
 window.onload = main;
 let typingTimer;
-const MAX_TYPING_DELAY = 10000; // miliseconds
+const MAX_TYPING_DELAY = 5000; // miliseconds
 const messageQueue = [];
 let typingDelay = MAX_TYPING_DELAY; // miliseconds
 let resizeTimeout; // Timer for window resize event
@@ -24,6 +24,12 @@ function main() {
     $('#chatbox-content').on('keydown', resetTimer);
     $('#chatbox-content')[0].addEventListener('input', adjustHeight);
     $(window)[0].addEventListener('resize', delayWindowResize);
+    // Prevent newline when ENTER is not pressed with SHIFT
+    $('#chatbox-content').on('keydown', function (event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+        }
+    });
 }
 /**
  * Delay the window resize event so it's run after bootstrap adjustment

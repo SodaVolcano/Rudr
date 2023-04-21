@@ -1,7 +1,7 @@
 window.onload = main;
 
 let typingTimer: number;
-const MAX_TYPING_DELAY = 10000;  // miliseconds
+const MAX_TYPING_DELAY = 5000;  // miliseconds
 const messageQueue: string[] = [];
 let typingDelay = MAX_TYPING_DELAY;      // miliseconds
 
@@ -30,6 +30,13 @@ function main() {
 
     $('#chatbox-content')[0].addEventListener('input', adjustHeight);
     $(window)[0].addEventListener('resize', delayWindowResize);
+
+    // Prevent newline when ENTER is not pressed with SHIFT
+    $('#chatbox-content').on('keydown', function(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+        }
+    });
 }
 
 /**
