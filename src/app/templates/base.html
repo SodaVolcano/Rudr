@@ -25,7 +25,8 @@
 
 </head>
 
-<body>
+<body class="background-dark foreground-bright">
+{% block header %}
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent container-fluid">
       <div class="container-fluid">
@@ -62,6 +63,7 @@
       </div>
     </nav>
   </header>
+{% endblock %}
 
   {% block content %}
 

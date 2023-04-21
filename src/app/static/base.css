@@ -1,10 +1,15 @@
 /* BACKGROUND */
 body {
-    background-color: rgb(6, 3, 19);
     font-size: 20px;
-    color: aliceblue;
 }
 
+.background-dark {
+    background-color: rgb(6, 3, 19);
+}
+
+.foreground-bright {
+    color: aliceblue;
+}
 
 /* ======================= HEADER STYLE ======================================= */
 /* Header containing a logo and links */
