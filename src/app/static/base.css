@@ -54,6 +54,7 @@ header {
 
 .navbar-nav li a {
   color: var(--text-colour-primary);
+
   text-decoration: none;
   font-size: 0.9rem;
 }
@@ -98,11 +99,12 @@ header {
     top: 0;
     background-color: var(--background-colour);
     background-color: var(--background-colour-alpha);
+
     overflow-x: hidden;
     transition: 0.5s;
   }
 
-  .overlay-content {
+.overlay-content {
     position: relative;
     top: 25%;
     width: 100%;
@@ -110,27 +112,29 @@ header {
     margin-top: 30px;
   }
   
-  .overlay a {
+.overlay a {
     padding: 8px;
     text-decoration: none;
     font-size: 36px;
     color: var(--text-colour-secondary);
+
     display: block;
     transition: 0.3s;
   }
   
-  .overlay a:hover, .overlay a:focus {
+.overlay a:hover, .overlay a:focus {
     color: var(--text-colour-hover);
+
   }
   
-  .overlay .closebtn {
+.overlay .closebtn {
     position: absolute;
     top: 20px;
     right: 45px;
     font-size: 60px;
   }
   
-  @media screen and (max-height: 450px) {
+@media screen and (max-height: 450px) {
     .overlay a {font-size: 20px}
     .overlay .closebtn {
       font-size: 40px;
