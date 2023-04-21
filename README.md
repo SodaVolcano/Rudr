@@ -10,10 +10,8 @@
 
 ### Home
 - [ ] Robot image is too big - title should fit in centre of banner, and robot is small and below it
-- [ ] Fix hamburger expansion of navbar links
 - [ ] Image (the gif) is too small - design of webpage should focus on images, should make it bigger
     - [ ] suggestion: replace signup and login into single button, when clicked, go to sign up with extra link going to login?
-- [ ] Fix social media not appearing in homepage
     
 ### Chatroom
 - [ ] Create text bubble
@@ -22,7 +20,7 @@
 
 
 ### Other
-- [ ] Save conversation history to database - TIn chi and Martin
+- [ ] Save conversation history to database
 
 
 
