@@ -26,7 +26,8 @@
 
 </head>
 
-<body>
+<body class="background-dark foreground-bright">
+{% block header %}
   <header>
     <!-- screen overlay -->
     <div id="myNav" class="overlay">
@@ -79,6 +80,7 @@
     </nav>
     {% block header %}{% endblock %}
   </header>
+{% endblock %}
 
   {% block content %}{% endblock %}
 
