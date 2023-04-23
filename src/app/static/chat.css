@@ -112,7 +112,6 @@ html, body {
 }
 
 .msg-user-wrapper {
-    border: 2px solid #ccc;
     padding: 15px;
     padding-left: 30px;
     margin: 10px 0;
@@ -122,7 +121,6 @@ html, body {
 }
 
 .msg-bot-wrapper {
-    border: 2px solid #ccc;
     padding: 15px;
     padding-right: 30px;
     margin: 10px 0;
@@ -133,21 +131,25 @@ html, body {
 
 .speech-bubble {
     border-radius: 10px;
-    padding: 5px 5px;
+    padding: 10px 20px;
 
     max-width: 500px;
-    min-width: 20%;
 
     background-color: transparent;
     border: 3px solid #ccc;
 
-    justify-content: center;
-    display: flex;
-    flex-direction: row;
+    display: inline-block;
     height: 100%;
-    width: 100%;
-    align-items: center;
     position: relative;
+}
+
+.speech-bubble p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+
+    max-width: 100%;
+    max-height: 100%;
 }
 
 /* https://projects.verou.me/bubbly/ */
