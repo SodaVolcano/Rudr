@@ -33,7 +33,7 @@ html, body {
     height: 100%;
 }
 
-.scroll-bar {
+.scrollbar {
     flex: 9;
     overflow-y: auto;
 }
@@ -59,6 +59,7 @@ html, body {
     border: 2px solid #22c;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 }
 
 /* padding and position of the chatbox */
@@ -108,4 +109,66 @@ html, body {
     align-items: center;
     justify-content: center;  /* center the icon */
     border: none;
+}
+
+.msg-user-wrapper {
+    border: 2px solid #ccc;
+    padding: 15px;
+    padding-left: 30px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.msg-bot-wrapper {
+    border: 2px solid #ccc;
+    padding: 15px;
+    padding-right: 30px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.speech-bubble {
+    border-radius: 10px;
+    padding: 5px 5px;
+
+    max-width: 500px;
+    min-width: 20%;
+
+    background-color: transparent;
+    border: 3px solid #ccc;
+
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    position: relative;
+}
+
+/* https://projects.verou.me/bubbly/ */
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: #ccc;
+	border-bottom: 0;
+	margin-bottom: -20px;
+}
+
+.msg-bot-wrapper .speech-bubble:after {
+    left: 10%;
+	border-left: 0;
+}
+
+.msg-user-wrapper .speech-bubble:after {
+    right: 10%;
+	border-right: 0;
 }
