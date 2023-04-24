@@ -14,10 +14,7 @@
     - [ ] suggestion: replace signup and login into single button, when clicked, go to sign up with extra link going to login?
     
 ### Chatroom
-- [ ] Create text bubble
-- [ ] Add scrollable chat history view
-  - [ ] Make chat history area auto scroll to the bottom
-
+- [ ] Add conversation list to the left of the chatroom - click to see previous conversations
 
 ### Other
 - [ ] Save conversation history to database

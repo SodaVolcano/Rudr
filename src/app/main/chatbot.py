@@ -31,7 +31,7 @@ class ChatbotMediator:
         """Structure the reply from the chatbot, e.g. split by period"""
         # Matches whitespace preceded by any number and combo of ., !, ?
         pattern = r"(?<=[.!?])\s"
-        return re.split(pattern, reply)
+        return [i for i in re.split(pattern, reply) if i != ""]
 
 
 class ChatbotAgent:
