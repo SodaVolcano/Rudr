@@ -1,12 +1,18 @@
 "use strict";
 window.onload = main;
+// ======================== global variables ========================
+// When timer expires, send queued messages to server. reset on each input
 let typingTimer;
 const MAX_TYPING_DELAY = 5000; // miliseconds
+let typingDelay = MAX_TYPING_DELAY; // miliseconds, gradually decreases
 const messageQueue = [];
-let typingDelay = MAX_TYPING_DELAY; // miliseconds
-let resizeTimeout; // Timer for window resize event
+// Timer for window resize, delay to allow bootstrap to adjust
+let resizeTimeout;
 let maxChatboxHeight = 227.5; // Found by trial and error
 let minChatboxHeight; // Computed from CSS on load in main()
+// Controls whether the scrollbar should be scrolled to the bottom
+// If user scrolled up, don't scroll down when new messages arrive
+let scrolledUp = false;
 /**
  * Initialise event listeners etc when the window loads
  */
@@ -30,7 +36,16 @@ function main() {
             event.preventDefault();
         }
     });
+    // Scrollbar
+    $('.scrollbar')[0].addEventListener('scroll', function (event) {
+        const scrollbar = event.target;
+        if (scrollbar.scrollTop !== scrollbar.scrollHeight - scrollbar.clientHeight)
+            scrolledUp = true;
+        else
+            scrolledUp = false;
+    });
 }
+// ======================== textarea resizing ========================
 /**
  * Delay the window resize event so it's run after bootstrap adjustment
  * Without this, chatbox is resized but then bootstrap readjust, making
@@ -59,6 +74,7 @@ function adjustHeight(event) {
         chatboxArea.style.height = newHeight + 'px';
     }
 }
+// ================ submit/recieve message from server ===================
 /**
  * Handle the bot response from the server
  * @param response JSON object containing the response from the server
@@ -81,19 +97,6 @@ function checkBotInit(response) {
     if (response.status !== 'OK')
         throw new Error("Failed to initialise bot");
     console.log(`SUCCESS: Bot initialised with id ${response.bot_id}`);
-}
-/**
- * Append a message to the chat HTML element
- * @param message string of the message to display
- * @param sender  whether the message was sent by the user or the bot
- */
-function displayMessage(message, isFromUser) {
-    let cssClass = "";
-    if (isFromUser)
-        cssClass = "msg-user";
-    else
-        cssClass = "msg-bot";
-    $('#chat-history').append(`<div class="${cssClass}"><p>${message}</p></div>`);
 }
 /**
  * Package user messages as JSON and send to Flask route
@@ -131,6 +134,7 @@ function QueueMessage(event) {
     resetTimer();
 }
 /**
+ * Reset the typing timer
  */
 function resetTimer() {
     clearTimeout(typingTimer);
@@ -139,4 +143,20 @@ function resetTimer() {
     typingDelay = MAX_TYPING_DELAY / (2 ** messageQueue.length - 1);
     typingTimer = setTimeout(sendQueuedMessages, typingDelay);
     console.log(`New typing delay: ${typingDelay}ms`);
+}
+// ======================== chat history ========================
+/**
+ * Append a message to the chat HTML element
+ * @param message string of the message to display
+ * @param sender  whether the message was sent by the user or the bot
+ */
+function displayMessage(message, isFromUser) {
+    let cssClass = "";
+    if (isFromUser)
+        cssClass = "msg-user-wrapper";
+    else
+        cssClass = "msg-bot-wrapper";
+    $('.chat-history').append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
+    if (!scrolledUp)
+        $('.scrollbar')[0].scrollTop = $('.scrollbar')[0].scrollHeight;
 }
