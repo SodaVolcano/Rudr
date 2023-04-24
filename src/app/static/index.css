@@ -123,6 +123,8 @@
   margin-top: 100px;
   display: flex;
   text-align: center;
+  flex-direction: column;
+  align-content: center;
 }
 
 .banner-byline {
