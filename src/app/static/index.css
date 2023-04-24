@@ -1,3 +1,58 @@
+
+/* ======================= HEADER STYLE ======================================= */
+/* Header containing a logo and links */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  background-color: transparent;
+  z-index: 999;
+  user-select: none;
+}
+
+
+/* LOGO STYLE */
+.site-logo img {
+  height: 4rem;
+  cursor: pointer;
+  transition: transform 0.15s ease-in-out;
+}
+
+.site-logo img:hover {
+  transform: scale(1.1);
+}
+
+/* LINK STYLE */
+.navbar-nav {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.navbar-nav li {
+  margin-left: 2rem;
+  margin-right: 0;
+}
+
+.navbar-nav li a {
+  color: var(--text-colour-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.navbar-nav li a:hover {
+  color: var(--text-colour-primary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
 /* ======================= SOCIAL MEDIA ================================ */
 /* Side bar with social media icons */
 .sidebar {
@@ -8,7 +63,7 @@
   height: 50px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  background-image: linear-gradient(to bottom, #bd77f5, #4f5de2);
+  background-image: var(--default-gradient);
   z-index: 998;
   overflow: hidden;
   transition: height 0.5s;
@@ -29,7 +84,7 @@
   opacity: 0;
   transition: opacity 0.5s, transform 0.5s;
   text-decoration: none;
-  color: #ffffff;
+  color: var(--text-colour-primary);
 }
 
 .social-media-icons i {
@@ -58,7 +113,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--text-colour-primary);
   font-weight: bold;
   font-size: 16px;
   text-decoration: none;
@@ -83,7 +138,7 @@
     flex-direction: column;  
 
     /* Fade to black at bottom */
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(6, 3, 19, 1)), url("https://wallpapers.com/images/featured/y3r21iaunx6u3tml.jpg");
+    background-image: linear-gradient(to bottom, transparent, var(--background-colour)), url("https://wallpapers.com/images/featured/y3r21iaunx6u3tml.jpg");
     background-position: center;
     background-size: cover;
     display: flex;

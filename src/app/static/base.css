@@ -1,20 +1,11 @@
 /* BACKGROUND */
 body {
-  background-color: rgb(6, 3, 19);
+  background-color: var(--background-colour);
   font-size: 20px;
-  color: aliceblue;
+  color: var(--text-colour-primary);
   margin: 0;
   overflow-x: hidden;
 }
-
-.background-dark {
-    background-color: rgb(6, 3, 19);
-}
-
-.foreground-bright {
-    color: aliceblue;
-}
-
 
 /* ======================= HEADER STYLE ======================= */
 /* Header containing a logo and links */
@@ -62,13 +53,14 @@ header {
 }
 
 .navbar-nav li a {
-  color: white;
+  color: var(--text-colour-primary);
+
   text-decoration: none;
   font-size: 0.9rem;
 }
 
 .navbar-nav li a:hover {
-  color: white;
+  color: var(--text-colour-primary);
   text-decoration: none;
   font-weight: bold;
 }
@@ -105,13 +97,14 @@ header {
     z-index: 999;
     left: 0;
     top: 0;
-    background-color: rgb(0,0,0);
-    background-color: rgba(0,0,0, 0.9);
+    background-color: var(--background-colour);
+    background-color: var(--background-colour-alpha);
+
     overflow-x: hidden;
     transition: 0.5s;
   }
 
-  .overlay-content {
+.overlay-content {
     position: relative;
     top: 25%;
     width: 100%;
@@ -119,27 +112,29 @@ header {
     margin-top: 30px;
   }
   
-  .overlay a {
+.overlay a {
     padding: 8px;
     text-decoration: none;
     font-size: 36px;
-    color: #818181;
+    color: var(--text-colour-secondary);
+
     display: block;
     transition: 0.3s;
   }
   
-  .overlay a:hover, .overlay a:focus {
-    color: #f1f1f1;
+.overlay a:hover, .overlay a:focus {
+    color: var(--text-colour-hover);
+
   }
   
-  .overlay .closebtn {
+.overlay .closebtn {
     position: absolute;
     top: 20px;
     right: 45px;
     font-size: 60px;
   }
   
-  @media screen and (max-height: 450px) {
+@media screen and (max-height: 450px) {
     .overlay a {font-size: 20px}
     .overlay .closebtn {
       font-size: 40px;
