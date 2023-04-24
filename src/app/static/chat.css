@@ -104,6 +104,10 @@ html, body {
     border: none;
 }
 
+.chatbox i {
+    color: var(--text-colour-primary);
+}
+
 .msg-user-wrapper {
     padding: 15px;
     padding-left: 30px;

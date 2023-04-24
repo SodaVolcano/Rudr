@@ -29,10 +29,10 @@
   opacity: 0;
   transition: opacity 0.5s, transform 0.5s;
   text-decoration: none;
-  color: var(--text-colour-primary);
 }
 
 .social-media-icons i {
+  color: var(--text-colour-primary);
   font-size: 30px;
   transition: transform 0.3s ease;
 }
@@ -114,6 +114,7 @@
   height: auto;
   display: block;
   margin: 0 auto;
+  padding: 70px 0 0 0;
 }
 
 .banner-slogan {
@@ -121,7 +122,6 @@
   margin: 0 auto;
   margin-top: 100px;
   display: flex;
-  justify-content: center;
   text-align: center;
 }
 
