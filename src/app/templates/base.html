@@ -35,9 +35,9 @@
       <a href="javascript:void(0)" class="closebtn">&times;</a>
       <div class="overlay-content">
         <a href="{{ url_for('.about') }}">About</a>
-        <a href="#">Chat</a>
-        <a href="#">Login</a>
-        <a href="#">Sign Up</a>
+        <a href="{{ url_for('.chat') }}"></a>Chat</a>
+        <a href="{{ url_for('.login') }}">Login</a>
+        <a href="{{ url_for('.signup') }}">Sign Up</a>
       </div>
     </div>
 
@@ -45,7 +45,7 @@
       <div class="container-fluid">
         <!-- logo -->
         <div class="d-flex justify-content-start">
-          <a class="navbar-brand site-logo mt-2" href="index" draggable="false">
+          <a class="navbar-brand site-logo mt-2" href="{{ url_for('.index') }}" draggable="false">
             <img src="{{ url_for('static', filename='Logo2.png') }}" alt="Logo" class="img-fluid" draggable="false">
           </a>
         </div>
