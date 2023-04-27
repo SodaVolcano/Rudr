@@ -154,6 +154,11 @@ header {
     align-items: center;
 }
 
+.banner-text {
+  display: flex;
+  flex-direction: column;
+}
+
 .banner-image {
   max-height: 700px;
   max-width: 100%;
@@ -164,19 +169,23 @@ header {
 
 .banner-slogan {
   font-size: 5rem;
+  width: fit-content;
   margin: 0 auto;
   margin-top: 100px;
-  display: flex;
+  display: block;
   justify-content: center;
   text-align: center;
+  
 }
 
 .banner-byline {
   font-size: 1.5rem;
+  width: fit-content;
   margin: 0 auto;
-  display: flex;
+  display: block;
   justify-content: center;
   text-align: center;
+
 }
 
 @media screen and (max-width: 992px) {
