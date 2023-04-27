@@ -46,8 +46,8 @@ function main() {
         }
     });
 
-    // Scrollbar
-    $('.scrollbar')[0].addEventListener('scroll', function(event) {
+    // Scrollbar - scroll to bottom if user hasn't scrolled up
+    $('#chat-scrollbar')[0].addEventListener('scroll', function(event) {
         const scrollbar = <HTMLDivElement> event.target;
         if (scrollbar.scrollTop !== scrollbar.scrollHeight - scrollbar.clientHeight)
             scrolledUp = true;
@@ -194,9 +194,9 @@ function displayMessage(message: string, isFromUser: boolean) {
     else
         cssClass = "msg-bot-wrapper";
 
-    $('.chat-history').append(
+    $('#chat-history').append(
         `<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
     );
     if (!scrolledUp)
-        $('.scrollbar')[0].scrollTop = $('.scrollbar')[0].scrollHeight;
+        $('#chat-scrollbar')[0].scrollTop = $('.scrollbar')[0].scrollHeight;
 }

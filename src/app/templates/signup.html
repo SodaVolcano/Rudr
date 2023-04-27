@@ -4,6 +4,11 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
 {% endblock %}
 
+{% block script %}
+<script defer src="{{ url_for('static', filename='hamburger.js') }}">
+<script defer src="{{ url_for('static', filename='scroll.js') }}"> </script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
   <div class="row">
