@@ -34,10 +34,11 @@ function main() {
     $('#chatbox-content').on('keydown', function (event) {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
+            adjustHeight(event);
         }
     });
-    // Scrollbar
-    $('.scrollbar')[0].addEventListener('scroll', function (event) {
+    // Scrollbar - scroll to bottom if user hasn't scrolled up
+    $('#chat-scrollbar')[0].addEventListener('scroll', function (event) {
         const scrollbar = event.target;
         if (scrollbar.scrollTop !== scrollbar.scrollHeight - scrollbar.clientHeight)
             scrolledUp = true;
@@ -156,7 +157,7 @@ function displayMessage(message, isFromUser) {
         cssClass = "msg-user-wrapper";
     else
         cssClass = "msg-bot-wrapper";
-    $('.chat-history').append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
+    $('#chat-history').append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
     if (!scrolledUp)
-        $('.scrollbar')[0].scrollTop = $('.scrollbar')[0].scrollHeight;
+        $('#chat-scrollbar')[0].scrollTop = $('.scrollbar')[0].scrollHeight;
 }

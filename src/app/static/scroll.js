@@ -7,12 +7,9 @@ const observer = new IntersectionObserver((entries) => {
             entry.target.classList.remove('show');
         }
     })
-  })
+});
   
-  
-  
-  
-  window.addEventListener('load', () => {
+window.addEventListener('load', () => {
     const hiddenElements = document.querySelectorAll('.hidden');
     hiddenElements.forEach((el) => observer.observe(el));
-  });
+});
