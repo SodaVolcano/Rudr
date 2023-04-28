@@ -40,9 +40,10 @@ function main() {
     $(window)[0].addEventListener('resize', delayWindowResize);
 
     // Prevent newline when ENTER is not pressed with SHIFT
-    $('#chatbox-content').on('keydown', function(event) {
+    $('#chatbox-content').on('keydown', function(event: any) {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
+            adjustHeight(event);
         }
     });
 

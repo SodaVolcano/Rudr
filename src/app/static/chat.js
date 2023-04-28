@@ -34,6 +34,7 @@ function main() {
     $('#chatbox-content').on('keydown', function (event) {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
+            adjustHeight(event);
         }
     });
     // Scrollbar - scroll to bottom if user hasn't scrolled up
