@@ -18,7 +18,6 @@
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
     crossorigin="anonymous"></script>
   <script src="{{ url_for('static', filename='base.js')  }}"> </script>
-  <script defer src="{{ url_for('static', filename='hamburger.js') }}"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='colours.css') }}">
@@ -81,6 +80,7 @@
       </div>
     </nav>
   </header>
+  <script defer src="{{ url_for('static', filename='hamburger.js') }}"></script>
 {% endblock %}
 
 <main>
