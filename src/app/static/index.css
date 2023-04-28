@@ -185,6 +185,8 @@ header {
   display: block;
   justify-content: center;
   text-align: center;
+  min-height: 30px;
+  overflow: hidden;
 
 }
 

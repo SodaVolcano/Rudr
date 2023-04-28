@@ -26,11 +26,11 @@ window.addEventListener("load", () => {
 
 
 /* Typewriter effect for text */
-
-function typewriter(element) {
-  console.log(element.textContent);
+/*
+function typewriterWrite(element, text) {
+  console.log(text);
   const waitCharacter = 25;
-  const characters = element.textContent.split("");
+  const characters = text.split("");
   element.textContent = "";
 
   // Loop through each character and add it to the text element
@@ -47,6 +47,26 @@ function typewriter(element) {
 
   return characters.length * waitCharacter;
 }
+
+function typewriterRemove(element) {
+    const waitCharacter = 25;
+    const textLength = element.textContent.length;
+  
+    let intervalId = setInterval(() => {
+      // Check if the text content is empty
+      if (element.textContent === "") {
+        clearInterval(intervalId); // Clear the interval if text content is empty
+        element.style.borderRight = "none"; // Remove the border
+      } else {
+        element.textContent = element.textContent.slice(0, -1);
+      }
+    }, waitCharacter);
+  
+    return textLength * waitCharacter;
+  }
+  */
+  
+  
 
 
 

@@ -204,7 +204,7 @@ function displayMessage(message: string, isFromUser: boolean) {
       $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
     if (!isFromUser) {
       const newMessage = document.getElementById("new-message");
-      botWaitTime = typewriter(newMessage);
+      botWaitTime = typewriterWrite(newMessage, message);
       if (newMessage != null) {
         newMessage.removeAttribute("id");
       }

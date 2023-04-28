@@ -157,7 +157,6 @@ header {
   white-space: nowrap;
   font-size: 28px;
   font-family: "Courier", monospace;
-  border-right: 0.15em solid var(--gradient-colour-one);
   padding-right: 5px;
 }
 
