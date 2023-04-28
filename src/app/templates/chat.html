@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block script %}
-<script defer src="{{ url_for('static', filename='chat.js') }}">
+<script src="{{ url_for('static', filename='chat.js') }}">
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};  // For AJAX requests
 </script>
 {% endblock %}
