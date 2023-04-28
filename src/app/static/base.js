@@ -24,47 +24,35 @@ window.addEventListener("load", () => {
   hiddenElements.forEach((el) => observer.observe(el));
 });
 
+/* ======================= TYPEWRITER ======================= */
 
-/* Typewriter effect for text */
-/*
-function typewriterWrite(element, text) {
-  console.log(text);
-  const waitCharacter = 25;
-  const characters = text.split("");
-  element.textContent = "";
-
-  // Loop through each character and add it to the text element
-  characters.forEach((character, index) => {
-    setTimeout(() => {
-      element.textContent += character;
-    }, waitCharacter * index);
-  });
-
-  // Set a timeout to remove the border after all characters have been added
-  setTimeout(() => {
-    element.style.borderRight = "none";
-  }, waitCharacter * characters.length);
-
-  return characters.length * waitCharacter;
-}
-
-function typewriterRemove(element) {
+// Function that simulates a typewriter writing the given text in the given element
+async function typewriterWrite(element, text) {
+    element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
+    console.log(text);
     const waitCharacter = 25;
-    const textLength = element.textContent.length;
+    const characters = text.split("");
+    element.textContent = "";
   
-    let intervalId = setInterval(() => {
-      // Check if the text content is empty
-      if (element.textContent === "") {
-        clearInterval(intervalId); // Clear the interval if text content is empty
-        element.style.borderRight = "none"; // Remove the border
-      } else {
-        element.textContent = element.textContent.slice(0, -1);
-      }
-    }, waitCharacter);
+    for (let i = 0; i < characters.length; i++) {
+      await new Promise((resolve) => setTimeout(resolve, waitCharacter));
+      element.textContent += characters[i];
+    }
   
-    return textLength * waitCharacter;
+    element.style.borderRight = "none";
   }
-  */
+  
+  // Function that simulates a typewriter deleting the text in the given element
+  async function typeWriterRemove(element) {
+    element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
+    const waitCharacter = 25;
+    const characters = element.textContent.split("");
+    for (let i = 0; i < characters.length; i++) {
+      await new Promise((resolve) => setTimeout(resolve, waitCharacter));
+      element.textContent = element.textContent.slice(0, -1);
+    }
+    element.style.borderRight = "none";
+  }
   
   
 

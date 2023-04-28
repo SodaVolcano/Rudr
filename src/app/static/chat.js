@@ -1,21 +1,23 @@
 "use strict";
 window.onload = main;
+
 // ======================== global variables ========================
+
 // When timer expires, send queued messages to server. reset on each input
 let typingTimer;
 const MAX_TYPING_DELAY = 5000; // miliseconds
 let typingDelay = MAX_TYPING_DELAY; // miliseconds, gradually decreases
 const messageQueue = [];
+
 // Timer for window resize, delay to allow bootstrap to adjust
 let resizeTimeout;
 let maxChatboxHeight = 227.5; // Found by trial and error
 let minChatboxHeight; // Computed from CSS on load in main()
+
 // Controls whether the scrollbar should be scrolled to the bottom
 // If user scrolled up, don't scroll down when new messages arrive
 let scrolledUp = false;
 
-// The time to wait between bot messages in group of messages
-let botWaitTime = 0;
 /**
  * Initialise event listeners etc when the window loads
  */
@@ -83,7 +85,7 @@ function adjustHeight(event) {
  * @param response JSON object containing the response from the server
  */
 function delay(duration) {
-  return new Promise(function(resolve) {
+  return new Promise(function (resolve) {
     setTimeout(resolve, duration);
   });
 }
@@ -91,11 +93,8 @@ function delay(duration) {
 async function recieveBotReply(response) {
   if (response.status !== "OK") throw new Error("Failed to recieve bot reply");
   console.log("recieved bot reply");
-
-  botWaitTime = 0;
   for (let message of response.messages) {
-    await delay(botWaitTime);
-    displayMessage(message, false);
+    await displayMessage(message, false);
   }
 }
 
@@ -156,27 +155,30 @@ function resetTimer() {
  * @param message string of the message to display
  * @param sender  whether the message was sent by the user or the bot
  */
-function displayMessage(message, isFromUser) {
-  let cssClass = "";
-  if (isFromUser) {
-    cssClass = "msg-user-wrapper";
-    $(".chat-history").append(
+async function displayMessage(message, isFromUser) {
+  return new Promise(async (resolve) => {
+    let cssClass = "";
+    if (isFromUser) {
+      cssClass = "msg-user-wrapper";
+      $(".chat-history").append(
         `<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
       );
-  }
-  else {
-    cssClass = "msg-bot-wrapper";
-  $(".chat-history").append(
-    `<div class="${cssClass}"><div class="speech-bubble"><p id="new-message">${message}</p></div></div>`
-  );
-  }
-  if (!scrolledUp)
-    $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
-  if (!isFromUser) {
-    const newMessage = document.getElementById("new-message");
-    botWaitTime = typewriterWrite(newMessage, message);
-    if (newMessage != null) {
-      newMessage.removeAttribute("id");
+    } else {
+      cssClass = "msg-bot-wrapper";
+      $(".chat-history").append(
+        `<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`
+      );
     }
-  }
+    if (!scrolledUp) {
+      $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
+    }
+    if (!isFromUser) {
+      const newMessage = document.getElementById("new-message");
+      if (newMessage != null) {
+        await typewriterWrite(newMessage, message);
+        newMessage.removeAttribute("id");
+      }
+    }
+    resolve();
+  });
 }

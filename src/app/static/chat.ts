@@ -100,22 +100,18 @@ function adjustHeight(event: Event) {
  * @param response JSON object containing the response from the server
  */
 function delay(duration: number): Promise<void> {
-    return new Promise<void>(function(resolve) {
-      setTimeout(resolve, duration);
-    });
+  return new Promise<void>(function (resolve) {
+    setTimeout(resolve, duration);
+  });
+}
+
+async function recieveBotReply(response: any): Promise<void> {
+  if (response.status !== "OK") throw new Error("Failed to recieve bot reply");
+  console.log("recieved bot reply");
+  for (let message of response.messages) {
+    await displayMessage(message, false);
   }
-  
-  async function recieveBotReply(response: any): Promise<void> {
-    if (response.status !== "OK") throw new Error("Failed to recieve bot reply");
-    console.log("recieved bot reply");
-  
-    let botWaitTime = 0;
-    for (let message of response.messages) {
-      await delay(botWaitTime);
-      displayMessage(message, false);
-    }
-  }
-  
+}
 
 function checkBotInit(response: any) {
   if (response.status !== "OK") throw new Error("Failed to initialise bot");
@@ -186,27 +182,30 @@ function resetTimer() {
  * @param message string of the message to display
  * @param sender  whether the message was sent by the user or the bot
  */
-function displayMessage(message: string, isFromUser: boolean) {
+async function displayMessage(message: string, isFromUser: boolean) {
+  return new Promise(async (resolve) => {
     let cssClass = "";
     if (isFromUser) {
       cssClass = "msg-user-wrapper";
       $(".chat-history").append(
-          `<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
-        );
-    }
-    else {
+        `<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
+      );
+    } else {
       cssClass = "msg-bot-wrapper";
-    $(".chat-history").append(
-      `<div class="${cssClass}"><div class="speech-bubble"><p id="new-message">${message}</p></div></div>`
-    );
+      $(".chat-history").append(
+        `<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`
+      );
     }
-    if (!scrolledUp)
+    if (!scrolledUp) {
       $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
+    }
     if (!isFromUser) {
       const newMessage = document.getElementById("new-message");
-      botWaitTime = typewriterWrite(newMessage, message);
       if (newMessage != null) {
+        await typewriterWrite(newMessage, message);
         newMessage.removeAttribute("id");
       }
     }
-  }
+    resolve();
+  });
+}
