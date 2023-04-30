@@ -73,7 +73,7 @@ class Conversations(db.Model):
         # Add new message to database
         db.session.add(conversation)
         db.session.commit()
-
+        
     # check if conversation exists
     def conversation_exists(self, id):
         conversation = Conversations.query.filter_by(id=id).first()

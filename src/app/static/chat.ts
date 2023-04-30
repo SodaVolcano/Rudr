@@ -71,15 +71,18 @@ function checkConversationInit(response: any) {
  */
 
 function displayConversations(response: any) {
+    var conversationList = document.getElementById("conversations")
+    if(conversationList == null){
+        return;
+    }
+
     if (response.status != 'EMPTY') {
         console.log("Printing Conversations");
         let all_conversations = response.conversations;
         // Loop through each conversation
         for (let conversation in all_conversations) {
             if (all_conversations.hasOwnProperty(conversation)) {
-                console.log(conversation + ': ' + all_conversations[conversation]);
-
-                // if value is another dictionary, iterate through it
+                console.log(conversation + ': ');
                 for (let id in all_conversations[conversation]) {
                     if (all_conversations[conversation].hasOwnProperty(id)) {
                         console.log('  ' + id + ': ' + all_conversations[conversation][id]);
@@ -88,10 +91,15 @@ function displayConversations(response: any) {
             }
 
             // get conversation and add it to the ul list on /chat
+            const textNode = document.createTextNode(conversation);
+            textNode.addEventListener("click", changeConversation);
+            conversationList.appendChild(textNode);
         }
     }
 }
-
+function changeConversation(){
+    return null;
+}
 function newChat() {
     $.post("/init_chatbot").done(checkBotInit);
     $.post("/init_conversation").done(checkConversationInit)
