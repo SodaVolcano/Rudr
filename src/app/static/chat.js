@@ -84,18 +84,12 @@ function displayConversations(response) {
  * Change the current display of conversation to the required conversation attached to the event
  */
 function changeConversation(conversation_id) {
-    $.ajax({
-        url: '/replace_conversation',
-        method: 'POST',
-        data: { id: conversation_id },
-        dataType: 'json',
-        success: receiveConversation,
-        error: function () { throw new Error("Failed to send messages to server"); }
-    });
+    $.get("/replace_conversation").done(receiveConversation);
 }
 function receiveConversation(response) {
     if (response.status !== 'OK')
         throw new Error("Failed to initialise conversation");
+    // replace current conversation messages with the given ones
     console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
 }
 /**
