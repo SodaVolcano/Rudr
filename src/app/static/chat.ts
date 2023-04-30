@@ -54,6 +54,15 @@ function main() {
   });
 }
 
+
+
+function checkConversationInit(response) {
+    if (response.status !== 'OK')
+        throw new Error("Failed to initialise conversation");
+    console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+}
+
+
 // ======================== textarea resizing ========================
 
 /**
@@ -94,6 +103,7 @@ function adjustHeight(event: Event) {
 }
 
 // ================ submit/recieve message from server ===================
+
 
 /**
  * Handle the bot response from the server

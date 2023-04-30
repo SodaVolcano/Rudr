@@ -1,10 +1,18 @@
 /* ======================= COLOUR PALETTE ======================= */
 :root {
     --background-colour: rgb(6, 3, 19);
-    --background-colour-alpha: rgba(var(--background-colour), 0.9);
-    --text-colour-primary: white;
+    --background-colour-secondary: rgb(32, 9, 41);
+    --background-colour-alpha: rgba(6, 3, 19, 0.96);
+
+    --foreground-purple: rgb(162, 73, 165);
+    --foreground-purple-hover: rgb(178, 104, 180);
+
+    --foreground-blue: rgb(75, 82, 143);
+
+    --text-colour-primary: aliceblue;
     --text-colour-secondary: #818181;
     --text-colour-hover: #f1f1f1;
+
     --gradient-colour-one: #bd77f5;
     --gradient-colour-two: #4f5de2;
     --default-gradient: linear-gradient(to bottom, var(--gradient-colour-one), var(--gradient-colour-two));

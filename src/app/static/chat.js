@@ -59,6 +59,14 @@ function delayWindowResize() {
   if (resizeTimeout) clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(adjustHeight, 20);
 }
+
+function checkConversationInit(response) {
+    if (response.status !== 'OK')
+        throw new Error("Failed to initialise conversation");
+    console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+}
+
+
 /**
  * Adjust height of the chatbox
  */
@@ -181,4 +189,3 @@ async function displayMessage(message, isFromUser) {
     }
     resolve();
   });
-}

@@ -9,9 +9,9 @@
 
 
 ### Home
-- [ ] Robot image is too big - title should fit in centre of banner, and robot is small and below it
 - [ ] Image (the gif) is too small - design of webpage should focus on images, should make it bigger
     - [ ] suggestion: replace signup and login into single button, when clicked, go to sign up with extra link going to login?
+- [ ] Turn background colour of navbar solid when links turn into hamburger
     
 ### Chatroom
 - [ ] Add conversation list to the left of the chatroom - click to see previous conversations

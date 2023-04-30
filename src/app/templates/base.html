@@ -27,31 +27,31 @@
 
 </head>
 
-<body class="background-dark foreground-bright">
+<body>
 {% block header %}
   <header>
     <!-- screen overlay -->
-    <div id="myNav" class="overlay">
-      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="overlay" id="overlay-nav">
+      <a href="javascript:void(0)" class="closebtn">&times;</a>
       <div class="overlay-content">
         <a href="{{ url_for('.about') }}">About</a>
-        <a href="#">Chat</a>
-        <a href="#">Login</a>
-        <a href="#">Sign Up</a>
+        <a href="{{ url_for('.chat') }}">Chat</a>
+        <a href="{{ url_for('.login') }}">Login</a>
+        <a href="{{ url_for('.signup') }}">Sign Up</a>
       </div>
     </div>
 
-    <nav class="navbar navbar-expand-sm navbar-dark bg-transparent fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-transparent fixed-top">
       <div class="container-fluid">
         <!-- logo -->
         <div class="d-flex justify-content-start">
-          <a class="navbar-brand site-logo mt-2" href="index" draggable="false">
+          <a class="navbar-brand site-logo mt-2" href="{{ url_for('.index') }}" draggable="false">
             <img src="{{ url_for('static', filename='Logo2.png') }}" alt="Logo" class="img-fluid" draggable="false">
           </a>
         </div>
   
         <!-- hamburger menu -->
-        <span class="hamburger-menu d-block d-sm-none" onclick="openNav()">&#9776; </span>
+        <span class="hamburger-menu d-block d-md-none">&#9776; </span>
 
         <!-- navigation links -->
         <!-- (maybe change from ul to a div) -->
@@ -65,10 +65,10 @@
             </li>
             {% if current_user.is_anonymous %}
             <li>
-              <a id="open-loginform" href="{{ url_for('.login') }}">Login</a>
+              <a id="open-loginform" href="{{ url_for('.login') }}" draggable="false">Login</a>
             </li>
             <li>
-              <a id="open-registerform" href="{{ url_for('.signup') }}">Sign Up</a>
+              <a id="open-registerform" href="{{ url_for('.signup') }}" draggable="false">Sign Up</a>
             </li>
             {% else %}
             <li>
@@ -80,9 +80,13 @@
       </div>
     </nav>
   </header>
+  <script src="{{ url_for('static', filename='hamburger.js') }}"></script>
 {% endblock %}
 
-  {% block content %}{% endblock %}
+<main>
+{% block content %}
+{% endblock %}
+</main>
 
   <footer>
 

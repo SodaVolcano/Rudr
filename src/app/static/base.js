@@ -1,3 +1,5 @@
+"use strict";
+
 /* Open the overlay when someone clicks on the hamburger menu */
 function openNav() {
   document.getElementById("myNav").style.width = "100%";
@@ -53,9 +55,3 @@ async function typewriterWrite(element, text) {
     }
     element.style.borderRight = "none";
   }
-  
-  
-
-
-
-

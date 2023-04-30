@@ -3,7 +3,7 @@
 {% block css%}
 <link rel="stylesheet" href="{{ url_for('static', filename='scroll.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
- <script src="{{ url_for('static', filename='index.js') }}"> </script>
+<script src="{{ url_for('static', filename='index.js') }}"> </script>
 <script src="{{ url_for('static', filename='scroll.js')  }}"> </script>
 {% endblock %}
 
@@ -11,17 +11,15 @@
 L0VE
 {% endblock %}
 
-{% block header %}
-{{ super() }}
+{% block content %}
 <!-- Sidebar -->
 <div class="sidebar d-none d-lg-block">
   <div class="social-media-icons">
-    <a href="#"><i class="fa fa-facebook" style="color: #ffffff;"></i></a>
-    <a href="#"><i class="fa fa-twitter" style="color: #ffffff;"></i></a>
-    <a href="#"><i class="fa fa-instagram" style="color: #ffffff;"></i></a>
+    <a href="#"><i class="fa fa-facebook"></i></a>
+    <a href="#"><i class="fa fa-twitter""></i></a>
+    <a href="#"><i class="fa fa-instagram"></i></a>
   </div>
 </div>
-{% endblock %}
 
 {% block content %}
 <main>
@@ -46,21 +44,20 @@ L0VE
       </div>
     </div>
   </div>
+</div>
 
-  <div class="page-content container-fluid">
-    <div class="description container">
-      <div class="row">
-        <div class="col-md-6">
-          <h2 class="decription-title hidden hidden-delay">The next-era dating platform for humans and machines alike.</h2>
-          <p class="description-text hidden hidden-dealy">Quickly find your perfect date using QIMatch - our advanced quantum AI matchmaker.</p>
-          <a href="chat.html" class="description-button btn btn-primary hidden hidden-delay">Start Chatting Now!</a>
-        </div>
-        <div class="col-md-6">
-          <img class="img-fluid hidden hidden-delay" src="https://steamuserimages-a.akamaihd.net/ugc/829071070789454910/806610FE04833C3A97B63F23AEB0842C0EE4668A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" alt="" draggable="false">
-        </div>
+<div class="page-content container-fluid">
+  <div class="description container">
+    <div class="row">
+      <div class="col-lg-6">
+        <h2 class="decription-title hidden hidden-delay">The next-era dating platform for humans and machines alike.</h2>
+        <p class="description-text hidden hidden-dealy">Quickly find your perfect date using QIMatch - our advanced quantum AI matchmaker.</p>
+        <a href="{{ url_for('.chat') }}" class="description-button btn btn-primary hidden hidden-delay">Start Chatting Now!</a>
+      </div>
+      <div class="col-lg-6">
+        <img class="img-fluid hidden hidden-delay" src="https://steamuserimages-a.akamaihd.net/ugc/829071070789454910/806610FE04833C3A97B63F23AEB0842C0EE4668A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" alt="" draggable="false">
       </div>
     </div>
   </div>
-
-</main>
+</div>
 {% endblock %}

@@ -99,7 +99,6 @@ header {
   top: 0;
   background-color: var(--background-colour);
   background-color: var(--background-colour-alpha);
-
   overflow-x: hidden;
   transition: 0.5s;
 }
