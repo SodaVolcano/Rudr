@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 
+
 {% block css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='chat.js')  }}">
+<script src="{{ url_for('static', filename='chat.js') }}">
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};  // For AJAX requests
 </script>
 {% endblock %}
@@ -14,15 +15,32 @@
 Chatroom
 {% endblock %}
 
-{% block content %}
-<!-- TODO: Remove this mess, this is here to prevent overlap with the navbar -->
-<br><br><br><br><br>
+<!-- Disable header -->
+{% block header %}
+{% endblock %}
 
-<div id="message-log">
-  <!-- Messages will be inserted here dynamically -->  
-</div>
-<div>
-  <textarea id="chatbox-content" name="message" placeholder="Send a message..."></textarea>
-  <button id="chatbox-submit">Send</button>
+
+{% block content %}
+<div class="chatpage-container row">
+  <div class="convo-list col-2">
+    <ul>
+      <!-- insert list of conversations here -->
+    </ul>
+  </div>
+
+  <!-- The chat history, scroll bar, and text input -->
+  <div class="chatroom-container col-10">
+    <div class="scrollbar" id="chat-scrollbar">
+      <div id="chat-history" class="chat-history">
+        <!-- Messages will be inserted here dynamically -->  
+      </div>
+    </div>
+    <div class="chatbox-area">
+      <div class="chatbox">
+        <textarea id="chatbox-content" name="message" placeholder="Send a message..." maxlength="300"></textarea>
+        <button id="chatbox-submit"><i class="fa fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

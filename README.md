@@ -1,13 +1,25 @@
 # CITS3403 Web Project
 
 ## **TODOS**
-- [ ] Fix hamburger expansion of navbar links
-- [ ] Robot image is too big - title should fit in centre of banner, and robot is small and below it
-- [ ] Add scrollable chatroom view
-- [ ] Save conversation history to database - TIn chi and Martin
+
+### General
+- [ ] Define colour classes for bg and fg and replace all reference to colours with those classes
+- [ ] Clean up CSS style - remove CSS and JS from HTML attributes, remove uneeded CSS properties
+- [ ] Style scroll bar
+
+
+### Home
 - [ ] Image (the gif) is too small - design of webpage should focus on images, should make it bigger
     - [ ] suggestion: replace signup and login into single button, when clicked, go to sign up with extra link going to login?
-- [ ] Fix social media not appearing in homepage
+- [ ] Turn background colour of navbar solid when links turn into hamburger
+    
+### Chatroom
+- [ ] Add conversation list to the left of the chatroom - click to see previous conversations
+
+### Other
+- [ ] Save conversation history to database
+
+
 
 ## Authors
 - Cohen Rafiq 23348918

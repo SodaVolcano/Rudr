@@ -17,8 +17,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N"
     crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='base.js')  }}"> </script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='colours.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
   {% block css %} {% endblock %}
   {% block script %} {% endblock %}
@@ -26,31 +28,47 @@
 </head>
 
 <body>
+{% block header %}
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent container-fluid">
+    <!-- screen overlay -->
+    <div class="overlay" id="overlay-nav">
+      <a href="javascript:void(0)" class="closebtn">&times;</a>
+      <div class="overlay-content">
+        <a href="{{ url_for('.about') }}">About</a>
+        <a href="{{ url_for('.chat') }}">Chat</a>
+        <a href="{{ url_for('.login') }}">Login</a>
+        <a href="{{ url_for('.signup') }}">Sign Up</a>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-transparent fixed-top">
       <div class="container-fluid">
         <!-- logo -->
         <div class="d-flex justify-content-start">
-          <a class="navbar-brand site-logo mt-2" href="index" draggable="false">
+          <a class="navbar-brand site-logo mt-2" href="{{ url_for('.index') }}" draggable="false">
             <img src="{{ url_for('static', filename='Logo2.png') }}" alt="Logo" class="img-fluid" draggable="false">
           </a>
         </div>
+  
+        <!-- hamburger menu -->
+        <span class="hamburger-menu d-block d-md-none">&#9776; </span>
 
-        <!-- nav links -->
-        <div class="d-flex justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
+        <!-- navigation links -->
+        <!-- (maybe change from ul to a div) -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto justify-content-end">
             <li>
-              <a href="{{ url_for('.about') }}" draggable="false">About Us</a>
+              <a href="{{ url_for('.about') }}" draggable="false">About</a>
             </li>
             <li>
-              <a href="{{ url_for('.chat') }}" draggable="false">Start Chatting</a>
+              <a href="{{ url_for('.chat') }}" draggable="false">Chat</a>
             </li>
             {% if current_user.is_anonymous %}
             <li>
-              <a id="open-loginform" href="{{ url_for('.login') }}">Login Form</a>
+              <a id="open-loginform" href="{{ url_for('.login') }}" draggable="false">Login</a>
             </li>
             <li>
-              <a id="open-registerform" href="{{ url_for('.signup') }}">Sign Up</a>
+              <a id="open-registerform" href="{{ url_for('.signup') }}" draggable="false">Sign Up</a>
             </li>
             {% else %}
             <li>
@@ -62,12 +80,13 @@
       </div>
     </nav>
   </header>
+  <script src="{{ url_for('static', filename='hamburger.js') }}"></script>
+{% endblock %}
 
-  {% block content %}
-
-  {% endblock %}
-
-
+<main>
+{% block content %}
+{% endblock %}
+</main>
 
   <footer>
 

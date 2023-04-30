@@ -1,0 +1,173 @@
+html, body, main {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+/* FUCK YOU BOOTSTRAP */
+.row {
+    margin: 0;
+    padding: 0;
+}
+
+.chatpage-container {
+    height: 100%;
+    width: 100%;
+}
+
+.convo-list {
+    border: 2px solid #ccc;
+}
+
+.chatroom-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    height: 100%;
+}
+
+.scrollbar {
+    flex: 9;
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--background-colour-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--foreground-purple);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--foreground-purple-hover);
+}
+
+.chat-history {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+/* padding and position of the chatbox */
+.chatbox-area {
+    height: 15%;
+    padding: 35px 20%;
+}
+
+.chatbox {
+    /*border: 2px solid #444;*/
+    border-radius: 10px;
+    padding: 5px 5px;
+    background-color: var(--foreground-blue);
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+}
+
+.chatbox textarea, .chatbox textarea:focus {
+    /* Remove default styling */
+    overflow: auto;
+    border: none;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    resize: none;  /* Stop user from resizing it */
+
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-colour);
+    color: var(--text-colour-primary);
+    padding: 10px 20px;   /* Fake vertical alignment */
+    border-radius: 15px;
+}
+
+
+.chatbox button {
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    display: flex;  /* centre icon inside the button */
+    align-items: center;
+    justify-content: center;  /* center the icon */
+    border: none;
+}
+
+.chatbox i {
+    color: var(--text-colour-primary);
+}
+
+.msg-user-wrapper {
+    padding: 15px;
+    padding-left: 30px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+}
+
+.msg-bot-wrapper {
+    padding: 15px;
+    padding-right: 30px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.speech-bubble {
+    border-radius: 10px;
+    padding: 10px 20px;
+
+    max-width: 500px;
+
+    background-color: transparent;
+    border: 3px solid var(--foreground-blue);
+
+    display: inline-block;
+    height: 100%;
+    position: relative;
+}
+
+.speech-bubble p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* https://projects.verou.me/bubbly/ */
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: var(--foreground-blue);
+	border-bottom: 0;
+	margin-bottom: -20px;
+}
+
+.msg-bot-wrapper .speech-bubble:after {
+    left: 10%;
+	border-left: 0;
+}
+
+.msg-user-wrapper .speech-bubble:after {
+    right: 10%;
+	border-right: 0;
+}

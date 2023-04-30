@@ -31,7 +31,7 @@ class ChatbotMediator:
         """Structure the reply from the chatbot, e.g. split by period"""
         # Matches whitespace preceded by any number and combo of ., !, ?
         pattern = r"(?<=[.!?])\s"
-        return re.split(pattern, reply)
+        return [i for i in re.split(pattern, reply) if i != ""]
 
 
 class ChatbotAgent:
@@ -65,7 +65,10 @@ class ChatbotAgent:
         i = 0
 
         for _ in range(n_replies):
-            reply += f"{i} {random.choice(lines)[:-1]} "  # -1 removes newline
+            string = random.choice(lines).strip()
+            if string == "":
+                continue
+            reply += f"{i} {string} "
             i += 1
         # Include bot ID for debugging
         return reply
