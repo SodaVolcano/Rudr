@@ -49,8 +49,8 @@ class Robot(db.Model):
     conversations = db.relationship("Conversations", backref="robot", lazy="dynamic")
 
     # Add new robot to database
-    def add_robot(name, profile_link):
-        robot = Robot(name=name, profile_link=profile_link)
+    def add_robot(name, profile_link,id):
+        robot = Robot(name=name, profile_link=profile_link, id=id)
 
         db.session.add(robot)
         db.session.commit()

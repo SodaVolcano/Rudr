@@ -36,6 +36,26 @@ def chat():
     print("Arrived at chat")
     return render_template("chat.html")
 
+@main.route("/get_conversations", methods=["GET"])
+def get_conversations():
+    # get conversations and check if empty
+    print("Getting conversations for user: " + str(current_user.id))
+    get_conversation = Conversations.query.filter_by(user_id=current_user.id).all()
+    if get_conversation is None:
+        print("No conversations!")
+        return jsonify({"status": "EMPTY", "conversations": None})
+    
+    # convert to json object
+    my_conversations = {}
+    for conversation in get_conversation:
+        print("CONVERSATION " + str(conversation.id) + ": " + str(conversation.user_id) + " , " + str(conversation.robot_id))
+        # convert conversation to json array
+        temp = {"user_id" : conversation.user_id, "robot_id": conversation.robot_id}
+
+        # add to conversation
+        my_conversations[conversation.id] = temp    
+    return jsonify({"status": "OK", "conversations": my_conversations})
+
 
 @main.route("/process-msg", methods=["POST"])
 def process_msg():
@@ -94,7 +114,7 @@ def init_chatbot():
     session["chatbot"] = ChatbotAgent("random")
 
     # add new robot
-    Robot.add_robot("rob", "")
+    Robot.add_robot("rob", "", session["chatbot"].id)
 
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
 

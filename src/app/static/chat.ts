@@ -25,13 +25,13 @@ function main() {
     minChatboxHeight = parseFloat(computedStyle.height);
 
     $('#chatbox-submit')[0].addEventListener('click', QueueMessage);
-    $('#chatbox-content')[0].addEventListener('keydown', function(event) {
+    $('#chatbox-content')[0].addEventListener('keydown', function (event) {
         if (event.key === 'Enter')
             QueueMessage(event);
     });
+    $('#new-chat')[0].addEventListener('click', newChat);
+    $.get("/get_conversations").done(displayConversations);
 
-    $.post("/init_chatbot").done(checkBotInit);
-    $.post("/init_conversation").done(checkConversationInit)
 
     // Reset timer when user types in chatbox
     // Timer is also reset when user presses submit
@@ -41,7 +41,7 @@ function main() {
     $(window)[0].addEventListener('resize', delayWindowResize);
 
     // Prevent newline when ENTER is not pressed with SHIFT
-    $('#chatbox-content').on('keydown', function(event: any) {
+    $('#chatbox-content').on('keydown', function (event: any) {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
             adjustHeight(event);
@@ -49,8 +49,8 @@ function main() {
     });
 
     // Scrollbar - scroll to bottom if user hasn't scrolled up
-    $('#chat-scrollbar')[0].addEventListener('scroll', function(event) {
-        const scrollbar = <HTMLDivElement> event.target;
+    $('#chat-scrollbar')[0].addEventListener('scroll', function (event) {
+        const scrollbar = <HTMLDivElement>event.target;
         if (scrollbar.scrollTop !== scrollbar.scrollHeight - scrollbar.clientHeight)
             scrolledUp = true;
         else
@@ -60,12 +60,42 @@ function main() {
 
 
 
-function checkConversationInit(response) {
+function checkConversationInit(response: any) {
     if (response.status !== 'OK')
         throw new Error("Failed to initialise conversation");
     console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
 }
 
+/**
+ * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
+ */
+
+function displayConversations(response: any) {
+    if (response.status != 'EMPTY') {
+        console.log("Printing Conversations");
+        let all_conversations = response.conversations;
+        // Loop through each conversation
+        for (let conversation in all_conversations) {
+            if (all_conversations.hasOwnProperty(conversation)) {
+                console.log(conversation + ': ' + all_conversations[conversation]);
+
+                // if value is another dictionary, iterate through it
+                for (let id in all_conversations[conversation]) {
+                    if (all_conversations[conversation].hasOwnProperty(id)) {
+                        console.log('  ' + id + ': ' + all_conversations[conversation][id]);
+                    }
+                }
+            }
+
+            // get conversation and add it to the ul list on /chat
+        }
+    }
+}
+
+function newChat() {
+    $.post("/init_chatbot").done(checkBotInit);
+    $.post("/init_conversation").done(checkConversationInit)
+}
 
 // ======================== textarea resizing ========================
 
@@ -78,7 +108,7 @@ function delayWindowResize() {
     // Clear existing timeout to avoid multiple resizes
     if (resizeTimeout)
         clearTimeout(resizeTimeout);
-    
+
     resizeTimeout = setTimeout(adjustHeight, 20);
 }
 
@@ -87,18 +117,18 @@ function delayWindowResize() {
  */
 function adjustHeight(event: Event) {
     const chatboxArea = $('.chatbox-area')[0];
-    const textarea: HTMLTextAreaElement = <HTMLTextAreaElement> $('#chatbox-content')[0];
+    const textarea: HTMLTextAreaElement = <HTMLTextAreaElement>$('#chatbox-content')[0];
     // Reset height - always adjust height from min height
     // This allows box to shrink when user deletes messages
     chatboxArea.style.height = minChatboxHeight + 'px';
-    
+
     const computedStyle = window.getComputedStyle(chatboxArea);
     const height = parseFloat(computedStyle.height);
 
     // If at min height, textarea overflows, expand chatbox
     if (textarea.scrollHeight > textarea.clientHeight) {
         const newHeight = Math.min(
-            height + textarea.scrollHeight - textarea.clientHeight, 
+            height + textarea.scrollHeight - textarea.clientHeight,
             maxChatboxHeight
         );
         chatboxArea.style.height = newHeight + 'px';
@@ -148,10 +178,10 @@ function sendQueuedMessages() {
     $.ajax({
         url: '/process-msg',
         method: 'POST',
-        data: {messages: JSON.stringify(messageQueue)},
+        data: { messages: JSON.stringify(messageQueue) },
         dataType: 'json',
         success: recieveBotReply,
-        error: function() {throw new Error("Failed to send messages to server")}
+        error: function () { throw new Error("Failed to send messages to server") }
     })
     console.log(`message list sent to server ${messageQueue}}`);
     messageQueue.length = 0;
@@ -163,7 +193,7 @@ function sendQueuedMessages() {
 function QueueMessage(event: Event) {
     let message = $('#chatbox-content').val();
 
-    if (typeof(message) !== 'string')
+    if (typeof (message) !== 'string')
         throw new Error("Message is not a string");
 
     message = message.trim();

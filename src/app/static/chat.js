@@ -24,8 +24,8 @@ function main() {
         if (event.key === 'Enter')
             QueueMessage(event);
     });
-    $.post("/init_chatbot").done(checkBotInit);
-    $.post("/init_conversation").done(checkConversationInit)
+    $('#new-chat')[0].addEventListener('click', newChat);
+    $.get("/get_conversations").done(displayConversations);
     // Reset timer when user types in chatbox
     // Timer is also reset when user presses submit
     $('#chatbox-content').on('keydown', resetTimer);
@@ -47,6 +47,37 @@ function main() {
             scrolledUp = false;
     });
 }
+function checkConversationInit(response) {
+    if (response.status !== 'OK')
+        throw new Error("Failed to initialise conversation");
+    console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+}
+/**
+ * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
+ */
+function displayConversations(response) {
+    if (response.status != 'EMPTY') {
+        console.log("Printing Conversations");
+        let all_conversations = response.conversations;
+        // Loop through each conversation
+        for (let conversation in all_conversations) {
+            if (all_conversations.hasOwnProperty(conversation)) {
+                console.log(conversation + ': ' + all_conversations[conversation]);
+                // if value is another dictionary, iterate through it
+                for (let id in all_conversations[conversation]) {
+                    if (all_conversations[conversation].hasOwnProperty(id)) {
+                        console.log('  ' + id + ': ' + all_conversations[conversation][id]);
+                    }
+                }
+            }
+            // get conversation and add it to the ul list on /chat
+        }
+    }
+}
+function newChat() {
+    $.post("/init_chatbot").done(checkBotInit);
+    $.post("/init_conversation").done(checkConversationInit);
+}
 // ======================== textarea resizing ========================
 /**
  * Delay the window resize event so it's run after bootstrap adjustment
@@ -59,14 +90,6 @@ function delayWindowResize() {
         clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(adjustHeight, 20);
 }
-
-function checkConversationInit(response) {
-    if (response.status !== 'OK')
-        throw new Error("Failed to initialise conversation");
-    console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
-}
-
-
 /**
  * Adjust height of the chatbox
  */
