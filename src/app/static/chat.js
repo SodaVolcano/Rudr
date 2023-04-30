@@ -189,3 +189,4 @@ async function displayMessage(message, isFromUser) {
     }
     resolve();
   });
+}
