@@ -8,7 +8,10 @@
   }
   
   #login-box {
-    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 80%;
     background: #FFFFFF;
     border-radius: 10px;
@@ -19,6 +22,7 @@
     justify-content: space-between;
     box-shadow: 0 0 20px 6px #090b6f85;
   }
+  
 
   @media (max-width: 980px) {
     #login-box {
@@ -33,11 +37,11 @@
     color: #FFFFFF;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("https://i.pinimg.com/736x/5d/73/ea/5d73eaabb25e3805de1f8cdea7df4a42--tumblr-backgrounds-iphone-phone-wallpapers-iphone-wallaper-tumblr.jpg");
+    background-image: url("https://thumbs.gfycat.com/AccurateLimpingAchillestang-max-1mb.gif");
     overflow: hidden;
   }
 
-  #left .overlay {
+  #left .login-overlay {
     padding: 30px;
     width: 100%;
     height: 100%;
@@ -84,76 +88,3 @@
     outline: none;
     border-bottom: 2px solid #B0B3B9;
   }
-
-
-  a {
-    color: var(--text-colour-hover);
-  }
-  
-  a:hover {
-    color: var(--text-colour-secondary);
-  }
-  
-  #login-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding: 50px;
-  }
-  
-  #left {
-    flex: 1;
-    padding: 50px;
-    background-color: var(--background-colour-alpha);
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  #right {
-    flex: 1;
-    padding: 50px;
-    background-color: var(--background-colour-alpha);
-    border-radius: 10px;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  #loginForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  #loginForm p {
-    margin: 10px 0;
-    width: 100%;
-  }
-  
-  #username-input,
-  #password-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: none;
-    border-radius: 5px;
-  }
-  
-  #login-button {
-    background-color: var(--default-gradient);
-    color: var(--text-colour-primary);
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  #login-button:hover {
-    background-color: var(--gradient-colour-two);
-  }
-  
-  #error-message {
-    color: var(--error-colour);
-  }
-  
