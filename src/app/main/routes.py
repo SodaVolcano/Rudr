@@ -36,6 +36,7 @@ def chat():
     print("Arrived at chat")
     return render_template("chat.html")
 
+
 @main.route("/replace_conversation", methods=["POST"])
 def replace_conversation():
     conversation_id = request.form.get("id")
@@ -45,15 +46,18 @@ def replace_conversation():
     for result in query:
         print(result)
         msg = {
-            "id" : result.id,
+            "id": result.id,
             "content": result.body,
             "conversationID": result.conversation_ID,
             "speaker": result.speaker,
             "emotion": result.emotion,
-            "timestamp": result.timestamp
+            "timestamp": result.timestamp,
         }
         messages.append(msg)
-    return jsonify({"status": "OK","conversation_id": conversation_id, "conversation": messages})
+    return jsonify(
+        {"status": "OK", "conversation_id": conversation_id, "conversation": messages}
+    )
+
 
 @main.route("/get_conversations", methods=["GET"])
 def get_conversations():
