@@ -4,6 +4,7 @@ from flask import render_template, redirect, url_for, flash, request, session, j
 from werkzeug.urls import url_parse
 from flask_wtf import FlaskForm
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_session import Session
 
 from . import main
 from .forms import LoginForm, RegisterForm
@@ -27,8 +28,8 @@ def about():
     return render_template("about_us.html")
 
 
-@login_required
 @main.route("/chat", methods=["GET"])
+@login_required
 def chat():
     print("Arrived at chat")
     return render_template("chat.html")

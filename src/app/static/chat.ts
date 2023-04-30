@@ -16,10 +16,18 @@ function main() {
     });
 
     $.post("/init_chatbot").done(checkBotInit);
+    $.post("/init_conversation").done(checkConversationInit)
 
     // Reset timer when user types in chatbox
     // Timer is also reset when user presses submit
     $('#chatbox-content').on('keydown', resetTimer);
+}
+
+
+function checkConversationInit(response) {
+    if (response.status !== 'OK')
+        throw new Error("Failed to initialise conversation");
+    console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
 }
 
 /**
