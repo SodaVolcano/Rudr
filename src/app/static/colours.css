@@ -8,4 +8,5 @@
     --gradient-colour-one: #bd77f5;
     --gradient-colour-two: #4f5de2;
     --default-gradient: linear-gradient(to bottom, var(--gradient-colour-one), var(--gradient-colour-two));
+    --error-colour: #ffcccb;
   }

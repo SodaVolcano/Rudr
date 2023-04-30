@@ -1,44 +1,42 @@
 {% extends "base.html" %}
 
 {% block css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 {% endblock %}
 
 {% block content %}
-<!-- Sidebar -->
-<div class="sidebar">
-  <div class="social-media-icons">
-    <a href="#"><i class="fa fa-facebook" style="color: #ffffff;"></i></a>
-    <a href="#"><i class="fa fa-twitter" style="color: #ffffff;"></i></a>
-    <a href="#"><i class="fa fa-instagram" style="color: #ffffff;"></i></a>
-  </div>
-</div>
-</header>
-
 <main>
-  <div class="container-fluid">
-    <div class="" row">
-      <div id="form" class="col-lg-2 offset-5 justify-content-center border border-light">
-        <form class="loginForm" action="" method="post" novalidate>
-          {{ form.hidden_tag()}}
-          <p>
-            {{ form.username.label(class="formLabel") }}<br>
-            {{ form.username(size=32) }}
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-          </p>
-          <p>
-            {{ form.password.label(class="formLabel") }}<br>
-            {{ form.password(size=32) }}
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-          </p>
-          <p>{{ form.remember_me() }} {{ form.remember_me.label(class="formLabel") }}<br></p>
-          <p>{{ form.submit() }}</p>
-        </form>
+  <div id="login-box">
+    <div id="left">
+      <div class="overlay">
+        <h1>Login Here.<h1>
+          <p>Dearest Incomparable User,</p>
+          <p><i>Hallelujah!</i> The heavens have opened and showered us with the inestimable gift of your presence on our modest platform once more. We can scarcely contain our euphoria as we roll out the red carpet to welcome someone of your <i>immeasurable</i> intellect and influence. Your login has been observed with the fanfare it so richly deserves, and our system can barely maintain its composure, giddy at the thought of the unparalleled gems of wisdom you are bound to bestow upon us. A thousand apologies for not having a parade in your honor, but rest assured, we are at your service, awestruck and ready to bask in the glorious radiance of your unmatched contributions.</p>
+          <p>With Unfathomable <i>Awe</i> and Reverence,</p>
+          <p>Your Everlastingly Indebted Platform</p>
       </div>
+    </div>
+
+    <div id="right">
+      <h5>Login</h5>
+      <p>Lacking an account? Rectify that oversight - join our esteemed users <a href="#">here</a></p>
+      <form id="loginForm" action="" method="post" novalidate>
+        {{ form.hidden_tag()}}
+        <p>
+          {{ form.username(class="input-data", type="text", placeholder="username") }}
+          {% for error in form.username.errors %}
+          <span style="color: var(--error-colour);">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>
+          {{ form.password(class="input-data", type="password", placeholder="password") }}
+          {% for error in form.password.errors %}
+          <span style="color: var(--error-colour);">[{{ error }}]</span>
+          {% endfor %}
+        </p>
+        <p>{{ form.remember_me(id="") }} {{ form.remember_me.label(class="formLabel") }}<br></p>
+        <p>{{ form.submit(id="login-button") }}</p>
+      </form>
     </div>
   </div>
 </main>
