@@ -47,6 +47,9 @@ function main() {
             scrolledUp = false;
     });
 }
+/**
+ * Esnure conversation initialisation is ok
+ */
 function checkConversationInit(response) {
     if (response.status !== 'OK')
         throw new Error("Failed to initialise conversation");
@@ -64,25 +67,40 @@ function displayConversations(response) {
         console.log("Printing Conversations");
         let all_conversations = response.conversations;
         // Loop through each conversation
-        for (let conversation in all_conversations) {
-            if (all_conversations.hasOwnProperty(conversation)) {
-                console.log(conversation + ': ');
-                for (let id in all_conversations[conversation]) {
-                    if (all_conversations[conversation].hasOwnProperty(id)) {
-                        console.log('  ' + id + ': ' + all_conversations[conversation][id]);
-                    }
-                }
-            }
+        for (let i = 0; i < all_conversations.length; i++) {
+            let current = all_conversations[i];
+            console.log(current);
             // get conversation and add it to the ul list on /chat
-            const textNode = document.createTextNode(conversation);
-            textNode.addEventListener("click", changeConversation);
-            conversationList.appendChild(textNode);
+            const conversationElement = document.createElement("ul");
+            conversationElement.textContent = current;
+            conversationElement.addEventListener("click", () => {
+                changeConversation(current);
+            });
+            conversationList.appendChild(conversationElement);
         }
     }
 }
-function changeConversation() {
-    return null;
+/**
+ * Change the current display of conversation to the required conversation attached to the event
+ */
+function changeConversation(conversation_id) {
+    $.ajax({
+        url: '/replace_conversation',
+        method: 'POST',
+        data: { id: conversation_id },
+        dataType: 'json',
+        success: receiveConversation,
+        error: function () { throw new Error("Failed to send messages to server"); }
+    });
 }
+function receiveConversation(response) {
+    if (response.status !== 'OK')
+        throw new Error("Failed to initialise conversation");
+    console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+}
+/**
+ * Initialise a new conversation and initialise the respective chatbot
+ */
 function newChat() {
     $.post("/init_chatbot").done(checkBotInit);
     $.post("/init_conversation").done(checkConversationInit);

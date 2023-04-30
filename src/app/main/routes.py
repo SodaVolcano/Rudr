@@ -36,6 +36,24 @@ def chat():
     print("Arrived at chat")
     return render_template("chat.html")
 
+@main.route("/replace_conversation", methods=["POST"])
+def replace_conversation():
+    conversation_id = request.form.get("id")
+    print("Replacing with conversation: " + conversation_id)
+    query = Messages.query.filter_by(conversation_ID=conversation_id).all()
+    messages = []
+    for result in query:
+        print(result)
+        msg = {
+            "id" : result.id,
+            "content": result.body,
+            "conversationID": result.conversation_ID,
+            "speaker": result.speaker,
+            "emotion": result.emotion,
+            "timestamp": result.timestamp
+        }
+        messages.append(msg)
+    return jsonify({"status": "OK","conversation_id": conversation_id, "conversation": messages})
 
 @main.route("/get_conversations", methods=["GET"])
 def get_conversations():
@@ -47,21 +65,10 @@ def get_conversations():
         return jsonify({"status": "EMPTY", "conversations": None})
 
     # convert to json object
-    my_conversations = {}
+    my_conversations = []
     for conversation in get_conversation:
-        print(
-            "CONVERSATION "
-            + str(conversation.id)
-            + ": "
-            + str(conversation.user_id)
-            + " , "
-            + str(conversation.robot_id)
-        )
-        # convert conversation to json array
-        temp = {"user_id": conversation.user_id, "robot_id": conversation.robot_id}
-
-        # add to conversation
-        my_conversations[conversation.id] = temp
+        print(conversation.id)
+        my_conversations.append(conversation.id)
     return jsonify({"status": "OK", "conversations": my_conversations})
 
 
