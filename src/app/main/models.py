@@ -34,6 +34,7 @@ class Users(UserMixin, db.Model):
         return "<User {}>".format(self.username)
 
     # Add new user to database
+    @staticmethod
     def add_user(username, email, password):
         user = Users(username=username, email=email)
         user.set_password(password)
@@ -49,7 +50,7 @@ class Robot(db.Model):
     conversations = db.relationship("Conversations", backref="robot", lazy="dynamic")
 
     # Add new robot to database
-    def add_robot(name, profile_link):
+    def add_robot(self, name, profile_link):
         robot = Robot(name=name, profile_link=profile_link)
 
         db.session.add(robot)

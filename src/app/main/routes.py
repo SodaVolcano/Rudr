@@ -16,8 +16,6 @@ import json
 import json
 import random
 
-from app import db
-
 
 @main.route("/", methods=["GET", "POST"])
 @main.route("/index", methods=["GET", "POST"])

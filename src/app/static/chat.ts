@@ -1,3 +1,20 @@
+interface BotResponse {
+  status: string;
+  messages: string[];
+}
+
+interface BotInitResponse {
+  status: string;
+  bot_id: string;
+}
+
+interface ConversationInitResponse {
+  status: string;
+  conversation_id: string;
+  error: string;
+}
+
+
 window.onload = main;
 
 // ======================== global variables ========================
@@ -56,7 +73,7 @@ function main() {
 
 
 
-function checkConversationInit(response) {
+function checkConversationInit(response: ConversationInitResponse) {
     if (response.status !== 'OK')
         throw new Error("Failed to initialise conversation");
     console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
@@ -115,7 +132,7 @@ function delay(duration: number): Promise<void> {
   });
 }
 
-async function recieveBotReply(response: any): Promise<void> {
+async function recieveBotReply(response: BotResponse): Promise<void> {
   if (response.status !== "OK") throw new Error("Failed to recieve bot reply");
   console.log("recieved bot reply");
   for (let message of response.messages) {
@@ -123,7 +140,7 @@ async function recieveBotReply(response: any): Promise<void> {
   }
 }
 
-function checkBotInit(response: any) {
+function checkBotInit(response: BotInitResponse) {
   if (response.status !== "OK") throw new Error("Failed to initialise bot");
 
   console.log(`SUCCESS: Bot initialised with id ${response.bot_id}`);
@@ -193,7 +210,7 @@ function resetTimer() {
  * @param sender  whether the message was sent by the user or the bot
  */
 async function displayMessage(message: string, isFromUser: boolean) {
-  return new Promise(async (resolve) => {
+  return new Promise<void>(async (resolve) => {
     let cssClass = "";
     if (isFromUser) {
       cssClass = "msg-user-wrapper";

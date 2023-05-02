@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 
 {% block css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='login_signup.css') }}">
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='scroll.js') }}"> </script>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
+<div class="container-fluid" style="margin: 300px">
   <div class="row">
     <div id="form" class="col-lg-2 offset-5 justify-content-center border border-light">
       <form class="registerForm" action="" method="post" novalidate>
