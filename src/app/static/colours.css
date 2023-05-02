@@ -5,8 +5,10 @@
     --text-colour-primary: white;
     --text-colour-secondary: #818181;
     --text-colour-hover: #f1f1f1;
-    --gradient-colour-one: #bd77f5;
-    --gradient-colour-two: #4f5de2;
+    --gradient-colour-one: rgb(189, 119, 245);
+    --gradient-colour-two: rgb(79, 93, 226);
+    --gradient-colour-one-alpha: rgba(189, 119, 245, 0.6);
+    --gradient-colour-two-alpha: rgba(79, 93, 226, 0.6);
     --default-gradient: linear-gradient(to bottom, var(--gradient-colour-one), var(--gradient-colour-two));
     --error-colour: #ffcccb;
   }
