@@ -12,7 +12,7 @@ def load_user(id):
 
 
 # User Table
-class Users(UserMixin, db.Model):
+class Users(db.Model, UserMixin):
     # Primary key
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -33,9 +33,9 @@ class Users(UserMixin, db.Model):
     def __repr__(self):
         return "<User {}>".format(self.username)
 
-    # Add new user to database
     @staticmethod
     def add_user(username, email, password):
+        '''Add new user to database'''
         user = Users(username=username, email=email)
         user.set_password(password)
 
@@ -49,13 +49,13 @@ class Robot(db.Model):
     profile_link = db.Column(db.String(100))
     conversations = db.relationship("Conversations", backref="robot", lazy="dynamic")
 
-    # Add new robot to database
-    def add_robot(self, name, profile_link):
+    @staticmethod
+    def add_robot(name, profile_link):
+        '''Add new robot to database'''
         robot = Robot(name=name, profile_link=profile_link)
 
         db.session.add(robot)
         db.session.commit()
-
 
 class Conversations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -64,7 +64,7 @@ class Conversations(db.Model):
 
     messages = db.relationship("Messages", backref="conversation", lazy="dynamic")
 
-    # add new conversation
+    @staticmethod
     def add_conversation(id: int, user_id: int, robot_id: int):
         conversation = Conversations(
             id=id,
@@ -75,8 +75,8 @@ class Conversations(db.Model):
         db.session.add(conversation)
         db.session.commit()
 
-    # check if conversation exists
-    def conversation_exists(self, id):
+    @staticmethod
+    def conversation_exists(id):
         conversation = Conversations.query.filter_by(id=id).first()
         return conversation is not None
 
@@ -112,6 +112,7 @@ class Messages(db.Model):
         return "<Post {}>".format(self.body)
         # Add new message
 
+    @staticmethod
     def add_msg(content: str, emote: str, speaker: str, conversationID: int):
         message = Messages(
             body=content,
@@ -123,8 +124,9 @@ class Messages(db.Model):
         db.session.add(message)
         db.session.commit()
 
-    # Get a certain amount of messages from the database, from a given conversation, in chronological order
+    @staticmethod
     def get_messages(conversation: Conversations, amount: int):
+        """Get a certain amount of messages from the database, from a given conversation, in chronological order"""
         msgs = (
             Messages.query.order_by(Messages.timestamp)
             .filter_by(conversation_ID=conversation.id)
