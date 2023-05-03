@@ -35,7 +35,7 @@ class Users(db.Model, UserMixin):
 
     @staticmethod
     def add_user(username, email, password):
-        '''Add new user to database'''
+        """Add new user to database"""
         user = Users(username=username, email=email)
         user.set_password(password)
 
@@ -51,11 +51,12 @@ class Robot(db.Model):
 
     @staticmethod
     def add_robot(name, profile_link):
-        '''Add new robot to database'''
+        """Add new robot to database"""
         robot = Robot(name=name, profile_link=profile_link)
 
         db.session.add(robot)
         db.session.commit()
+
 
 class Conversations(db.Model):
     id = db.Column(db.Integer, primary_key=True)
