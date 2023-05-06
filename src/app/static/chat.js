@@ -110,7 +110,7 @@ function receiveConversation(response) {
             isFromUser = false;
         }
         console.log(response.conversation[i].content);
-        displayMessage(response.conversation[i].content, isFromUser);
+        reDisplayMessage(response.conversation[i].content, isFromUser);
     }
 }
 /**
@@ -235,12 +235,12 @@ async function displayMessage(message, isFromUser) {
     if (isFromUser) {
       cssClass = "msg-user-wrapper";
       $(".chat-history").append(
-        `<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
+        `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
       );
     } else {
       cssClass = "msg-bot-wrapper";
       $(".chat-history").append(
-        `<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`
+        `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p id="new-message">${message}</p></div></div>`
       );
     }
     if (!scrolledUp) {
@@ -257,7 +257,30 @@ async function displayMessage(message, isFromUser) {
   });
 }  
 
+
+function reDisplayMessage(message, isFromUser) {
+    let cssClass = "";
+
+    if (isFromUser) {
+      cssClass = "msg-user-wrapper";
+      $(".chat-history").append(
+        `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
+      );
+    } else {
+      cssClass = "msg-bot-wrapper";
+      $(".chat-history").append(
+        `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p id="new-message">${message}</p></div></div>`
+      );
+    }
+    if (!scrolledUp) {
+      $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
+    }
+}
+
 function clearConversation() {
-    $("#messages").remove();
+    var chatHistory = document.getElementById("chat-history");
+    while(chatHistory.firstChild){
+        chatHistory.firstChild.remove()
+    }
 }
 
