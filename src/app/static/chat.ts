@@ -94,19 +94,36 @@ function displayConversations(response: any) {
         }
     }
 }
-
 /**
  * Change the current display of conversation to the required conversation attached to the event
  */
 function changeConversation(conversation_id: string){
-    $.get("/replace_conversation").done(receiveConversation);
+    $.ajax({
+        url: '/replace_conversation',
+        method: 'GET',
+        data: { new_id: JSON.stringify(conversation_id) },
+        dataType: 'json',
+        success: receiveConversation,
+        error: function () { throw new Error("Failed to change conversation") }
+    })
 }
 
 function receiveConversation(response: any){
     if (response.status !== 'OK')
         throw new Error("Failed to initialise conversation");
     // replace current conversation messages with the given ones
-    console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+    console.log(`SUCCESS: New Conversation initialised with id ${response.conversation_id}`);
+    clearConversation();
+    for(let i = 0; i < response.conversation.length; i++){
+        // check if from robot or user
+        let isFromUser = true;
+        console.log(response.conversation[i].speaker);
+        if(response.conversation[i].speaker == "robot"){
+            isFromUser = false;
+        }
+        console.log(response.conversation[i].content);
+        displayMessage(response.conversation[i].content, isFromUser);
+    }
 }
 /**
  * Initialise a new conversation and initialise the respective chatbot
@@ -256,8 +273,13 @@ function displayMessage(message: string, isFromUser: boolean) {
         cssClass = "msg-bot-wrapper";
 
     $('#chat-history').append(
-        `<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
+        `<div id="message" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
     );
     if (!scrolledUp)
         $('#chat-scrollbar')[0].scrollTop = $('.scrollbar')[0].scrollHeight;
+}
+
+
+function clearConversation(){
+    $("#messages").remove();
 }

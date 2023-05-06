@@ -37,11 +37,15 @@ def chat():
     return render_template("chat.html")
 
 
-@main.route("/replace_conversation", methods=["POST"])
+@main.route("/replace_conversation", methods=["GET"])
 def replace_conversation():
-    conversation_id = request.form.get("id")
-    print("Replacing with conversation: " + conversation_id)
+    conversation_id = request.args.get("new_id")
+    print("Replacing with conversation: " + str(conversation_id))
     query = Messages.query.filter_by(conversation_ID=conversation_id).all()
+
+    session["conversation_id"] = conversation_id
+    # session["chatbot"] = current chatbot, if changing
+
     messages = []
     for result in query:
         print(result)
@@ -69,11 +73,12 @@ def get_conversations():
         return jsonify({"status": "EMPTY", "conversations": None})
 
     # convert to json object
-    my_conversations = []
+    my_conversation = []
     for conversation in get_conversation:
         print(conversation.id)
-        my_conversations.append(conversation.id)
-    return jsonify({"status": "OK", "conversations": my_conversations})
+        my_conversation.append(conversation.id)
+    # return a list of all conversations
+    return jsonify({"status": "OK", "conversations": my_conversation})
 
 
 @main.route("/process-msg", methods=["POST"])
