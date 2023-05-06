@@ -165,6 +165,7 @@ function receiveConversation(response: receiveConversationResponse) {
 
 function changeConversation(conversation_id: string) {
   sendQueuedMessages();
+  resetTimer();
   
   $.ajax({
       url: '/replace_conversation',
