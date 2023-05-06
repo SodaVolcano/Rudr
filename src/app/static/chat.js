@@ -172,7 +172,7 @@ function recieveBotReply(response) {
             throw new Error("Failed to recieve bot reply");
         console.log("recieved bot reply");
         for (let message of response.messages) {
-            yield displayMessage(message, false);
+            yield reDisplayMessage(message, false);
         }
     });
 }
@@ -213,7 +213,7 @@ function QueueMessage(event) {
     if (message === "")
         // Ignore empty strings
         return;
-    displayMessage(message, true);
+    reDisplayMessage(message, true);
     $("#chatbox-content").val(""); // Clear message box
     messageQueue.push(message);
     console.log(`Message queued ${message}}`);
