@@ -35,16 +35,20 @@ def chat():
 
 @main.route("/replace_conversation", methods=["GET"])
 def replace_conversation():
-    conversation_id = request.args.get("new_id")
+    conversation_id = request.args.get("new_id").strip('"')
     print("Replacing with conversation: " + str(conversation_id))
-    query = Messages.query.filter_by(conversation_ID=conversation_id).all()
+    print("Getting conversation from db")
 
+    query = Messages.query.filter_by(conversation_ID=(conversation_id)).all()
     session["conversation_id"] = conversation_id
     session["chatbot"] = ChatbotAgent("random")
 
+    print(query)
+
     messages = []
+    print("listing msgs from db")
     for result in query:
-        print(result)
+        print(result.body)
         msg = {
             "id": result.id,
             "content": result.body,

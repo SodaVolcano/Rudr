@@ -249,7 +249,7 @@ async function recieveBotReply(response: BotResponse): Promise<void> {
   if (response.status !== "OK") throw new Error("Failed to recieve bot reply");
   console.log("recieved bot reply");
   for (let message of response.messages) {
-    await displayMessage(message, false);
+    await reDisplayMessage(message, false);
   }
 }
 
@@ -293,7 +293,7 @@ function QueueMessage(event: Event) {
     // Ignore empty strings
     return;
 
-  displayMessage(message, true);
+  reDisplayMessage(message, true);
   $("#chatbox-content").val(""); // Clear message box
 
   messageQueue.push(message);
