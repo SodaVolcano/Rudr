@@ -33,6 +33,50 @@ def chat():
     return render_template("chat.html")
 
 
+@main.route("/replace_conversation", methods=["GET"])
+def replace_conversation():
+    conversation_id = request.args.get("new_id")
+    print("Replacing with conversation: " + str(conversation_id))
+    query = Messages.query.filter_by(conversation_ID=conversation_id).all()
+
+    session["conversation_id"] = conversation_id
+    session["chatbot"] = ChatbotAgent("random")
+
+    messages = []
+    for result in query:
+        print(result)
+        msg = {
+            "id": result.id,
+            "content": result.body,
+            "conversationID": result.conversation_ID,
+            "speaker": result.speaker,
+            "emotion": result.emotion,
+            "timestamp": result.timestamp,
+        }
+        messages.append(msg)
+    return jsonify(
+        {"status": "OK", "conversation_id": conversation_id, "conversation": messages}
+    )
+
+
+@main.route("/get_conversations", methods=["GET"])
+def get_conversations():
+    # get conversations and check if empty
+    print("Getting conversations for user: " + str(current_user.id))
+    get_conversation = Conversations.query.filter_by(user_id=current_user.id).all()
+    if get_conversation is None:
+        print("No conversations!")
+        return jsonify({"status": "EMPTY", "conversations": None})
+
+    # convert to json object
+    my_conversation = []
+    for conversation in get_conversation:
+        print(conversation.id)
+        my_conversation.append(conversation.id)
+    # return a list of all conversations
+    return jsonify({"status": "OK", "conversations": my_conversation})
+
+
 @main.route("/process-msg", methods=["POST"])
 def process_msg():
     messages = request.form.get("messages")
@@ -89,7 +133,7 @@ def init_chatbot():
     session["chatbot"] = ChatbotAgent("random")
 
     # add new robot
-    Robot.add_robot("rob", "")
+    Robot.add_robot("rob", "", session["chatbot"].id)
 
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
 

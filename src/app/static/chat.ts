@@ -17,6 +17,44 @@ interface ConversationInitResponse {
 
 window.onload = main;
 
+
+interface BotResponse {
+  status: string;
+  messages: string[];
+}
+
+interface BotInitResponse {
+  status: string;
+  bot_id: string;
+}
+
+interface ConversationInitResponse {
+  status: string;
+  conversation_id: string;
+  error: string;
+}
+
+interface receiveConversationResponse {
+  status: string;
+  conversation_id: string;
+  conversation: message[];
+  error: string;
+}
+interface displayConversationListResponse {
+  status: string;
+  conversations: BigInteger[];
+  error: string;
+}
+
+interface message {
+  id: BigInteger;
+  content: string;
+  conversationID: BigInteger;
+  speaker: string;
+  emotion: string;
+  timestamp: EpochTimeStamp
+}
+
 // ======================== global variables ========================
 
 // When timer expires, send queued messages to server. reset on each input
@@ -46,7 +84,8 @@ function main() {
     if (event.key === "Enter") QueueMessage(event);
   });
 
-  $.post("/init_chatbot").done(checkBotInit);
+  $('#new-chat')[0].addEventListener('click', newChat);
+  $.get("/get_conversations").done(displayConversations);
 
   // Reset timer when user types in chatbox
   // Timer is also reset when user presses submit
@@ -71,13 +110,92 @@ function main() {
   });
 }
 
+// ================== conversation init and switiching ====================
 
+function checkConversationInit(response: ConversationInitResponse) {
+  if (response.status !== 'OK')
+    throw new Error("Failed to initialise conversation");
+  console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+}
+
+
+/**
+ * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
+ */
+function displayConversations(response: displayConversationListResponse) {
+  var conversationList = document.getElementById("conversations");
+  if (conversationList == null) {
+    return;
+  }
+  if (response.status != 'EMPTY') {
+    console.log("Printing Conversations");
+    let all_conversations = response.conversations;
+    // Loop through each conversation
+    for (let i = 0; i < all_conversations.length; i++) {
+      let current = all_conversations[i].toString();
+      console.log(current);
+      // get conversation and add it to the ul list on /chat
+      const conversationElement = document.createElement("ul");
+      conversationElement.textContent = current;
+      conversationElement.addEventListener("click", () => {
+        changeConversation(current);
+      });
+      conversationList.appendChild(conversationElement);
+    }
+  }
 
 function checkConversationInit(response: ConversationInitResponse) {
     if (response.status !== 'OK')
         throw new Error("Failed to initialise conversation");
     console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+
 }
+
+function receiveConversation(response: receiveConversationResponse) {
+  if (response.status !== 'OK')
+      throw new Error("Failed to initialise conversation");
+  // replace current conversation messages with the given ones
+  console.log(`SUCCESS: New Conversation initialised with id ${response.conversation_id}`);
+  clearConversation();
+  for (let i = 0; i < response.conversation.length; i++) {
+      // check if from robot or user
+      let isFromUser = true;
+      console.log(response.conversation[i].speaker);
+      if (response.conversation[i].speaker == "robot") {
+          isFromUser = false;
+      }
+      console.log(response.conversation[i].content);
+      reDisplayMessage(response.conversation[i].content, isFromUser);
+  }
+}
+
+function changeConversation(conversation_id: string) {
+  $.ajax({
+      url: '/replace_conversation',
+      method: 'GET',
+      data: { new_id: JSON.stringify(conversation_id) },
+      dataType: 'json',
+      success: receiveConversation,
+      error: function () { throw new Error("Failed to change conversation"); }
+  });
+}
+
+function clearConversation() {
+  let chatHistory = document.getElementById("chat-history");
+  if (chatHistory != null) {
+    while (chatHistory.firstChild) {
+      chatHistory.firstChild.remove()
+    }
+  }
+}
+
+function newChat() {
+  $.post("/init_chatbot").done(checkBotInit);
+  $.post("/init_conversation").done(checkConversationInit);
+  console.log("clearing chat");
+  clearConversation();
+}
+
 
 
 // ======================== textarea resizing ========================
@@ -142,7 +260,6 @@ async function recieveBotReply(response: BotResponse): Promise<void> {
 
 function checkBotInit(response: BotInitResponse) {
   if (response.status !== "OK") throw new Error("Failed to initialise bot");
-
   console.log(`SUCCESS: Bot initialised with id ${response.bot_id}`);
 }
 
@@ -235,4 +352,28 @@ async function displayMessage(message: string, isFromUser: boolean) {
     }
     resolve();
   });
+}
+
+/**
+ * Append a message to the chat HTML element, but without the typewriter effect for switching between conversations
+ * @param message string of the message to display
+ * @param sender  whether the message was sent by the user or the bot
+ */
+function reDisplayMessage(message: string, isFromUser: boolean) {
+  let cssClass = "";
+
+  if (isFromUser) {
+    cssClass = "msg-user-wrapper";
+    $(".chat-history").append(
+      `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
+    );
+  } else {
+    cssClass = "msg-bot-wrapper";
+    $(".chat-history").append(
+      `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p id="new-message">${message}</p></div></div>`
+    );
+  }
+  if (!scrolledUp) {
+    $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
+  }
 }

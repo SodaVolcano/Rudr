@@ -69,3 +69,4 @@ function typeWriterRemove(element) {
         element.style.borderRight = "none";
     });
 }
+
