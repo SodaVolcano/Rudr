@@ -62,8 +62,8 @@ def replace_conversation():
 @main.route("/get_conversations", methods=["GET"])
 def get_conversations():
     # get conversations and check if empty
-    print("Getting conversations for user: " + str(current_user.id))
-    get_conversation = Conversations.query.filter_by(user_id=current_user.id).all()
+    print("Getting conversations for user: " + str(current_user.id))  # type: ignore
+    get_conversation = Conversations.query.filter_by(user_id=current_user.id).all()  # type: ignore
     if get_conversation is None:
         print("No conversations!")
         return jsonify({"status": "EMPTY", "conversations": None})
@@ -119,7 +119,7 @@ def init_conversation():
 
     # Add conversation to db
     Conversations.add_conversation(
-        conversation_id, current_user.id, session["chatbot"].id
+        conversation_id, current_user.id, session["chatbot"].id  # type: ignore
     )
 
     return jsonify(
