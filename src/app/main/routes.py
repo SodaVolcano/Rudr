@@ -111,15 +111,15 @@ def init_conversation():
             }
         )
 
-    conversationID = 0
-    while Conversations.conversation_exists(conversationID):
-        conversationID = random.randint(0, 10000)
+    conversation_id = 0
+    while Conversations.conversation_exists(conversation_id):
+        conversation_id = random.randint(0, 10000)
 
-    session["conversation_id"] = conversationID
+    session["conversation_id"] = conversation_id
 
     # Add conversation to db
     Conversations.add_conversation(
-        conversationID, current_user.id, session["chatbot"].id
+        conversation_id, current_user.id, session["chatbot"].id
     )
 
     return jsonify(

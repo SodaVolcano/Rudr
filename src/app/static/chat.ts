@@ -143,13 +143,8 @@ function displayConversations(response: displayConversationListResponse) {
       conversationList.appendChild(conversationElement);
     }
   }
-
-function checkConversationInit(response: ConversationInitResponse) {
-    if (response.status !== 'OK')
-        throw new Error("Failed to initialise conversation");
-    console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
-
 }
+
 
 function receiveConversation(response: receiveConversationResponse) {
   if (response.status !== 'OK')
