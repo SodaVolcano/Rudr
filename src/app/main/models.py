@@ -52,7 +52,6 @@ class Robot(db.Model):
     def add_robot(name, profile_link, id):
         """Add new robot to database"""
         robot = Robot(name=name, profile_link=profile_link, id=id)
-        robot = Robot(name=name, profile_link=profile_link)
         db.session.add(robot)
         db.session.commit()
 
