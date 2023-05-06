@@ -164,6 +164,8 @@ function receiveConversation(response: receiveConversationResponse) {
 }
 
 function changeConversation(conversation_id: string) {
+  sendQueuedMessages();
+  
   $.ajax({
       url: '/replace_conversation',
       method: 'GET',
@@ -182,7 +184,6 @@ function clearConversation() {
     }
   }
 }
-
 function newChat() {
   $.post("/init_chatbot").done(checkBotInit);
   $.post("/init_conversation").done(checkConversationInit);

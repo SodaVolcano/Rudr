@@ -104,6 +104,7 @@ function receiveConversation(response) {
     }
 }
 function changeConversation(conversation_id) {
+    sendQueuedMessages();
     $.ajax({
         url: '/replace_conversation',
         method: 'GET',
