@@ -52,7 +52,6 @@ interface message {
   conversationID: BigInteger;
   speaker: string;
   emotion: string;
-  timestamp: EpochTimeStamp
 }
 
 // ======================== global variables ========================
