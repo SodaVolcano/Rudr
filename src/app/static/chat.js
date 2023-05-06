@@ -121,7 +121,7 @@ function newChat() {
     $.post("/init_conversation").done(checkConversationInit);
 }
 // 
-=================== textarea resizing ========================
+//=================== textarea resizing ========================
 /**
  * Delay the window resize event so it's run after bootstrap adjustment
  * Without this, chatbox is resized but then bootstrap readjust, making
@@ -255,8 +255,9 @@ async function displayMessage(message, isFromUser) {
     }
     resolve();
   });
-  
-  function clearConversation() {
+}  
+
+function clearConversation() {
     $("#messages").remove();
 }
 
