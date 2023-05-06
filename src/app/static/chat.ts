@@ -1,3 +1,20 @@
+interface BotResponse {
+  status: string;
+  messages: string[];
+}
+
+interface BotInitResponse {
+  status: string;
+  bot_id: string;
+}
+
+interface ConversationInitResponse {
+  status: string;
+  conversation_id: string;
+  error: string;
+}
+
+
 window.onload = main;
 
 
@@ -101,6 +118,7 @@ function checkConversationInit(response: ConversationInitResponse) {
   console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
 }
 
+
 /**
  * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
  */
@@ -125,6 +143,12 @@ function displayConversations(response: displayConversationListResponse) {
       conversationList.appendChild(conversationElement);
     }
   }
+
+function checkConversationInit(response: ConversationInitResponse) {
+    if (response.status !== 'OK')
+        throw new Error("Failed to initialise conversation");
+    console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+
 }
 
 function receiveConversation(response: receiveConversationResponse) {
@@ -303,7 +327,7 @@ function resetTimer() {
  * @param sender  whether the message was sent by the user or the bot
  */
 async function displayMessage(message: string, isFromUser: boolean) {
-  return new Promise(async (resolve) => {
+  return new Promise<void>(async (resolve) => {
     let cssClass = "";
     if (isFromUser) {
       cssClass = "msg-user-wrapper";

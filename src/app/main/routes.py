@@ -1,11 +1,9 @@
 """ Route and view function definitions for the main blueprint """
 
-from flask import render_template, redirect, url_for, flash, request, session, jsonify
+from flask import render_template, redirect, url_for, request, session, jsonify
 from werkzeug.urls import url_parse
 
-from flask_wtf import FlaskForm
 from flask_login import login_user, logout_user, current_user, login_required
-from flask_session import Session
 
 from . import main
 from .forms import LoginForm, RegisterForm
@@ -15,8 +13,6 @@ import json
 
 import json
 import random
-
-from app import db
 
 
 @main.route("/", methods=["GET", "POST"])
@@ -116,13 +112,12 @@ def init_conversation():
         )
 
     conversationID = 0
-    while Conversations.conversation_exists(Conversations, conversationID):
+    while Conversations.conversation_exists(conversationID):
         conversationID = random.randint(0, 10000)
 
     session["conversation_id"] = conversationID
 
     # Add conversation to db
-
     Conversations.add_conversation(
         conversationID, current_user.id, session["chatbot"].id
     )

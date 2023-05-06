@@ -175,3 +175,4 @@ data-dev.sqlite
 
 #Vscode
 settings.json
+*/migrations/**
