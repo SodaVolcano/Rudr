@@ -44,7 +44,7 @@ def replace_conversation():
     query = Messages.query.filter_by(conversation_ID=conversation_id).all()
 
     session["conversation_id"] = conversation_id
-    # session["chatbot"] = current chatbot, if changing
+    session["chatbot"] = ChatbotAgent("random")
 
     messages = []
     for result in query:
