@@ -102,7 +102,13 @@ def process_msg():
     for msg in reply:
         Messages.add_msg(msg, "happy", "robot", conversation_id)
 
-    return jsonify({"status": "OK", "messages": reply, "messages_conversation_id": session["conversation_id"]})
+    return jsonify(
+        {
+            "status": "OK",
+            "messages": reply,
+            "messages_conversation_id": session["conversation_id"],
+        }
+    )
 
 
 @main.route("/init_conversation", methods=["POST"])
