@@ -84,6 +84,8 @@ def get_conversations():
 @main.route("/process-msg", methods=["POST"])
 def process_msg():
     messages = request.form.get("messages")
+    conversation_id = request.form.get("conversation_id")
+    print(conversation_id + " is the received ID")
 
     if messages is None:
         return jsonify({"status": "ERROR", "message": "No message provided"}), 400
@@ -93,14 +95,14 @@ def process_msg():
     messages = json.loads(messages)
 
     for msg in messages:
-        Messages.add_msg(msg, "happy", "user", session["conversation_id"])
+        Messages.add_msg(msg, "happy", "user", conversation_id)
 
     reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
 
     for msg in reply:
-        Messages.add_msg(msg, "happy", "robot", session["conversation_id"])
+        Messages.add_msg(msg, "happy", "robot", conversation_id)
 
-    return jsonify({"status": "OK", "messages": reply})
+    return jsonify({"status": "OK", "messages": reply, "messages_conversation_id": session["conversation_id"]})
 
 
 @main.route("/init_conversation", methods=["POST"])

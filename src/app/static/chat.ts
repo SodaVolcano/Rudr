@@ -1,18 +1,3 @@
-interface BotResponse {
-  status: string;
-  messages: string[];
-}
-
-interface BotInitResponse {
-  status: string;
-  bot_id: string;
-}
-
-interface ConversationInitResponse {
-  status: string;
-  conversation_id: string;
-  error: string;
-}
 
 
 window.onload = main;
@@ -21,6 +6,7 @@ window.onload = main;
 interface BotResponse {
   status: string;
   messages: string[];
+  messages_conversation_id : string;
 }
 
 interface BotInitResponse {
@@ -66,6 +52,9 @@ const messageQueue: string[] = [];
 let resizeTimeout: number | undefined;
 let maxChatboxHeight: number = 227.5; // Found by trial and error
 let minChatboxHeight: number; // Computed from CSS on load in main()
+
+// current conversation id
+let currentConversationID = ""
 
 // Controls whether the scrollbar should be scrolled to the bottom
 // If user scrolled up, don't scroll down when new messages arrive
@@ -114,6 +103,7 @@ function main() {
 function checkConversationInit(response: ConversationInitResponse) {
   if (response.status !== 'OK')
     throw new Error("Failed to initialise conversation");
+  currentConversationID = response.conversation_id;
   console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
 }
 
@@ -150,6 +140,7 @@ function receiveConversation(response: receiveConversationResponse) {
       throw new Error("Failed to initialise conversation");
   // replace current conversation messages with the given ones
   console.log(`SUCCESS: New Conversation initialised with id ${response.conversation_id}`);
+  currentConversationID = response.conversation_id;
   clearConversation();
   for (let i = 0; i < response.conversation.length; i++) {
       // check if from robot or user
@@ -248,6 +239,7 @@ function delay(duration: number): Promise<void> {
 
 async function recieveBotReply(response: BotResponse): Promise<void> {
   if (response.status !== "OK") throw new Error("Failed to recieve bot reply");
+  if (response.messages_conversation_id != currentConversationID) throw new Error("Messages are from another conversation");
   console.log("recieved bot reply");
   for (let message of response.messages) {
     await reDisplayMessage(message, false);
@@ -270,7 +262,7 @@ function sendQueuedMessages() {
   $.ajax({
     url: "/process-msg",
     method: "POST",
-    data: { messages: JSON.stringify(messageQueue) },
+    data: { messages: JSON.stringify(messageQueue), conversation_id: currentConversationID },
     dataType: "json",
     success: recieveBotReply,
     error: function () {
