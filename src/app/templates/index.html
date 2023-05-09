@@ -22,28 +22,26 @@ L0VE
 </div>
 
 <main>
-  <div class="top-banner container-fluid">
-    <div class="top-banner-inner container">
-      <div class="row">
-        <div class="col-md-12 text-centre">
-          <div class="banner-text"> 
-            <div class="typewriter">
-              <h1 id="banner-slogan" class="banner-slogan align-centre typewriter-text"></h1>
-            </div>
-          </div>
-          <div class="banner-text"> 
-            <div class="typewriter">
-              <h2 id="banner-byline" class="banner-byline align-centre typewriter-text"></h2>
-            </div>
+  <div class="top-banner flex-container">
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <div class="banner-text"> 
+          <div class="typewriter">
+            <h1 id="banner-slogan" class="banner-slogan align-center typewriter-text"></h1>
           </div>
         </div>
-        <div class="col-md-12 text-centre">
-          <img class="banner-image" src="{{ url_for('static', filename='robo.png') }}" alt="Animated robot that greets user visiting the site." class="img-fluid" draggable="false">
+        <div class="banner-text"> 
+          <div class="typewriter">
+            <h2 id="banner-byline" class="banner-byline align-center typewriter-text"></h2>
+          </div>
         </div>
+      </div>
+      <div class="col-md-12 text-center">
+        <img class="banner-image img-fluid" src="{{ url_for('static', filename='robo.png') }}" alt="Animated robot that greets user visiting the site." draggable="false">
       </div>
     </div>
   </div>
-</div>
+  
 
 <div class="page-content container-fluid">
   <div class="description container">

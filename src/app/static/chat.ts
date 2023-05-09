@@ -56,7 +56,7 @@ function main() {
 
 
 
-function checkConversationInit(response) {
+function checkConversationInit(response: { status: string; conversation_id: string; }) {
     if (response.status !== 'OK')
         throw new Error("Failed to initialise conversation");
     console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
@@ -193,7 +193,7 @@ function resetTimer() {
  * @param sender  whether the message was sent by the user or the bot
  */
 async function displayMessage(message: string, isFromUser: boolean) {
-  return new Promise(async (resolve) => {
+  return new Promise<void>(async (resolve) => {
     let cssClass = "";
     if (isFromUser) {
       cssClass = "msg-user-wrapper";

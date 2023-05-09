@@ -147,16 +147,23 @@ header {
 /* ======================= TYPEWRITER ======================= */
 /* Syles for typewriter effect */
 .typewriter {
-  display: inline-block;
+  display: flex;
 }
 
 .typewriter-text {
-  display: block;
+  display: flex;
   overflow: hidden;
-  white-space: nowrap;
   font-size: 28px;
   font-family: "Courier", monospace;
   padding-right: 5px;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 3px;
+  animation: blink-caret 0.75s step-end infinite;
+  color: var(--gradient-colour-one);
 }
 
 /* Set the @keyframes for the blinking cursor */

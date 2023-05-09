@@ -1,57 +1,74 @@
 "use strict";
-
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 /* Open the overlay when someone clicks on the hamburger menu */
 function openNav() {
-  document.getElementById("myNav").style.width = "100%";
+    const myNav = document.getElementById("myNav");
+    if (myNav != null)
+        myNav.style.width = "100%";
 }
-
 /* Close the overlay when someone clicks on the "x" symbol inside the overlay */
 function closeNav() {
-  document.getElementById("myNav").style.width = "0%";
+    const myNav = document.getElementById("myNav");
+    if (myNav != null)
+        myNav.style.width = "0%";
 }
-
 /* Shows elements as you scroll when they appear onscreen */
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("show");
-    } else {
-      entry.target.classList.remove("show");
-    }
-  });
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+        else {
+            entry.target.classList.remove("show");
+        }
+    });
 });
-
 window.addEventListener("load", () => {
-  const hiddenElements = document.querySelectorAll(".hidden");
-  hiddenElements.forEach((el) => observer.observe(el));
+    const hiddenElements = document.querySelectorAll(".hidden");
+    hiddenElements.forEach((el) => observer.observe(el));
 });
-
 /* ======================= TYPEWRITER ======================= */
-
 // Function that simulates a typewriter writing the given text in the given element
-async function typewriterWrite(element, text) {
-    element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
-    console.log(text);
-    const waitCharacter = 25;
-    const characters = text.split("");
-    element.textContent = "";
-  
-    for (let i = 0; i < characters.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, waitCharacter));
-      element.textContent += characters[i];
-    }
-  
-    element.style.borderRight = "none";
-  }
-  
-  // Function that simulates a typewriter deleting the text in the given element
-  async function typeWriterRemove(element) {
-    element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
-    const waitCharacter = 25;
-    const characters = element.textContent.split("");
-    for (let i = 0; i < characters.length; i++) {
-      await new Promise((resolve) => setTimeout(resolve, waitCharacter));
-      element.textContent = element.textContent.slice(0, -1);
-    }
-    element.style.borderRight = "none";
-  }
+function typewriterWrite(element, text) {
+    return __awaiter(this, void 0, void 0, function* () {
+        //element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
+        console.log(text);
+        const waitCharacter = 25;
+        const characters = text.split("");
+        let currentText = "";
+        element.textContent = "";
+        for (let i = 0; i < characters.length; i++) {
+            yield new Promise((resolve) => setTimeout(resolve, waitCharacter));
+            currentText += characters[i];
+            element.textContent = currentText + '|';
+        }
+        element.textContent = currentText;
+        //element.style.borderRight = "none";
+    });
+}
+// Function that simulates a typewriter deleting the text in the given element
+function typeWriterRemove(element) {
+    return __awaiter(this, void 0, void 0, function* () {
+        //element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
+        const waitCharacter = 25;
+        let textContent = element.textContent;
+        if (textContent != null) {
+            const characters = textContent.split("");
+            for (let i = 0; i < characters.length; i++) {
+                yield new Promise((resolve) => setTimeout(resolve, waitCharacter));
+                textContent = textContent.slice(0, -1);
+                element.textContent = textContent + "|";
+            }
+        }
+        element.textContent = "";
+        //element.style.borderRight = "none";
+    });
+}
