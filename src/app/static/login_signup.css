@@ -104,6 +104,9 @@ body {
       border-top-right-radius: 40px;
       border-bottom-left-radius: 0px;
     }
+    #left p {
+        display: None;
+    }
     #right {
       border-bottom-left-radius: 40px;
       border-top-right-radius: 0px;
