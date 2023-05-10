@@ -1,5 +1,6 @@
 "use strict";
 
+/* ======================= EXPAND NAV ======================= */
 /* Open the overlay when someone clicks on the hamburger menu */
 function openNav() {
     const myNav = document.getElementById("myNav");
@@ -12,12 +13,16 @@ function closeNav() {
     if (myNav != null) myNav.style.width = "0%";
 }
 
+
+/* ======================= SCROLL FADE ======================= */
 /* Shows elements as you scroll when they appear onscreen */
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
+      console.log("show");
       entry.target.classList.add("show");
     } else {
+      console.log("hide");
       entry.target.classList.remove("show");
     }
   });
@@ -29,10 +34,8 @@ window.addEventListener("load", () => {
 });
 
 /* ======================= TYPEWRITER ======================= */
-
-// Function that simulates a typewriter writing the given text in the given element
+/* Function that simulates a typewriter writing the given text in the given element */
 async function typewriterWrite(element : HTMLElement, text : string) {
-    //element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
     console.log(text);
     const waitCharacter = 25;
     const characters = text.split("");
@@ -45,14 +48,10 @@ async function typewriterWrite(element : HTMLElement, text : string) {
       element.textContent = currentText + '|';      
     }
     element.textContent = currentText;
-
-    //element.style.borderRight = "none";
   }
   
-  // Function that simulates a typewriter deleting the text in the given element
+  /* Function that simulates a typewriter deleting the text in the given element */
   async function typeWriterRemove(element : HTMLElement) {
-    //element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
-
     const waitCharacter = 25;
     let textContent = element.textContent;
     if (textContent != null) {
@@ -64,5 +63,4 @@ async function typewriterWrite(element : HTMLElement, text : string) {
         }
     }
     element.textContent = "";
-    //element.style.borderRight = "none";
   }

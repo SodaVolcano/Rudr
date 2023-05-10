@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+/* ======================= EXPAND NAV ======================= */
 /* Open the overlay when someone clicks on the hamburger menu */
 function openNav() {
     const myNav = document.getElementById("myNav");
@@ -20,13 +21,16 @@ function closeNav() {
     if (myNav != null)
         myNav.style.width = "0%";
 }
+/* ======================= SCROLL FADE ======================= */
 /* Shows elements as you scroll when they appear onscreen */
 const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
+            console.log("show");
             entry.target.classList.add("show");
         }
         else {
+            console.log("hide");
             entry.target.classList.remove("show");
         }
     });
@@ -36,10 +40,9 @@ window.addEventListener("load", () => {
     hiddenElements.forEach((el) => observer.observe(el));
 });
 /* ======================= TYPEWRITER ======================= */
-// Function that simulates a typewriter writing the given text in the given element
+/* Function that simulates a typewriter writing the given text in the given element */
 function typewriterWrite(element, text) {
     return __awaiter(this, void 0, void 0, function* () {
-        //element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
         console.log(text);
         const waitCharacter = 25;
         const characters = text.split("");
@@ -51,13 +54,11 @@ function typewriterWrite(element, text) {
             element.textContent = currentText + '|';
         }
         element.textContent = currentText;
-        //element.style.borderRight = "none";
     });
 }
-// Function that simulates a typewriter deleting the text in the given element
+/* Function that simulates a typewriter deleting the text in the given element */
 function typeWriterRemove(element) {
     return __awaiter(this, void 0, void 0, function* () {
-        //element.style.borderRight = "0.15em solid var(--gradient-colour-one)";
         const waitCharacter = 25;
         let textContent = element.textContent;
         if (textContent != null) {
@@ -69,6 +70,5 @@ function typeWriterRemove(element) {
             }
         }
         element.textContent = "";
-        //element.style.borderRight = "none";
     });
 }
