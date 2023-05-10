@@ -38,7 +38,7 @@ header {
 /* LINK STYLE */
 
 .navbar {
-    z-index: 5;
+  z-index: 5;
 }
 .navbar-nav {
   list-style: none;
@@ -66,7 +66,7 @@ header {
 }
 
 .navbar-toggler {
-    border-width: 0px;
+  border-width: 0px;
 }
 
 .navbar-toggler:focus {
@@ -76,9 +76,9 @@ header {
 }
 
 .navbar-collapse {
-    align-items: end;
-    display: flex;
-    justify-content: flex-end;
+  align-items: end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .hamburger-menu {
@@ -90,55 +90,82 @@ header {
   font-weight: bold;
 }
 
-.overlay { 
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    background-color: var(--background-colour);
-    background-color: var(--background-colour-alpha);
-
-    overflow-x: hidden;
-    transition: 0.5s;
-  }
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  background-color: var(--background-colour);
+  background-color: var(--background-colour-alpha);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
 
 .overlay-content {
-    position: relative;
-    top: 25%;
-    width: 100%;
-    text-align: center;
-    margin-top: 30px;
-  }
-  
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+
 .overlay a {
-    padding: 8px;
-    text-decoration: none;
-    font-size: 36px;
-    color: var(--text-colour-secondary);
+  padding: 8px;
+  text-decoration: none;
+  font-size: 36px;
+  color: var(--text-colour-secondary);
 
-    display: block;
-    transition: 0.3s;
-  }
-  
-.overlay a:hover, .overlay a:focus {
-    color: var(--text-colour-hover);
+  display: block;
+  transition: 0.3s;
+}
 
-  }
-  
+.overlay a:hover,
+.overlay a:focus {
+  color: var(--text-colour-hover);
+}
+
 .overlay .closebtn {
-    position: absolute;
-    top: 20px;
-    right: 45px;
-    font-size: 60px;
-  }
-  
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+
 @media screen and (max-height: 450px) {
-    .overlay a {font-size: 20px}
-    .overlay .closebtn {
-      font-size: 40px;
-      top: 15px;
-      right: 35px;
-    }
+  .overlay a {
+    font-size: 20px;
   }
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+}
+
+/* ======================= TYPEWRITER ======================= */
+/* Syles for typewriter effect */
+.typewriter {
+  display: inline-block;
+}
+
+.typewriter-text {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 28px;
+  font-family: "Courier", monospace;
+  padding-right: 5px;
+}
+
+/* Set the @keyframes for the blinking cursor */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--gradient-colour-one);
+  }
+}

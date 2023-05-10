@@ -1,16 +1,18 @@
 """ Route and view function definitions for the main blueprint """
 
-from flask import render_template, redirect, url_for, flash, request, session, jsonify
+from flask import render_template, redirect, url_for, request, session, jsonify
 from werkzeug.urls import url_parse
-from flask_login import login_user, logout_user
+
+from flask_login import login_user, logout_user, current_user, login_required
 
 from . import main
 from .forms import LoginForm, RegisterForm
-from .models import Users
+from .models import Users, Messages, Conversations, Robot
 from .chatbot import ChatbotAgent, ChatbotMediator
 import json
 
-from app import db
+import json
+import random
 
 
 @main.route("/", methods=["GET", "POST"])
@@ -25,28 +27,126 @@ def about():
 
 
 @main.route("/chat", methods=["GET"])
+@login_required
 def chat():
+    print("Arrived at chat")
     return render_template("chat.html")
+
+
+@main.route("/replace_conversation", methods=["GET"])
+def replace_conversation():
+    conversation_id = request.args.get("new_id").strip('"')
+    print("Replacing with conversation: " + str(conversation_id))
+    print("Getting conversation from db")
+
+    query = Messages.query.filter_by(conversation_ID=(conversation_id)).all()
+    session["conversation_id"] = conversation_id
+    session["chatbot"] = ChatbotAgent("random")
+
+    print(query)
+
+    messages = []
+    print("listing msgs from db")
+    for result in query:
+        print(result.body)
+        msg = {
+            "id": result.id,
+            "content": result.body,
+            "conversationID": result.conversation_ID,
+            "speaker": result.speaker,
+            "emotion": result.emotion,
+            "timestamp": result.timestamp,
+        }
+        messages.append(msg)
+    return jsonify(
+        {"status": "OK", "conversation_id": conversation_id, "conversation": messages}
+    )
+
+
+@main.route("/get_conversations", methods=["GET"])
+def get_conversations():
+    # get conversations and check if empty
+    print("Getting conversations for user: " + str(current_user.id))  # type: ignore
+    get_conversation = Conversations.query.filter_by(user_id=current_user.id).all()  # type: ignore
+    if get_conversation is None:
+        print("No conversations!")
+        return jsonify({"status": "EMPTY", "conversations": None})
+
+    # convert to json object
+    my_conversation = []
+    for conversation in get_conversation:
+        print(conversation.id)
+        my_conversation.append(conversation.id)
+    # return a list of all conversations
+    return jsonify({"status": "OK", "conversations": my_conversation})
 
 
 @main.route("/process-msg", methods=["POST"])
 def process_msg():
     messages = request.form.get("messages")
-    print(messages)
+    conversation_id = request.form.get("conversation_id")
+    print(conversation_id + " is the received ID")
+
     if messages is None:
         return jsonify({"status": "ERROR", "message": "No message provided"}), 400
     if "chatbot" not in session:
         return jsonify({"status": "ERROR", "message": "Chatbot not initialized"}), 400
 
     messages = json.loads(messages)
+
+    for msg in messages:
+        Messages.add_msg(msg, "happy", "user", conversation_id)
+
     reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
-    return jsonify({"status": "OK", "messages": reply})
+
+    for msg in reply:
+        Messages.add_msg(msg, "happy", "robot", conversation_id)
+
+    return jsonify(
+        {
+            "status": "OK",
+            "messages": reply,
+            "messages_conversation_id": session["conversation_id"],
+        }
+    )
+
+
+@main.route("/init_conversation", methods=["POST"])
+def init_conversation():
+    """Initialize the conversation agent when user starts new session"""
+    if session["chatbot"] is None:
+        return jsonify(
+            {
+                "status": "FAILED",
+                "conversation_id": -1,
+                "error": "Chatbot not initialiazed",
+            }
+        )
+
+    conversation_id = 0
+    while Conversations.conversation_exists(conversation_id):
+        conversation_id = random.randint(0, 10000)
+
+    session["conversation_id"] = conversation_id
+
+    # Add conversation to db
+    Conversations.add_conversation(
+        conversation_id, current_user.id, session["chatbot"].id  # type: ignore
+    )
+
+    return jsonify(
+        {"status": "OK", "conversation_id": session["conversation_id"], "error": "none"}
+    )
 
 
 @main.route("/init_chatbot", methods=["POST"])
 def init_chatbot():
     """Initialize the chatbot agent when user starts new session"""
     session["chatbot"] = ChatbotAgent("random")
+
+    # add new robot
+    Robot.add_robot("rob", "", session["chatbot"].id)
+
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
 
 
@@ -55,21 +155,16 @@ def init_chatbot():
 def signup():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-        # parse registration information
-        flash(
-            "Logged in: "
-            + register_form.username.data
-            + ", "
-            + register_form.password.data
-        )
-        # Login user
-        user = Users(
-            username=register_form.username.data, email=register_form.email.data
-        )
-        user.set_password(register_form.password.data)
+        # Generate New User
 
-        db.session.add(user)
-        db.session.commit()
+        # Add user to database
+        Users.add_user(
+            register_form.username.data,
+            register_form.email.data,
+            register_form.password.data,
+        )
+
+        # Send to login page
         return redirect(url_for(".login"))
     return render_template("signup.html", form=register_form)
 
@@ -79,24 +174,28 @@ def signup():
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
-        # parse login information
-        flash(
-            "Logged in: " + login_form.username.data + ", " + login_form.password.data
-        )
+        # Get User from table
         user = Users.query.filter_by(username=login_form.username.data).first()
+
+        # Check for invalid details
         if user is None or not user.check_password(login_form.password.data):
-            flash("Invalid username or password")
             return redirect(url_for(".index"))
+
+        # login user
         login_user(user, remember=login_form.remember_me.data)
+
+        # redirect to previous page if necessary
         next_page = request.args.get("next")
         if not next_page or url_parse(next_page).netloc != "":
             next_page = url_for(".index")
         return redirect(next_page)
+
     return render_template("login.html", form=login_form)
 
 
 # To logout user
 @main.route("/logout")
 def logout():
+    # logout user
     logout_user()
     return redirect(url_for(".index"))
