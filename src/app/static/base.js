@@ -23,19 +23,17 @@ function closeNav() {
 }
 /* ======================= SCROLL FADE ======================= */
 /* Shows elements as you scroll when they appear onscreen */
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            console.log("show");
-            entry.target.classList.add("show");
-        }
-        else {
-            console.log("hide");
-            entry.target.classList.remove("show");
-        }
+document.addEventListener("DOMContentLoaded", function () {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+            }
+            else {
+                entry.target.classList.remove("show");
+            }
+        });
     });
-});
-window.addEventListener("load", () => {
     const hiddenElements = document.querySelectorAll(".hidden");
     hiddenElements.forEach((el) => observer.observe(el));
 });
