@@ -53,6 +53,16 @@ $ python -m venv /path/to/your/directory/my-env
 (my-env) $ pip install -r path/to/requirements.txt
 ```
 
+### Setting up the Data Bases
+In order for the chat and user features to be functional, the databases must be constructed and initialised.
+These commands must be run in the src directory.
+0. Enter the src directory
+
+1. flask db init
+    - note that it should list roughly the outline and schema of each table in the log
+2. flask db migrate -m "db init"
+3. flask db upgrade
+
 ### Running the Test Server
 - In the command line, **from the top-most directory**, run
 ```bash

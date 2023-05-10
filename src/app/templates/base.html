@@ -58,9 +58,6 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto justify-content-end">
             <li>
-              <a href="{{ url_for('.about') }}" draggable="false">About</a>
-            </li>
-            <li>
               <a href="{{ url_for('.chat') }}" draggable="false">Chat</a>
             </li>
             {% if current_user.is_anonymous %}
@@ -88,9 +85,9 @@
 {% endblock %}
 </main>
 
-  <footer>
+<footer>
 
-  </footer>
+</footer>
 </body>
 
 </html>
