@@ -1,50 +1,54 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block css%}
+<link rel="stylesheet" href="{{ url_for('static', filename='login_signup.css') }}" />
+{% endblock %} {% block content %}
+<main>
+  <div id="signup-box">
+    <div id="left" class="col-md-7 col-12">
+      <div class="signup-overlay">
+        <h1>Sign Up.</h1>
+        <p>Idk man. Please sign up. Or not. Your choice.</p>
+      </div>
+    </div>
 
-{% block css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='login_signup.css') }}">
-{% endblock %}
-
-{% block script %}
-{% endblock %}
-
-{% block content %}
-<div class="container-fluid" style="margin: 300px">
-  <div class="row">
-    <div id="form" class="col-lg-2 offset-5 justify-content-center border border-light">
-      <form class="registerForm" action="" method="post" novalidate>
+    <div id="right" class="col-md-5 col-12">
+      <p>
+        Lacking an account? Rectify that oversight - join our esteemed users
+        <a href="{{ url_for('.signup') }}">here</a>
+      </p>
+      <form id="loginForm" action="" method="post" novalidate>
         {{ form.hidden_tag()}}
         <p>
-          {{ form.username.label(class="formLabel") }}<br>
-          {{ form.username(size=32) }}
-          {% for error in form.username.errors %}
-          <span style="color: red;">[{{ error }}]</span>
+          {{ form.username(class="input-data", type="text",
+          placeholder="username") }} {% for error in form.username.errors %}
+          <span style="color: var(--error-colour)">[{{ error }}]</span>
           {% endfor %}
         </p>
         <p>
-          {{ form.password.label(class="formLabel") }}<br>
-          {{ form.password(size=32) }}
-          {% for error in form.password.errors %}
-          <span style="color: red;">[{{ error }}]</span>
+          {{ form.password(class="input-data", type="password",
+          placeholder="password") }} {% for error in form.password.errors %}
+          <span style="color: var(--error-colour)">[{{ error }}]</span>
           {% endfor %}
         </p>
         <p>
-          {{ form.password2.label(class="formLabel") }}<br>
-          {{ form.password2(size=32) }}
-          {% for error in form.password2.errors %}
-          <span style="color: red;">[{{ error }}]</span>
+          {{ form.password2(class="input-data", type="password",
+          placeholder="confirm password") }} {% for error in
+          form.password2.errors %}
+          <span style="color: var(--error-colour)">[{{ error }}]</span>
           {% endfor %}
         </p>
         <p>
-          {{ form.email.label(class="formLabel") }}<br>
-          {{ form.email(size=32) }}
-          {% for error in form.email.errors %}
-          <span style="color: red;">[{{ error }}]</span>
+          {{ form.email(class="input-data", type="email", placeholder="email")
+          }} {% for error in form.email.errors %}
+          <span style="color: var(--error-colour)">[{{ error }}]</span>
           {% endfor %}
         </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label(class="formLabel") }}<br></p>
-        <p>{{ form.submit() }}</p>
+        <p>
+          {{ form.remember_me(id="remember-me") }} {{
+          form.remember_me.label(class="formLabel") }}<br />
+        </p>
+        <p>{{ form.submit(id="login-button") }}</p>
       </form>
     </div>
   </div>
-</div>
+</main>
 {% endblock %}

@@ -14,12 +14,12 @@ header {
   top: 0;
   left: 0;
   right: 0;
-  height: 8rem;
+  height: 12rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1rem;
-  background-color: transparent;
+  background: linear-gradient(to bottom, var(--background-colour) 0%, rgba(0, 0, 0, 0) 100%);
   z-index: 5;
   user-select: none;
 }
