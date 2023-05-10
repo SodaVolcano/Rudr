@@ -80,10 +80,10 @@
       </div>
     </nav>
   </header>
+  {% block script%}
   <script src="{{ url_for('static', filename='hamburger.js') }}"></script>
   <script src="{{ url_for('static', filename='base.js')  }}"> </script>
 {% endblock %}
-
 <main>
 {% block content %}
 {% endblock %}
