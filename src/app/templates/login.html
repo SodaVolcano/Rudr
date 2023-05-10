@@ -1,7 +1,8 @@
-<<<<<<< HEAD
 {% extends "base.html" %} {% block css%}
 <link rel="stylesheet" href="{{ url_for('static', filename='login_signup.css') }}" />
-{% endblock %} {% block content %}
+{% endblock %}
+{% block script %}{% endblock %}
+{% block content %}
 <main>
   <div id="login-box">
     <div id="left" class="col-md-8">
@@ -23,40 +24,6 @@
         <p>With Unfathomable <i>Awe</i> and Reverence,</p>
         <p>Your Everlastingly Indebted Platform</p>
       </div>
-=======
-{% extends "base.html" %}
-
-{% block css%}
-<link rel="stylesheet" href="{{ url_for('static', filename='login_signup.css') }}">
-{% endblock %}
-
-{% block script %}
-{% endblock %}
-
-{% block content %}
-<div class="container-fluid" style="margin: 300px">
-  <div class="" row">
-    <div id="form" class="col-lg-2 offset-5 justify-content-center border border-light">
-      <form class="loginForm" action="" method="post" novalidate>
-        {{ form.hidden_tag()}}
-        <p>
-          {{ form.username.label(class="formLabel") }}<br>
-          {{ form.username(size=32) }}
-          {% for error in form.username.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>
-          {{ form.password.label(class="formLabel") }}<br>
-          {{ form.password(size=32) }}
-          {% for error in form.password.errors %}
-          <span style="color: red;">[{{ error }}]</span>
-          {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label(class="formLabel") }}<br></p>
-        <p>{{ form.submit() }}</p>
-      </form>
->>>>>>> main
     </div>
 
     <div id="right" class="col-md-4">
@@ -86,10 +53,4 @@
       </form>
     </div>
   </div>
-<<<<<<< HEAD
-</main>
 {% endblock %}
-=======
-</div>
-{% endblock %}
->>>>>>> main
