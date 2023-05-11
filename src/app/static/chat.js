@@ -25,30 +25,7 @@ let currentConversationID = "";
 // If user scrolled up, don't scroll down when new messages arrive
 let scrolledUp = false;
 // Image sources
-/*
-const imageSources: string[] = [
-  "{{ url_for('static/robot_icons', filename='rob1.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob2.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob3.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob4.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob5.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob6.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob7.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob8.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob9.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob10.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob11.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob12.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob13.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob14.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob15.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob16.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob17.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob18.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob19.png') }}",
-  "{{ url_for('static/robot_icons', filename='rob20.png') }}"
-];
-*/
+/* https://dribbble.com/shots/14503125-Robot-Avatar-Icons */
 const imageSources = [
     "/static/robot_icons/rob1.png",
     "/static/robot_icons/rob2.png",
@@ -77,6 +54,9 @@ const imageSources = [
 function main() {
     const computedStyle = window.getComputedStyle($(".chatbox-area")[0]);
     minChatboxHeight = parseFloat(computedStyle.height);
+    const underChatbox = document.getElementById("under-chatbox");
+    if (underChatbox != null)
+        underChatbox.style.height = minChatboxHeight + "px";
     $("#chatbox-submit")[0].addEventListener("click", QueueMessage);
     $("#chatbox-content")[0].addEventListener("keydown", function (event) {
         if (event.key === "Enter")
@@ -135,6 +115,7 @@ function displayConversations(response) {
         const name = document.createElement("h5");
         name.textContent = current; // Change with Robot Name
         div.appendChild(name);
+        div.classList.add("conversation-container");
         div.setAttribute("id", current);
         div.addEventListener("click", () => {
             changeConversation(current);
@@ -210,6 +191,7 @@ function delayWindowResize() {
  * Adjust height of the chatbox
  */
 function adjustHeight(event) {
+    const underChatbox = document.getElementById("under-chatbox");
     const chatboxArea = $(".chatbox-area")[0];
     const textarea = ($("#chatbox-content")[0]);
     // Reset height - always adjust height from min height
@@ -221,6 +203,8 @@ function adjustHeight(event) {
     if (textarea.scrollHeight > textarea.clientHeight) {
         const newHeight = Math.min(height + textarea.scrollHeight - textarea.clientHeight, maxChatboxHeight);
         chatboxArea.style.height = newHeight + "px";
+        if (underChatbox != null)
+            underChatbox.style.height = newHeight + "px";
     }
 }
 // ================ submit/recieve message from server ===================
@@ -341,7 +325,7 @@ function displayMessage(message, isFromUser) {
  */
 function reDisplayMessage(message, isFromUser) {
     const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
-    $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p">${message}</p></div></div>`);
+    $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
     if (!scrolledUp) {
         $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
     }
