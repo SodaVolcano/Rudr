@@ -1,6 +1,6 @@
 
 
-window.onload = main;
+document.addEventListener("DOMContentLoaded", main)
 
 
 interface BotResponse {
@@ -92,10 +92,11 @@ function main() {
   // Scrollbar
   $(".scrollbar")[0].addEventListener("scroll", function (event) {
     const scrollbar = <HTMLDivElement>event.target;
-    if (scrollbar.scrollTop !== scrollbar.scrollHeight - scrollbar.clientHeight)
-      scrolledUp = true;
-    else scrolledUp = false;
+    scrolledUp = !(scrollbar.scrollTop + scrollbar.clientHeight >= scrollbar.scrollHeight - 1)
   });
+  
+  // No Conversation
+
 }
 
 // ================== conversation init and switiching ====================
@@ -104,6 +105,7 @@ function checkConversationInit(response: ConversationInitResponse) {
   if (response.status !== 'OK')
     throw new Error("Failed to initialise conversation");
   currentConversationID = response.conversation_id;
+
   console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
 }
 
@@ -112,25 +114,25 @@ function checkConversationInit(response: ConversationInitResponse) {
  * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
  */
 function displayConversations(response: displayConversationListResponse) {
-  var conversationList = document.getElementById("conversations");
-  if (conversationList == null) {
+  const conversationList = document.getElementById("conversations");
+  if (conversationList == null || response.status == 'EMPTY') {
     return;
   }
-  if (response.status != 'EMPTY') {
     console.log("Printing Conversations");
-    let all_conversations = response.conversations;
+    const all_conversations = response.conversations;
     // Loop through each conversation
     for (let i = 0; i < all_conversations.length; i++) {
-      let current = all_conversations[i].toString();
+      const current = all_conversations[i].toString();
       console.log(current);
       // get conversation and add it to the ul list on /chat
       const conversationElement = document.createElement("ul");
       conversationElement.textContent = current;
+      conversationElement.setAttribute("id",current);
       conversationElement.addEventListener("click", () => {
         changeConversation(current);
       });
       conversationList.appendChild(conversationElement);
-    }
+    
   }
 }
 
@@ -157,7 +159,12 @@ function receiveConversation(response: receiveConversationResponse) {
 function changeConversation(conversation_id: string) {
   sendQueuedMessages();
   resetTimer();
-  
+  const prevSelected = document.getElementsByClassName("selected");
+  for (let i = 0; i < prevSelected.length; i++) {
+    prevSelected[i].classList.remove("selected");
+  }
+  const newSelected = document.getElementById(conversation_id);
+  newSelected?.classList.add("selected");
   $.ajax({
       url: '/replace_conversation',
       method: 'GET',
@@ -316,14 +323,12 @@ function resetTimer() {
  */
 async function displayMessage(message: string, isFromUser: boolean) {
   return new Promise<void>(async (resolve) => {
-    let cssClass = "";
+    const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
     if (isFromUser) {
-      cssClass = "msg-user-wrapper";
       $(".chat-history").append(
         `<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
       );
     } else {
-      cssClass = "msg-bot-wrapper";
       $(".chat-history").append(
         `<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`
       );
@@ -331,6 +336,7 @@ async function displayMessage(message: string, isFromUser: boolean) {
     if (!scrolledUp) {
       $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
     }
+    
     if (!isFromUser) {
       const newMessage = document.getElementById("new-message");
       if (newMessage != null) {

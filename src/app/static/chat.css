@@ -171,3 +171,11 @@ html, body, main {
     right: 10%;
 	border-right: 0;
 }
+
+.selected {
+    background-color: var(--foreground-purple);
+}
+.selected:hover {
+    font-weight: bold;
+    background-color: var(--foreground-purple-hover);
+}

@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-window.onload = main;
+document.addEventListener("DOMContentLoaded", main);
 // ======================== global variables ========================
 // When timer expires, send queued messages to server. reset on each input
 let typingTimer;
@@ -51,11 +51,9 @@ function main() {
     // Scrollbar
     $(".scrollbar")[0].addEventListener("scroll", function (event) {
         const scrollbar = event.target;
-        if (scrollbar.scrollTop !== scrollbar.scrollHeight - scrollbar.clientHeight)
-            scrolledUp = true;
-        else
-            scrolledUp = false;
+        scrolledUp = !(scrollbar.scrollTop + scrollbar.clientHeight >= scrollbar.scrollHeight - 1);
     });
+    // No Conversation
 }
 // ================== conversation init and switiching ====================
 function checkConversationInit(response) {
@@ -68,25 +66,24 @@ function checkConversationInit(response) {
  * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
  */
 function displayConversations(response) {
-    var conversationList = document.getElementById("conversations");
-    if (conversationList == null) {
+    const conversationList = document.getElementById("conversations");
+    if (conversationList == null || response.status == 'EMPTY') {
         return;
     }
-    if (response.status != 'EMPTY') {
-        console.log("Printing Conversations");
-        let all_conversations = response.conversations;
-        // Loop through each conversation
-        for (let i = 0; i < all_conversations.length; i++) {
-            let current = all_conversations[i].toString();
-            console.log(current);
-            // get conversation and add it to the ul list on /chat
-            const conversationElement = document.createElement("ul");
-            conversationElement.textContent = current;
-            conversationElement.addEventListener("click", () => {
-                changeConversation(current);
-            });
-            conversationList.appendChild(conversationElement);
-        }
+    console.log("Printing Conversations");
+    const all_conversations = response.conversations;
+    // Loop through each conversation
+    for (let i = 0; i < all_conversations.length; i++) {
+        const current = all_conversations[i].toString();
+        console.log(current);
+        // get conversation and add it to the ul list on /chat
+        const conversationElement = document.createElement("ul");
+        conversationElement.textContent = current;
+        conversationElement.setAttribute("id", current);
+        conversationElement.addEventListener("click", () => {
+            changeConversation(current);
+        });
+        conversationList.appendChild(conversationElement);
     }
 }
 function receiveConversation(response) {
@@ -110,6 +107,12 @@ function receiveConversation(response) {
 function changeConversation(conversation_id) {
     sendQueuedMessages();
     resetTimer();
+    const prevSelected = document.getElementsByClassName("selected");
+    for (let i = 0; i < prevSelected.length; i++) {
+        prevSelected[i].classList.remove("selected");
+    }
+    const newSelected = document.getElementById(conversation_id);
+    newSelected === null || newSelected === void 0 ? void 0 : newSelected.classList.add("selected");
     $.ajax({
         url: '/replace_conversation',
         method: 'GET',
@@ -247,13 +250,11 @@ function resetTimer() {
 function displayMessage(message, isFromUser) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-            let cssClass = "";
+            const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
             if (isFromUser) {
-                cssClass = "msg-user-wrapper";
                 $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
             }
             else {
-                cssClass = "msg-bot-wrapper";
                 $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`);
             }
             if (!scrolledUp) {
