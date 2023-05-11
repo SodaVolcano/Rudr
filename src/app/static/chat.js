@@ -19,6 +19,8 @@ const messageQueue = [];
 let resizeTimeout;
 let maxChatboxHeight = 227.5; // Found by trial and error
 let minChatboxHeight; // Computed from CSS on load in main()
+// current conversation id
+let currentConversationID = "";
 // Controls whether the scrollbar should be scrolled to the bottom
 // If user scrolled up, don't scroll down when new messages arrive
 let scrolledUp = false;
@@ -33,7 +35,8 @@ function main() {
         if (event.key === "Enter")
             QueueMessage(event);
     });
-    $.post("/init_chatbot").done(checkBotInit);
+    $('#new-chat')[0].addEventListener('click', newChat);
+    $.get("/get_conversations").done(displayConversations);
     // Reset timer when user types in chatbox
     // Timer is also reset when user presses submit
     $("#chatbox-content").on("keydown", resetTimer);
@@ -54,10 +57,82 @@ function main() {
             scrolledUp = false;
     });
 }
+
+// ================== conversation init and switiching ====================
 function checkConversationInit(response) {
     if (response.status !== 'OK')
         throw new Error("Failed to initialise conversation");
+    currentConversationID = response.conversation_id;
     console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+}
+/**
+ * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
+ */
+function displayConversations(response) {
+    var conversationList = document.getElementById("conversations");
+    if (conversationList == null) {
+        return;
+    }
+    if (response.status != 'EMPTY') {
+        console.log("Printing Conversations");
+        let all_conversations = response.conversations;
+        // Loop through each conversation
+        for (let i = 0; i < all_conversations.length; i++) {
+            let current = all_conversations[i].toString();
+            console.log(current);
+            // get conversation and add it to the ul list on /chat
+            const conversationElement = document.createElement("ul");
+            conversationElement.textContent = current;
+            conversationElement.addEventListener("click", () => {
+                changeConversation(current);
+            });
+            conversationList.appendChild(conversationElement);
+        }
+    }
+}
+function receiveConversation(response) {
+    if (response.status !== 'OK')
+        throw new Error("Failed to initialise conversation");
+    // replace current conversation messages with the given ones
+    console.log(`SUCCESS: New Conversation initialised with id ${response.conversation_id}`);
+    currentConversationID = response.conversation_id;
+    clearConversation();
+    for (let i = 0; i < response.conversation.length; i++) {
+        // check if from robot or user
+        let isFromUser = true;
+        console.log(response.conversation[i].speaker);
+        if (response.conversation[i].speaker == "robot") {
+            isFromUser = false;
+        }
+        console.log(response.conversation[i].content);
+        reDisplayMessage(response.conversation[i].content, isFromUser);
+    }
+}
+function changeConversation(conversation_id) {
+    sendQueuedMessages();
+    resetTimer();
+    $.ajax({
+        url: '/replace_conversation',
+        method: 'GET',
+        data: { new_id: JSON.stringify(conversation_id) },
+        dataType: 'json',
+        success: receiveConversation,
+        error: function () { throw new Error("Failed to change conversation"); }
+    });
+}
+function clearConversation() {
+    let chatHistory = document.getElementById("chat-history");
+    if (chatHistory != null) {
+        while (chatHistory.firstChild) {
+            chatHistory.firstChild.remove();
+        }
+    }
+}
+function newChat() {
+    $.post("/init_chatbot").done(checkBotInit);
+    $.post("/init_conversation").done(checkConversationInit);
+    console.log("clearing chat");
+    clearConversation();
 }
 // ======================== textarea resizing ========================
 /**
@@ -102,9 +177,11 @@ function recieveBotReply(response) {
     return __awaiter(this, void 0, void 0, function* () {
         if (response.status !== "OK")
             throw new Error("Failed to recieve bot reply");
+        if (response.messages_conversation_id != currentConversationID)
+            throw new Error("Messages are from another conversation");
         console.log("recieved bot reply");
         for (let message of response.messages) {
-            yield displayMessage(message, false);
+            yield reDisplayMessage(message, false);
         }
     });
 }
@@ -124,7 +201,7 @@ function sendQueuedMessages() {
     $.ajax({
         url: "/process-msg",
         method: "POST",
-        data: { messages: JSON.stringify(messageQueue) },
+        data: { messages: JSON.stringify(messageQueue), conversation_id: currentConversationID },
         dataType: "json",
         success: recieveBotReply,
         error: function () {
@@ -145,7 +222,7 @@ function QueueMessage(event) {
     if (message === "")
         // Ignore empty strings
         return;
-    displayMessage(message, true);
+    reDisplayMessage(message, true);
     $("#chatbox-content").val(""); // Clear message box
     messageQueue.push(message);
     console.log(`Message queued ${message}}`);
@@ -193,4 +270,24 @@ function displayMessage(message, isFromUser) {
             resolve();
         }));
     });
+}
+
+/**
+ * Append a message to the chat HTML element, but without the typewriter effect for switching between conversations
+ * @param message string of the message to display
+ * @param sender  whether the message was sent by the user or the bot
+ */
+function reDisplayMessage(message, isFromUser) {
+    let cssClass = "";
+    if (isFromUser) {
+        cssClass = "msg-user-wrapper";
+        $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
+    }
+    else {
+        cssClass = "msg-bot-wrapper";
+        $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p id="new-message">${message}</p></div></div>`);
+    }
+    if (!scrolledUp) {
+        $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
+    }
 }

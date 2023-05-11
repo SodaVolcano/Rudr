@@ -28,6 +28,8 @@ The homepage is divided into a top banner containing the page slogan and the rob
 
 ## Running the Web Application
 > On localhost
+**IMPORTANT** - Make sure you are using Python version 3.11.2!
+
 ### Setting up Virtual Environment
 It's recommended that you use a virtual environment to manage the required Python packages without intefering with other packages that you have installed. Virtual environments can be set up in two ways. It's recommended that you use mamba as it is the easiest.
 1. Using conda/mamba, simply run below to create a virtual environment named `my-env` and install all packages specified by the `requirements.txt`
@@ -50,6 +52,16 @@ $ python -m venv /path/to/your/directory/my-env
 ```bash
 (my-env) $ pip install -r path/to/requirements.txt
 ```
+
+### Setting up the Data Bases
+In order for the chat and user features to be functional, the databases must be constructed and initialised.
+These commands must be run in the src directory.
+0. Enter the src directory
+
+1. flask db init
+    - note that it should list roughly the outline and schema of each table in the log
+2. flask db migrate -m "db init"
+3. flask db upgrade
 
 ### Running the Test Server
 - In the command line, **from the top-most directory**, run

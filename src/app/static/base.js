@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+
 /* ======================= EXPAND NAV ======================= */
 /* Open the overlay when someone clicks on the hamburger menu */
 function openNav() {
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const hiddenElements = document.querySelectorAll(".hidden");
     hiddenElements.forEach((el) => observer.observe(el));
 });
+
 /* ======================= TYPEWRITER ======================= */
 /* Function that simulates a typewriter writing the given text in the given element */
 function typewriterWrite(element, text) {

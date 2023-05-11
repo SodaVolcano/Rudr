@@ -1,11 +1,9 @@
 """ Route and view function definitions for the main blueprint """
 
-from flask import render_template, redirect, url_for, flash, request, session, jsonify
+from flask import render_template, redirect, url_for, request, session, jsonify
 from werkzeug.urls import url_parse
 
-from flask_wtf import FlaskForm
 from flask_login import login_user, logout_user, current_user, login_required
-from flask_session import Session
 
 from . import main
 from .forms import LoginForm, RegisterForm
@@ -15,8 +13,6 @@ import json
 
 import json
 import random
-
-from app import db
 
 
 @main.route("/", methods=["GET", "POST"])
@@ -37,9 +33,59 @@ def chat():
     return render_template("chat.html")
 
 
+@main.route("/replace_conversation", methods=["GET"])
+def replace_conversation():
+    conversation_id = request.args.get("new_id").strip('"')
+    print("Replacing with conversation: " + str(conversation_id))
+    print("Getting conversation from db")
+
+    query = Messages.query.filter_by(conversation_ID=(conversation_id)).all()
+    session["conversation_id"] = conversation_id
+    session["chatbot"] = ChatbotAgent("random")
+
+    print(query)
+
+    messages = []
+    print("listing msgs from db")
+    for result in query:
+        print(result.body)
+        msg = {
+            "id": result.id,
+            "content": result.body,
+            "conversationID": result.conversation_ID,
+            "speaker": result.speaker,
+            "emotion": result.emotion,
+            "timestamp": result.timestamp,
+        }
+        messages.append(msg)
+    return jsonify(
+        {"status": "OK", "conversation_id": conversation_id, "conversation": messages}
+    )
+
+
+@main.route("/get_conversations", methods=["GET"])
+def get_conversations():
+    # get conversations and check if empty
+    print("Getting conversations for user: " + str(current_user.id))  # type: ignore
+    get_conversation = Conversations.query.filter_by(user_id=current_user.id).all()  # type: ignore
+    if get_conversation is None:
+        print("No conversations!")
+        return jsonify({"status": "EMPTY", "conversations": None})
+
+    # convert to json object
+    my_conversation = []
+    for conversation in get_conversation:
+        print(conversation.id)
+        my_conversation.append(conversation.id)
+    # return a list of all conversations
+    return jsonify({"status": "OK", "conversations": my_conversation})
+
+
 @main.route("/process-msg", methods=["POST"])
 def process_msg():
     messages = request.form.get("messages")
+    conversation_id = request.form.get("conversation_id")
+    print(conversation_id + " is the received ID")
 
     if messages is None:
         return jsonify({"status": "ERROR", "message": "No message provided"}), 400
@@ -49,14 +95,20 @@ def process_msg():
     messages = json.loads(messages)
 
     for msg in messages:
-        Messages.add_msg(msg, "happy", "user", session["conversation_id"])
+        Messages.add_msg(msg, "happy", "user", conversation_id)
 
     reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
 
     for msg in reply:
-        Messages.add_msg(msg, "happy", "robot", session["conversation_id"])
+        Messages.add_msg(msg, "happy", "robot", conversation_id)
 
-    return jsonify({"status": "OK", "messages": reply})
+    return jsonify(
+        {
+            "status": "OK",
+            "messages": reply,
+            "messages_conversation_id": session["conversation_id"],
+        }
+    )
 
 
 @main.route("/init_conversation", methods=["POST"])
@@ -71,16 +123,15 @@ def init_conversation():
             }
         )
 
-    conversationID = 0
-    while Conversations.conversation_exists(Conversations, conversationID):
-        conversationID = random.randint(0, 10000)
+    conversation_id = 0
+    while Conversations.conversation_exists(conversation_id):
+        conversation_id = random.randint(0, 10000)
 
-    session["conversation_id"] = conversationID
+    session["conversation_id"] = conversation_id
 
     # Add conversation to db
-
     Conversations.add_conversation(
-        conversationID, current_user.id, session["chatbot"].id
+        conversation_id, current_user.id, session["chatbot"].id  # type: ignore
     )
 
     return jsonify(
@@ -94,7 +145,7 @@ def init_chatbot():
     session["chatbot"] = ChatbotAgent("random")
 
     # add new robot
-    Robot.add_robot("rob", "")
+    Robot.add_robot("rob", "", session["chatbot"].id)
 
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
 
