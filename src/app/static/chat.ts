@@ -242,7 +242,7 @@ async function recieveBotReply(response: BotResponse): Promise<void> {
   if (response.messages_conversation_id != currentConversationID) throw new Error("Messages are from another conversation");
   console.log("recieved bot reply");
   for (let message of response.messages) {
-    await reDisplayMessage(message, false);
+    await displayMessage(message, false);
   }
 }
 

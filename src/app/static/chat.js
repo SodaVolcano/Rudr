@@ -180,7 +180,7 @@ function recieveBotReply(response) {
             throw new Error("Messages are from another conversation");
         console.log("recieved bot reply");
         for (let message of response.messages) {
-            yield reDisplayMessage(message, false);
+            yield displayMessage(message, false);
         }
     });
 }
