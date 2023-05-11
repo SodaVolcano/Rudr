@@ -262,6 +262,8 @@ function displayMessage(message, isFromUser) {
             if (!isFromUser) {
                 const newMessage = document.getElementById("new-message");
                 if (newMessage != null) {
+                    console.log("sdajdhajsdk");
+                    console.log(message);
                     yield typewriterWrite(newMessage, message);
                     newMessage.removeAttribute("id");
                 }
@@ -283,7 +285,7 @@ function reDisplayMessage(message, isFromUser) {
     }
     else {
         cssClass = "msg-bot-wrapper";
-        $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p id="new-message">${message}</p></div></div>`);
+        $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p">${message}</p></div></div>`);
     }
     if (!scrolledUp) {
         $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;

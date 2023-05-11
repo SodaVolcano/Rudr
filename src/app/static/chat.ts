@@ -334,6 +334,8 @@ async function displayMessage(message: string, isFromUser: boolean) {
     if (!isFromUser) {
       const newMessage = document.getElementById("new-message");
       if (newMessage != null) {
+        console.log("sdajdhajsdk");
+        console.log(message);
         await typewriterWrite(newMessage, message);
         newMessage.removeAttribute("id");
       }
@@ -358,7 +360,7 @@ function reDisplayMessage(message: string, isFromUser: boolean) {
   } else {
     cssClass = "msg-bot-wrapper";
     $(".chat-history").append(
-      `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p id="new-message">${message}</p></div></div>`
+      `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p">${message}</p></div></div>`
     );
   }
   if (!scrolledUp) {
