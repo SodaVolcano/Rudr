@@ -1,12 +1,9 @@
-
-
-document.addEventListener("DOMContentLoaded", main)
-
+document.addEventListener("DOMContentLoaded", main);
 
 interface BotResponse {
   status: string;
   messages: string[];
-  messages_conversation_id : string;
+  messages_conversation_id: string;
 }
 
 interface BotInitResponse {
@@ -54,12 +51,59 @@ let maxChatboxHeight: number = 227.5; // Found by trial and error
 let minChatboxHeight: number; // Computed from CSS on load in main()
 
 // current conversation id
-let currentConversationID = ""
+let currentConversationID = "";
 
 // Controls whether the scrollbar should be scrolled to the bottom
 // If user scrolled up, don't scroll down when new messages arrive
 let scrolledUp = false;
 
+// Image sources
+/*
+const imageSources: string[] = [
+  "{{ url_for('static/robot_icons', filename='rob1.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob2.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob3.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob4.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob5.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob6.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob7.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob8.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob9.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob10.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob11.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob12.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob13.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob14.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob15.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob16.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob17.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob18.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob19.png') }}",
+  "{{ url_for('static/robot_icons', filename='rob20.png') }}"
+];
+*/
+const imageSources: string[] = [
+  "/static/robot_icons/rob1.png",
+  "/static/robot_icons/rob2.png",
+  "/static/robot_icons/rob3.png",
+  "/static/robot_icons/rob4.png",
+  "/static/robot_icons/rob5.png",
+  "/static/robot_icons/rob6.png",
+  "/static/robot_icons/rob7.png",
+  "/static/robot_icons/rob8.png",
+  "/static/robot_icons/rob9.png",
+  "/static/robot_icons/rob10.png",
+  "/static/robot_icons/rob11.png",
+  "/static/robot_icons/rob12.png",
+  "/static/robot_icons/rob13.png",
+  "/static/robot_icons/rob14.png",
+  "/static/robot_icons/rob15.png",
+  "/static/robot_icons/rob16.png",
+  "/static/robot_icons/rob17.png",
+  "/static/robot_icons/rob18.png",
+  "/static/robot_icons/rob19.png",
+  "/static/robot_icons/rob20.png"
+];
 /**
  * Initialise event listeners etc when the window loads
  */
@@ -72,7 +116,7 @@ function main() {
     if (event.key === "Enter") QueueMessage(event);
   });
 
-  $('#new-chat')[0].addEventListener('click', newChat);
+  $("#new-chat")[0].addEventListener("click", newChat);
   $.get("/get_conversations").done(displayConversations);
 
   // Reset timer when user types in chatbox
@@ -92,67 +136,78 @@ function main() {
   // Scrollbar
   $(".scrollbar")[0].addEventListener("scroll", function (event) {
     const scrollbar = <HTMLDivElement>event.target;
-    scrolledUp = !(scrollbar.scrollTop + scrollbar.clientHeight >= scrollbar.scrollHeight - 1)
+    scrolledUp = !(
+      scrollbar.scrollTop + scrollbar.clientHeight >=
+      scrollbar.scrollHeight - 1
+    );
   });
-  
-  // No Conversation
 
+  // No Conversation
 }
 
 // ================== conversation init and switiching ====================
 
 function checkConversationInit(response: ConversationInitResponse) {
-  if (response.status !== 'OK')
+  if (response.status !== "OK")
     throw new Error("Failed to initialise conversation");
   currentConversationID = response.conversation_id;
 
-  console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+  console.log(
+    `SUCCESS: Conversation initialised with id ${response.conversation_id}`
+  );
 }
-
 
 /**
  * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
  */
 function displayConversations(response: displayConversationListResponse) {
   const conversationList = document.getElementById("conversations");
-  if (conversationList == null || response.status == 'EMPTY') {
+  if (conversationList == null || response.status == "EMPTY") {
     return;
   }
-    console.log("Printing Conversations");
-    const all_conversations = response.conversations;
-    // Loop through each conversation
-    for (let i = 0; i < all_conversations.length; i++) {
-      const current = all_conversations[i].toString();
-      console.log(current);
-      // get conversation and add it to the ul list on /chat
-      const conversationElement = document.createElement("ul");
-      conversationElement.textContent = current;
-      conversationElement.setAttribute("id",current);
-      conversationElement.addEventListener("click", () => {
-        changeConversation(current);
-      });
-      conversationList.appendChild(conversationElement);
-    
+  console.log("Printing Conversations");
+  const all_conversations = response.conversations;
+  // Loop through each conversation
+  for (let i = 0; i < all_conversations.length; i++) {
+    const current = all_conversations[i].toString();
+    console.log(current);
+    // get conversation and add it to the ul list on /chat
+    const div = document.createElement("div");
+    const img = document.createElement("img");
+    img.src = imageSources[parseInt(current) % imageSources.length];
+    img.alt = current;
+    const hue = (parseInt(current)) % 360;
+    img.style.filter = `hue-rotate(${hue}deg)`;
+    div.appendChild(img);
+    const name = document.createElement("h5");
+    name.textContent = current; // Change with Robot Name
+    div.appendChild(name);
+    div.setAttribute("id", current);
+    div.addEventListener("click", () => {
+      changeConversation(current);
+    });
+    conversationList.appendChild(div);
   }
 }
 
-
 function receiveConversation(response: receiveConversationResponse) {
-  if (response.status !== 'OK')
-      throw new Error("Failed to initialise conversation");
+  if (response.status !== "OK")
+    throw new Error("Failed to initialise conversation");
   // replace current conversation messages with the given ones
-  console.log(`SUCCESS: New Conversation initialised with id ${response.conversation_id}`);
+  console.log(
+    `SUCCESS: New Conversation initialised with id ${response.conversation_id}`
+  );
   currentConversationID = response.conversation_id;
   clearConversation();
   for (let i = 0; i < response.conversation.length; i++) {
-      // check if from robot or user
-      let isFromUser = true;
-      console.log(response.conversation[i].speaker);
-      if (response.conversation[i].speaker == "robot") {
-          isFromUser = false;
-      }
-      console.log(response.conversation[i].content);
-      reDisplayMessage(response.conversation[i].content, isFromUser);
+    // check if from robot or user
+    let isFromUser = true;
+    console.log(response.conversation[i].speaker);
+    if (response.conversation[i].speaker == "robot") {
+      isFromUser = false;
+    }
+    console.log(response.conversation[i].content);
+    reDisplayMessage(response.conversation[i].content, isFromUser);
   }
 }
 
@@ -166,12 +221,14 @@ function changeConversation(conversation_id: string) {
   const newSelected = document.getElementById(conversation_id);
   newSelected?.classList.add("selected");
   $.ajax({
-      url: '/replace_conversation',
-      method: 'GET',
-      data: { new_id: JSON.stringify(conversation_id) },
-      dataType: 'json',
-      success: receiveConversation,
-      error: function () { throw new Error("Failed to change conversation"); }
+    url: "/replace_conversation",
+    method: "GET",
+    data: { new_id: JSON.stringify(conversation_id) },
+    dataType: "json",
+    success: receiveConversation,
+    error: function () {
+      throw new Error("Failed to change conversation");
+    },
   });
 }
 
@@ -179,7 +236,7 @@ function clearConversation() {
   let chatHistory = document.getElementById("chat-history");
   if (chatHistory != null) {
     while (chatHistory.firstChild) {
-      chatHistory.firstChild.remove()
+      chatHistory.firstChild.remove();
     }
   }
 }
@@ -189,8 +246,6 @@ function newChat() {
   console.log("clearing chat");
   clearConversation();
 }
-
-
 
 // ======================== textarea resizing ========================
 
@@ -233,7 +288,6 @@ function adjustHeight(event: Event) {
 
 // ================ submit/recieve message from server ===================
 
-
 /**
  * Handle the bot response from the server
  * @param response JSON object containing the response from the server
@@ -246,7 +300,8 @@ function delay(duration: number): Promise<void> {
 
 async function recieveBotReply(response: BotResponse): Promise<void> {
   if (response.status !== "OK") throw new Error("Failed to recieve bot reply");
-  if (response.messages_conversation_id != currentConversationID) throw new Error("Messages are from another conversation");
+  if (response.messages_conversation_id != currentConversationID)
+    throw new Error("Messages are from another conversation");
   console.log("recieved bot reply");
   for (let message of response.messages) {
     await displayMessage(message, false);
@@ -269,7 +324,10 @@ function sendQueuedMessages() {
   $.ajax({
     url: "/process-msg",
     method: "POST",
-    data: { messages: JSON.stringify(messageQueue), conversation_id: currentConversationID },
+    data: {
+      messages: JSON.stringify(messageQueue),
+      conversation_id: currentConversationID,
+    },
     dataType: "json",
     success: recieveBotReply,
     error: function () {
@@ -336,7 +394,7 @@ async function displayMessage(message: string, isFromUser: boolean) {
     if (!scrolledUp) {
       $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
     }
-    
+
     if (!isFromUser) {
       const newMessage = document.getElementById("new-message");
       if (newMessage != null) {
