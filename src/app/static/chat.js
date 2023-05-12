@@ -109,7 +109,7 @@ function displayConversations(response) {
         const img = document.createElement("img");
         img.src = imageSources[parseInt(current) % imageSources.length];
         img.alt = current;
-        const hue = (parseInt(current)) % 360;
+        const hue = ((parseInt(current)) * 360) / 10000; //Adjust hue by id
         img.style.filter = `hue-rotate(${hue}deg)`;
         div.appendChild(img);
         const name = document.createElement("h5");
@@ -144,12 +144,17 @@ function receiveConversation(response) {
 function changeConversation(conversation_id) {
     sendQueuedMessages();
     resetTimer();
+    // Change seleceted icon
     const prevSelected = document.getElementsByClassName("selected");
     for (let i = 0; i < prevSelected.length; i++) {
         prevSelected[i].classList.remove("selected");
     }
     const newSelected = document.getElementById(conversation_id);
     newSelected === null || newSelected === void 0 ? void 0 : newSelected.classList.add("selected");
+    // Change title
+    const title = document.getElementById("name-title");
+    if (title != null)
+        title.textContent = conversation_id;
     $.ajax({
         url: "/replace_conversation",
         method: "GET",

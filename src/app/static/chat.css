@@ -65,7 +65,6 @@ html, body, main {
 }
 
 .chat-history {
-    min-height: 100%;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
@@ -150,18 +149,25 @@ html, body, main {
 .speech-bubble {
     border-radius: 10px;
     padding: 10px 20px;
-
-    max-width: 500px;
-
-    background-color: transparent;
-    /*border: 3px solid var(--foreground-blue);*/
+    margin-left: 5%;
+    margin-right: 5%;
+    max-width: 60%;
     background-color: var(--foreground-blue);
     display: inline-block;
     height: 100%;
     position: relative;
 }
 
+@media (max-width: 576px) {
+    .speech-bubble{
+        margin-left: 0%;
+        margin-right: 0%;
+        max-width: 80%;
+    }
+}
+
 .speech-bubble p {
+    font-size: 1rem;
     word-wrap: break-word;
     overflow-wrap: break-word;
     white-space: pre-wrap;
@@ -193,6 +199,19 @@ html, body, main {
     right: 10%;
 	border-right: 0;
 }
+
+/* Name Title */
+#name-title {
+    font-size: 3em;
+    font-weight: bold;
+    color: var(--text-colour-secondary);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
 
 
 /* Conversation */
