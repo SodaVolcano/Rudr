@@ -1,9 +1,12 @@
 // Declare slogan and byline text and set the time interval for changing byline
 const sloganText = "Make Sparks Fly";
 const bylineTexts = [
-  "WE do something idk our website is very functionally cool",
-  "I am an epic robot",
-  "Why are you still looking at me",
+  "Embark on an Exquisite Turing Test of Love: Connecting Souls, Byte by Byte",
+  "Algorithmic Prowess Meets Emotional Intelligence",
+  "Connecting Hearts with Data-Driven Precision",
+  "Enter the Data Matrix of Love",
+  "Harness the Synergy of Quantum Algorithms for Robot Romantics",
+  "Quantifiably Reduced Propensity of Fallacious Relationship Outcomes"
 ];
 const waitTime = 4000;
 
