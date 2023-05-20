@@ -64,6 +64,10 @@ function main() {
     });
     $("#new-chat")[0].addEventListener("click", newChat);
     $.get("/get_conversations").done(displayConversations);
+    const conversationList = document.getElementById("conversations");
+    if (conversationList == null) {
+        newChat();
+    }
     // Reset timer when user types in chatbox
     // Timer is also reset when user presses submit
     $("#chatbox-content").on("keydown", resetTimer);
@@ -98,6 +102,7 @@ function displayConversations(response) {
     if (conversationList == null || response.status == "EMPTY") {
         return;
     }
+    conversationList.replaceChildren();
     console.log("Printing Conversations");
     const all_conversations = response.conversations;
     // Loop through each conversation
@@ -177,8 +182,8 @@ function clearConversation() {
 function newChat() {
     $.post("/init_chatbot").done(checkBotInit);
     $.post("/init_conversation").done(checkConversationInit);
-    console.log("clearing chat");
     clearConversation();
+    $.get("/get_conversations").done(displayConversations);
 }
 // ======================== textarea resizing ========================
 /**
