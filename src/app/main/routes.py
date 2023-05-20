@@ -36,6 +36,7 @@ def chat():
     print("Arrived at chat")
     return render_template("chat.html")
 
+
 @main.route("/replace_conversation", methods=["GET"])
 def replace_conversation():
     conversation_id = request.args.get("new_id").strip('"')
@@ -170,7 +171,7 @@ def signup():
 @main.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('.index'))
+        return redirect(url_for(".index"))
     login_form = LoginForm()
     if login_form.validate_on_submit():
         # Get User from table
