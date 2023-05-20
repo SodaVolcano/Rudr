@@ -39,6 +39,7 @@
 
 .social-media-icons i:hover {
   transform: scale(1.2);
+  color: var(--gradient-colour-one);
 }
 
 .sidebar:hover {
@@ -46,7 +47,7 @@
 }
 
 .sidebar:hover a {
-    opacity: 1;
+  opacity: 1;
 }
 
 .sidebar span {

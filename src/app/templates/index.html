@@ -54,7 +54,11 @@ L0VE
       <div class="col-lg-6">
         <h2 class="decription-title hidden hidden-delay">The next-era dating platform for humans and machines alike.</h2>
         <p class="description-text hidden hidden-delay">Quickly find your perfect date using QIMatch - our advanced quantum AI matchmaker.</p>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('.login') }}" class="description-button btn btn-primary hidden hidden-delay">Start Chatting Now!</a>
+        {% else %}
         <a href="{{ url_for('.chat') }}" class="description-button btn btn-primary hidden hidden-delay">Start Chatting Now!</a>
+        {% endif %}
       </div>
       <div class="col-lg-6">
         <img class="img-fluid hidden hidden-delay" src="{{ url_for('static', filename='connections.png') }}" alt="Connections" draggable="false">
