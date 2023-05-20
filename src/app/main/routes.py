@@ -1,9 +1,11 @@
 """ Route and view function definitions for the main blueprint """
 
-from flask import render_template, redirect, url_for, request, session, jsonify
+from flask import render_template, redirect, url_for, flash, request, session, jsonify
 from werkzeug.urls import url_parse
 
+from flask_wtf import FlaskForm
 from flask_login import login_user, logout_user, current_user, login_required
+from flask_session import Session
 
 from . import main
 from .forms import LoginForm, RegisterForm
@@ -13,6 +15,8 @@ import json
 
 import json
 import random
+
+from app import db
 
 
 @main.route("/", methods=["GET", "POST"])
@@ -31,7 +35,6 @@ def about():
 def chat():
     print("Arrived at chat")
     return render_template("chat.html")
-
 
 @main.route("/replace_conversation", methods=["GET"])
 def replace_conversation():
@@ -84,8 +87,6 @@ def get_conversations():
 @main.route("/process-msg", methods=["POST"])
 def process_msg():
     messages = request.form.get("messages")
-    conversation_id = request.form.get("conversation_id")
-    print(conversation_id + " is the received ID")
 
     if messages is None:
         return jsonify({"status": "ERROR", "message": "No message provided"}), 400
@@ -95,20 +96,14 @@ def process_msg():
     messages = json.loads(messages)
 
     for msg in messages:
-        Messages.add_msg(msg, "happy", "user", conversation_id)
+        Messages.add_msg(msg, "happy", "user", session["conversation_id"])
 
     reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
 
     for msg in reply:
-        Messages.add_msg(msg, "happy", "robot", conversation_id)
+        Messages.add_msg(msg, "happy", "robot", session["conversation_id"])
 
-    return jsonify(
-        {
-            "status": "OK",
-            "messages": reply,
-            "messages_conversation_id": session["conversation_id"],
-        }
-    )
+    return jsonify({"status": "OK", "messages": reply})
 
 
 @main.route("/init_conversation", methods=["POST"])
@@ -123,15 +118,16 @@ def init_conversation():
             }
         )
 
-    conversation_id = 0
-    while Conversations.conversation_exists(conversation_id):
-        conversation_id = random.randint(0, 10000)
+    conversationID = 0
+    while Conversations.conversation_exists(conversationID):
+        conversationID = random.randint(0, 10000)
 
-    session["conversation_id"] = conversation_id
+    session["conversation_id"] = conversationID
 
     # Add conversation to db
+
     Conversations.add_conversation(
-        conversation_id, current_user.id, session["chatbot"].id  # type: ignore
+        conversationID, current_user.id, session["chatbot"].id
     )
 
     return jsonify(
@@ -143,9 +139,10 @@ def init_conversation():
 def init_chatbot():
     """Initialize the chatbot agent when user starts new session"""
     session["chatbot"] = ChatbotAgent("random")
+    chatbot_id = session["chatbot"].id
 
     # add new robot
-    Robot.add_robot("rob", "", session["chatbot"].id)
+    Robot.add_robot("rob", "", chatbot_id)
 
     return jsonify({"status": "OK", "bot_id": session["chatbot"].id})
 
@@ -172,6 +169,8 @@ def signup():
 # To logout user
 @main.route("/login", methods=["GET", "POST"])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('.index'))
     login_form = LoginForm()
     if login_form.validate_on_submit():
         # Get User from table
@@ -179,7 +178,7 @@ def login():
 
         # Check for invalid details
         if user is None or not user.check_password(login_form.password.data):
-            return redirect(url_for(".index"))
+            return redirect(url_for(".login"))
 
         # login user
         login_user(user, remember=login_form.remember_me.data)
