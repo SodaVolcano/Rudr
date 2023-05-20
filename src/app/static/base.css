@@ -1,3 +1,5 @@
+
+
 /* BACKGROUND */
 body {
   background-color: var(--background-colour);
@@ -5,6 +7,7 @@ body {
   color: var(--text-colour-primary);
   margin: 0;
   overflow-x: hidden;
+  font-family: 'Orbitron', sans-serif;
 }
 
 /* ======================= HEADER STYLE ======================= */
