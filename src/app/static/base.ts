@@ -13,6 +13,15 @@ function closeNav() {
         myNav.style.width = "0%";
     }
 }
+/* Open the overlay when someone clicks on the hamburger menu */
+$('.hamburger-menu')[0].addEventListener('click', function(event) {
+  $('#overlay-nav')[0].style.width = "100%";
+});
+
+/* Close the overlay when someone clicks on the "x" symbol inside the overlay */
+$('.closebtn')[0].addEventListener('click', function(event) {
+  $('#overlay-nav')[0].style.width = "0%";
+});
 
 /* Shows elements as you scroll when they appear onscreen */
 const observer = new IntersectionObserver((entries) => {

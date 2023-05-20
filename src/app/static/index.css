@@ -8,7 +8,7 @@
   height: 50px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  background-image: var(--gradient-colour-one);
+  background: var(--gradient-colour-two);
   z-index: 998;
   overflow: hidden;
   transition: height 0.5s;

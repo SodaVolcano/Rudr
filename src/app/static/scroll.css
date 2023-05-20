@@ -10,7 +10,7 @@
   opacity: 1;
   filter: blur(0);
   transform: translateX(0);
-  transition: all 1s;
+  transition: opacity 1s, filter 1s, transform 1s;
 }
 
 .hidden-delay:nth-child(2) {
