@@ -8,7 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-window.onload = main;
+document.addEventListener("DOMContentLoaded", main);
 // ======================== global variables ========================
 // When timer expires, send queued messages to server. reset on each input
 let typingTimer;
@@ -24,18 +24,45 @@ let currentConversationID = "";
 // Controls whether the scrollbar should be scrolled to the bottom
 // If user scrolled up, don't scroll down when new messages arrive
 let scrolledUp = false;
+// Image sources
+/* https://dribbble.com/shots/14503125-Robot-Avatar-Icons */
+const imageSources = [
+    "/static/robot_icons/rob1.png",
+    "/static/robot_icons/rob2.png",
+    "/static/robot_icons/rob3.png",
+    "/static/robot_icons/rob4.png",
+    "/static/robot_icons/rob5.png",
+    "/static/robot_icons/rob6.png",
+    "/static/robot_icons/rob7.png",
+    "/static/robot_icons/rob8.png",
+    "/static/robot_icons/rob9.png",
+    "/static/robot_icons/rob10.png",
+    "/static/robot_icons/rob11.png",
+    "/static/robot_icons/rob12.png",
+    "/static/robot_icons/rob13.png",
+    "/static/robot_icons/rob14.png",
+    "/static/robot_icons/rob15.png",
+    "/static/robot_icons/rob16.png",
+    "/static/robot_icons/rob17.png",
+    "/static/robot_icons/rob18.png",
+    "/static/robot_icons/rob19.png",
+    "/static/robot_icons/rob20.png"
+];
 /**
  * Initialise event listeners etc when the window loads
  */
 function main() {
     const computedStyle = window.getComputedStyle($(".chatbox-area")[0]);
     minChatboxHeight = parseFloat(computedStyle.height);
+    const underChatbox = document.getElementById("under-chatbox");
+    if (underChatbox != null)
+        underChatbox.style.height = minChatboxHeight + "px";
     $("#chatbox-submit")[0].addEventListener("click", QueueMessage);
     $("#chatbox-content")[0].addEventListener("keydown", function (event) {
         if (event.key === "Enter")
             QueueMessage(event);
     });
-    $('#new-chat')[0].addEventListener('click', newChat);
+    $("#new-chat")[0].addEventListener("click", newChat);
     $.get("/get_conversations").done(displayConversations);
     // Reset timer when user types in chatbox
     // Timer is also reset when user presses submit
@@ -51,15 +78,14 @@ function main() {
     // Scrollbar
     $(".scrollbar")[0].addEventListener("scroll", function (event) {
         const scrollbar = event.target;
-        if (scrollbar.scrollTop !== scrollbar.scrollHeight - scrollbar.clientHeight)
-            scrolledUp = true;
-        else
-            scrolledUp = false;
+        scrolledUp = !(scrollbar.scrollTop + scrollbar.clientHeight >=
+            scrollbar.scrollHeight - 1);
     });
+    // No Conversation
 }
 // ================== conversation init and switiching ====================
 function checkConversationInit(response) {
-    if (response.status !== 'OK')
+    if (response.status !== "OK")
         throw new Error("Failed to initialise conversation");
     currentConversationID = response.conversation_id;
     console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
@@ -68,29 +94,37 @@ function checkConversationInit(response) {
  * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
  */
 function displayConversations(response) {
-    var conversationList = document.getElementById("conversations");
-    if (conversationList == null) {
+    const conversationList = document.getElementById("conversations");
+    if (conversationList == null || response.status == "EMPTY") {
         return;
     }
-    if (response.status != 'EMPTY') {
-        console.log("Printing Conversations");
-        let all_conversations = response.conversations;
-        // Loop through each conversation
-        for (let i = 0; i < all_conversations.length; i++) {
-            let current = all_conversations[i].toString();
-            console.log(current);
-            // get conversation and add it to the ul list on /chat
-            const conversationElement = document.createElement("ul");
-            conversationElement.textContent = current;
-            conversationElement.addEventListener("click", () => {
-                changeConversation(current);
-            });
-            conversationList.appendChild(conversationElement);
-        }
+    console.log("Printing Conversations");
+    const all_conversations = response.conversations;
+    // Loop through each conversation
+    for (let i = 0; i < all_conversations.length; i++) {
+        const current = all_conversations[i].toString();
+        console.log(current);
+        // get conversation and add it to the ul list on /chat
+        const div = document.createElement("div");
+        const img = document.createElement("img");
+        img.src = imageSources[parseInt(current) % imageSources.length];
+        img.alt = current;
+        const hue = ((parseInt(current)) * 360) / 10000; //Adjust hue by id
+        img.style.filter = `hue-rotate(${hue}deg)`;
+        div.appendChild(img);
+        const name = document.createElement("h5");
+        name.textContent = current; // Change with Robot Name
+        div.appendChild(name);
+        div.classList.add("conversation-container");
+        div.setAttribute("id", current);
+        div.addEventListener("click", () => {
+            changeConversation(current);
+        });
+        conversationList.appendChild(div);
     }
 }
 function receiveConversation(response) {
-    if (response.status !== 'OK')
+    if (response.status !== "OK")
         throw new Error("Failed to initialise conversation");
     // replace current conversation messages with the given ones
     console.log(`SUCCESS: New Conversation initialised with id ${response.conversation_id}`);
@@ -110,13 +144,26 @@ function receiveConversation(response) {
 function changeConversation(conversation_id) {
     sendQueuedMessages();
     resetTimer();
+    // Change seleceted icon
+    const prevSelected = document.getElementsByClassName("selected");
+    for (let i = 0; i < prevSelected.length; i++) {
+        prevSelected[i].classList.remove("selected");
+    }
+    const newSelected = document.getElementById(conversation_id);
+    newSelected === null || newSelected === void 0 ? void 0 : newSelected.classList.add("selected");
+    // Change title
+    const title = document.getElementById("name-title");
+    if (title != null)
+        title.textContent = conversation_id;
     $.ajax({
-        url: '/replace_conversation',
-        method: 'GET',
+        url: "/replace_conversation",
+        method: "GET",
         data: { new_id: JSON.stringify(conversation_id) },
-        dataType: 'json',
+        dataType: "json",
         success: receiveConversation,
-        error: function () { throw new Error("Failed to change conversation"); }
+        error: function () {
+            throw new Error("Failed to change conversation");
+        },
     });
 }
 function clearConversation() {
@@ -149,6 +196,7 @@ function delayWindowResize() {
  * Adjust height of the chatbox
  */
 function adjustHeight(event) {
+    const underChatbox = document.getElementById("under-chatbox");
     const chatboxArea = $(".chatbox-area")[0];
     const textarea = ($("#chatbox-content")[0]);
     // Reset height - always adjust height from min height
@@ -160,6 +208,8 @@ function adjustHeight(event) {
     if (textarea.scrollHeight > textarea.clientHeight) {
         const newHeight = Math.min(height + textarea.scrollHeight - textarea.clientHeight, maxChatboxHeight);
         chatboxArea.style.height = newHeight + "px";
+        if (underChatbox != null)
+            underChatbox.style.height = newHeight + "px";
     }
 }
 // ================ submit/recieve message from server ===================
@@ -180,7 +230,7 @@ function recieveBotReply(response) {
             throw new Error("Messages are from another conversation");
         console.log("recieved bot reply");
         for (let message of response.messages) {
-            yield reDisplayMessage(message, false);
+            yield displayMessage(message, false);
         }
     });
 }
@@ -200,7 +250,10 @@ function sendQueuedMessages() {
     $.ajax({
         url: "/process-msg",
         method: "POST",
-        data: { messages: JSON.stringify(messageQueue), conversation_id: currentConversationID },
+        data: {
+            messages: JSON.stringify(messageQueue),
+            conversation_id: currentConversationID,
+        },
         dataType: "json",
         success: recieveBotReply,
         error: function () {
@@ -247,13 +300,11 @@ function resetTimer() {
 function displayMessage(message, isFromUser) {
     return __awaiter(this, void 0, void 0, function* () {
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-            let cssClass = "";
+            const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
             if (isFromUser) {
-                cssClass = "msg-user-wrapper";
                 $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
             }
             else {
-                cssClass = "msg-bot-wrapper";
                 $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`);
             }
             if (!scrolledUp) {
@@ -262,6 +313,8 @@ function displayMessage(message, isFromUser) {
             if (!isFromUser) {
                 const newMessage = document.getElementById("new-message");
                 if (newMessage != null) {
+                    console.log("sdajdhajsdk");
+                    console.log(message);
                     yield typewriterWrite(newMessage, message);
                     newMessage.removeAttribute("id");
                 }
@@ -276,15 +329,8 @@ function displayMessage(message, isFromUser) {
  * @param sender  whether the message was sent by the user or the bot
  */
 function reDisplayMessage(message, isFromUser) {
-    let cssClass = "";
-    if (isFromUser) {
-        cssClass = "msg-user-wrapper";
-        $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
-    }
-    else {
-        cssClass = "msg-bot-wrapper";
-        $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p id="new-message">${message}</p></div></div>`);
-    }
+    const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
+    $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
     if (!scrolledUp) {
         $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
     }

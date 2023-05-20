@@ -21,20 +21,24 @@ Chatroom
 
 
 {% block content %}
-<div class="chatpage-container row">
-  <div class="convo-list col-2">
-    <ul id="conversations">
+<div class="chatpage-container">
+  <div class="convo-list">
+    <div id="conversations">
       <!-- insert list of conversations here -->
       
-    </ul>
+    </div>
     <button id="new-chat"> New Chat </button>
   </div>
 
   <!-- The chat history, scroll bar, and text input -->
-  <div class="chatroom-container col-10">
+  <div class="chatroom-container">
     <div class="scrollbar" id="chat-scrollbar">
+      <h1 id="name-title"></h1>
       <div id="chat-history" class="chat-history">
         <!-- Messages will be inserted here dynamically -->  
+      </div>
+      <div id="under-chatbox">
+        <!-- Some blank area for under the chatbox -->
       </div>
     </div>
     <div class="chatbox-area">
