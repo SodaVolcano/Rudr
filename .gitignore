@@ -176,3 +176,5 @@ data-dev.sqlite
 #Vscode
 settings.json
 */migrations/**
+*/flask_session/**
+*.sqlite
