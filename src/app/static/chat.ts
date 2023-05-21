@@ -339,7 +339,7 @@ function sendQueuedMessages() {
     method: "POST",
     data: {
       messages: JSON.stringify(messageQueue),
-      conversation_id: currentConversationID,
+      conversation_id: JSON.stringify(currentConversationID),
     },
     dataType: "json",
     success: recieveBotReply,

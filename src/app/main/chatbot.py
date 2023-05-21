@@ -4,6 +4,7 @@ import os.path
 from typing import Literal
 import re
 
+import openai
 
 class ChatbotMediator:
     """Mediator class to handle I/O and prompt with the chatbot"""
@@ -12,10 +13,10 @@ class ChatbotMediator:
         pass
 
     @staticmethod
-    def prompt_chatbot(prompts: list[str], bot: "ChatbotAgent") -> list[str]:
+    def prompt_chatbot(prompts: list[str], history: list[str], bot: "ChatbotAgent") -> list[str]:
         """Prompt the chatbot with the given prompt"""
         prompt_structured = ChatbotMediator.__generate_prompt(prompts, bot)
-        reply = bot.prompt(prompt_structured)
+        reply = bot.prompt(prompt_structured, history)
 
         return ChatbotMediator.__structure_reply(reply)
 
@@ -47,12 +48,29 @@ class ChatbotAgent:
         self.mode = mode
         self.id = random.randint(0, 100000)
 
-    def prompt(self, prompt: str) -> str:
+    def prompt(self, prompt: str, history: list[str]) -> str:
         """Generate a reply from the chatbot using the given prompt"""
         if self.mode == "random":
             return self.__random_reply()
         elif self.mode == "echo":
             return prompt
+        elif self.mode == "gpt":
+            openai.api_key = os.environ.get("GPTKEY")
+            try: 
+                response = openai.Completion.create(
+                    engine="text-davinci-003",
+                    prompt=prompt,
+                    messages=history,
+                    max_tokens=50,
+                    temperature=0.6,
+                    n=1,
+                    stop=None,
+                    timeout=15,
+                )
+                return response.choices[0].text.strip()
+            except openai.error.RateLimitError:
+                print("Rate limit exceeded")
+                return "Sorry, my time has come..."
         else:
             return "ERROR: Chatbot mode not implemented yet"
 
