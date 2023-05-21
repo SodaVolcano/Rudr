@@ -435,7 +435,7 @@ async function displayMessage(message: string, isFromUser: boolean) {
 function reDisplayMessage(message: string, isFromUser: boolean) {
   const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
   $(".chat-history").append(
-    `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
+    `<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
   );
   if (!scrolledUp) {
     $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;

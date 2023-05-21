@@ -4,7 +4,6 @@
   href="{{ url_for('static', filename='login_signup.css') }}"
 />
 {% endblock %} {% block content %}
-<main>
   <div class="fullscreen-container">
     <div id="signup-box">
       <div id="left" class="col-md-7 col-12">
@@ -30,7 +29,7 @@
           Lacking an account? Rectify that oversight - join our esteemed users
           <a href="{{ url_for('.signup') }}">here</a>
         </p>
-        <form id="loginForm" action="" method="post" novalidate>
+        <form id="signupForm" method="post" novalidate>
           {{ form.hidden_tag()}}
           <p>
             {{ form.username(class="input-data", type="text",
@@ -58,7 +57,7 @@
             {% endfor %}
           </p>
           <p>
-            {{ form.remember_me(id="remember-me") }} {{
+            {{ form.remember_me(id="remember_me") }} {{
             form.remember_me.label(class="formLabel") }}<br />
           </p>
           <p>{{ form.submit(id="login-button") }}</p>
@@ -66,5 +65,4 @@
       </div>
     </div>
   </div>
-</main>
 {% endblock %}

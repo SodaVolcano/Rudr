@@ -6,9 +6,7 @@
 {% endblock %}
 
 {% block script %}
-<script src="{{ url_for('static', filename='chat.js') }}">
-  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};  // For AJAX requests
-</script>
+<script src="{{ url_for('static', filename='chat.js') }}"></script>
 {% endblock %}
 
 {% block title %}
@@ -39,7 +37,7 @@ Chatroom
   <!-- The chat history, scroll bar, and text input -->
   <div class="chatroom-container">
     <div class="scrollbar" id="chat-scrollbar">
-      <h1 id="name-title"></h1>
+      <h1 id="name-title">----</h1>
       <div id="chat-history" class="chat-history">
         <!-- Messages will be inserted here dynamically -->  
       </div>

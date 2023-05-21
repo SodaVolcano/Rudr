@@ -185,6 +185,7 @@ function newChat() {
     clearConversation();
     $.post("/init_chatbot").done(checkBotInit);
     $.post("/init_conversation").done(checkConversationInit);
+    $.get("/get_conversations").done(displayConversations);
 }
 // ======================== textarea resizing ========================
 /**
@@ -334,7 +335,7 @@ async function displayMessage(message, isFromUser) {
  */
 function reDisplayMessage(message, isFromUser) {
     const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
-    $(".chat-history").append(`<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
+    $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
     if (!scrolledUp) {
         $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
     }
