@@ -101,9 +101,13 @@ function main() {
   $.get("/get_conversations").done(displayConversations);
 
   const conversationList = document.getElementById("conversations");
-  if (conversationList == null) {
-    newChat();
+  if (conversationList != null) {
+    if (!conversationList.hasChildNodes()) {
+      newChat();
+    } 
+    // cohens code for switching chat
   }
+
 
   // Reset timer when user types in chatbox
   // Timer is also reset when user presses submit
@@ -153,7 +157,7 @@ function checkConversationInit(response: ConversationInitResponse) {
 async function displayConversations(response: displayConversationListResponse) {
   const conversationList = document.getElementById("conversations");
 
-  if (response.status == "EMPTY"|| conversationList == null) {
+  if (response.status == "EMPTY" || conversationList == null) {
     return;
   }
   conversationList.replaceChildren();
