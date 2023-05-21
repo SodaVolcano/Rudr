@@ -57,7 +57,7 @@ class ChatbotAgent:
             return self.__random_reply()
         elif self.mode == "echo":
             return prompt
-        elif self.mode == "gpt":
+        elif self.mode == "chatgpt":
             openai.api_key = os.environ.get("GPTKEY")
             try:
                 response = openai.Completion.create(
@@ -74,6 +74,9 @@ class ChatbotAgent:
             except openai.error.RateLimitError:
                 print("Rate limit exceeded")
                 return "Sorry, my time has come..."
+            except openai.error.AuthenticationError:
+                print("Invalid Key")
+                self.mode = "random"
         else:
             return "ERROR: Chatbot mode not implemented yet"
 
