@@ -6,14 +6,22 @@ body {
     background-attachment: fixed;
     /*font-family: "Open Sans", sans-serif;*/
   }
+
+  .fullscreen-container {
+    display: flex;
+    align-items: center;
+    height: 100svh;
+  }
   
+  p {
+    font-size: clamp(12px, 1.5vw, 16px);
+  }
+
   #signup-box,
   #login-box {
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0%);
-    padding-top: 120px;
-    padding-bottom: 120px;
     width: 80%;
     background: var(--background-colour);
     border-radius: 10px;
@@ -29,7 +37,7 @@ body {
     color: var(--text-colour-primary);
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("https://thumbs.gfycat.com/AccurateLimpingAchillestang-max-1mb.gif");
+    background-image: url(https://i.gifer.com/QWc9.gif);
     overflow: hidden;
     border-top-left-radius: 40px;
     border-bottom-left-radius: 40px;
@@ -54,7 +62,7 @@ body {
   }
   
   h1 {
-    font-size: 10vmax;
+    font-size: clamp(70px, 10vw, 100px);
     line-height: 1;
     font-weight: 900;
     margin-top: 40px;
@@ -78,7 +86,6 @@ body {
     */
   
   #right p {
-    font-size: 21px;
     color: var(--text-colour-secondary);
   }
   
@@ -86,13 +93,13 @@ body {
     width: 100%;
     padding: 10px;
     margin-top: 25px;
-    font-size: 24px;
+    font-size: clamp(15px, 2vh, 24px);
     border: none;
     outline: none;
     border-bottom: 2px solid var(--text-colour-secondary);
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 769px) {
     #signup-box,
     #login-box {
       flex-flow: wrap;
@@ -103,6 +110,7 @@ body {
     #left {
       border-top-right-radius: 40px;
       border-bottom-left-radius: 0px;
+      width: 100%;
     }
     #left p {
         display: None;
@@ -110,5 +118,7 @@ body {
     #right {
       border-bottom-left-radius: 40px;
       border-top-right-radius: 0px;
+      width: 100%;
+      padding: 15px;
     }
   }
