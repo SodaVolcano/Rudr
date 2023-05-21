@@ -3,24 +3,34 @@
 /* ======================= EXPAND NAV ======================= */
 /* Open the overlay when someone clicks on the hamburger menu */
 function openNav() {
-    const myNav = document.getElementById("myNav");
-    if (myNav != null) myNav.style.width = "100%";
+  const myNav = document.getElementById("myNav");
+  if (myNav != null)
+      myNav.style.width = "100%";
 }
-
 /* Close the overlay when someone clicks on the "x" symbol inside the overlay */
 function closeNav() {
-    const myNav = document.getElementById("myNav");
-    if (myNav != null) myNav.style.width = "0%";
+  const myNav = document.getElementById("myNav");
+  if (myNav != null)
+      myNav.style.width = "0%";
 }
 /* Open the overlay when someone clicks on the hamburger menu */
-$('.hamburger-menu')[0].addEventListener('click', function(event) {
-  $('#overlay-nav')[0].style.width = "100%";
+const hamburgerMenu = $('.hamburger-menu')[0];
+const overlayNav = $('#overlay-nav')[0];
+
+if (hamburgerMenu && overlayNav) {
+$(hamburgerMenu).on('click', function (event) {
+  $(overlayNav).css('width', '100%');
 });
+}
 
 /* Close the overlay when someone clicks on the "x" symbol inside the overlay */
-$('.closebtn')[0].addEventListener('click', function(event) {
-  $('#overlay-nav')[0].style.width = "0%";
+const closeBtn = $('.closebtn')[0];
+
+if (closeBtn && overlayNav) {
+$(closeBtn).on('click', function (event) {
+  $(overlayNav).css('width', '0%');
 });
+}
 
 
 /* ======================= SCROLL FADE ======================= */
