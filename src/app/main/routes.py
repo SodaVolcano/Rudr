@@ -75,14 +75,15 @@ def get_conversations():
     if get_conversation is None:
         print("No conversations!")
         return jsonify({"status": "EMPTY", "conversations": None})
+    sorted_conversations = sorted(get_conversation, key=lambda x: x.timestamp)
 
     # convert to json object
-    my_conversation = []
-    for conversation in get_conversation:
+    my_conversations = []
+    for conversation in sorted_conversations:
         print(conversation.id)
-        my_conversation.append(conversation.id)
+        my_conversations.append(conversation.id)
     # return a list of all conversations
-    return jsonify({"status": "OK", "conversations": my_conversation})
+    return jsonify({"status": "OK", "conversations": my_conversations})
 
 
 @main.route("/process-msg", methods=["POST"])

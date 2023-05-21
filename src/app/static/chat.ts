@@ -25,7 +25,7 @@ interface receiveConversationResponse {
 }
 interface displayConversationListResponse {
   status: string;
-  conversations: BigInteger[];
+  conversations: conversation[];
   error: string;
 }
 
