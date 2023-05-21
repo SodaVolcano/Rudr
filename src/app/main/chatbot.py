@@ -74,6 +74,8 @@ class ChatbotAgent:
             except openai.error.RateLimitError:
                 print("Rate limit exceeded")
                 return "Sorry, my time has come..."
+                self.mode = "random"
+
             except openai.error.AuthenticationError:
                 print("Invalid Key")
                 self.mode = "random"
