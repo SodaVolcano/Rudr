@@ -1,3 +1,5 @@
+
+
 /* BACKGROUND */
 body {
   background-color: var(--background-colour);
@@ -6,6 +8,7 @@ body {
   margin: 0;
   overflow-x: hidden;
   min-height: 100svh;
+  font-family: 'Orbitron', sans-serif;
 }
 
 /* ======================= HEADER STYLE ======================= */
@@ -102,11 +105,12 @@ header {
   background-color: var(--background-colour-alpha);
   overflow-x: hidden;
   transition: 0.5s;
+  display: flex;
+  align-items: center;
 }
 
 .overlay-content {
   position: relative;
-  top: 25%;
   width: 100%;
   text-align: center;
   margin-top: 30px;

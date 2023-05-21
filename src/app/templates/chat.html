@@ -21,20 +21,30 @@ Chatroom
 
 
 {% block content %}
-<div class="chatpage-container row">
-  <div class="convo-list col-2">
-    <ul id="conversations">
+<div class="chatpage-container">
+  <div class="convo-list">
+    <div class="container">
+      <a class="d-flex justify-content-center" href="{{ url_for('.index') }}" draggable="false">
+        <img src="{{ url_for('static', filename='Logo3.png') }}" alt="Logo" class="logo-image" draggable="false">
+      </a>
+    </div>
+    <button id="new-chat"> New Chat </button>
+    <div id="conversations">
       <!-- insert list of conversations here -->
       
-    </ul>
-    <button id="new-chat"> New Chat </button>
+    </div>
+    
   </div>
 
   <!-- The chat history, scroll bar, and text input -->
-  <div class="chatroom-container col-10">
+  <div class="chatroom-container">
     <div class="scrollbar" id="chat-scrollbar">
+      <h1 id="name-title"></h1>
       <div id="chat-history" class="chat-history">
         <!-- Messages will be inserted here dynamically -->  
+      </div>
+      <div id="under-chatbox">
+        <!-- Some blank area for under the chatbox -->
       </div>
     </div>
     <div class="chatbox-area">
