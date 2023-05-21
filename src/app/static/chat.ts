@@ -105,6 +105,15 @@ function main() {
     newChat();
   }
 
+  $.get("/get_conversations").done(function(response) {
+    displayConversations(response);
+    
+    // Change conversation to the first conversation
+    const firstConversation = response.conversations[0];
+    if (firstConversation) {
+        changeConversation(firstConversation);
+    }
+});
   // Reset timer when user types in chatbox
   // Timer is also reset when user presses submit
   $("#chatbox-content").on("keydown", resetTimer);
@@ -186,7 +195,7 @@ function addConversation(id: string) {
   div.addEventListener("click", () => {
     changeConversation(id);
   });
-  conversationList.appendChild(div);
+  conversationList.insertBefore(div, conversationList.firstChild);
 }
 
 function receiveConversation(response: receiveConversationResponse) {

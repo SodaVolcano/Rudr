@@ -39,7 +39,11 @@ html, body, main {
     height: 100%;
     width: 100%;
     position: relative;
+    background-image: url(tile.png);
+    background-size: cover;
+    background-repeat: no-repeat;
 }
+
 
 .scrollbar {
     flex: 9;
@@ -72,7 +76,6 @@ html, body, main {
 .chat-history {
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
 }
 
 /* padding and position of the chatbox */
