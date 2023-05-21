@@ -118,7 +118,7 @@ function displayConversations(response) {
         img.style.filter = `hue-rotate(${hue}deg)`;
         div.appendChild(img);
         const name = document.createElement("h5");
-        name.textContent = current; // Change with Robot Name
+        name.textContent = current.padStart(4, '0'); ; // Change with Robot Name
         div.appendChild(name);
         div.classList.add("conversation-container");
         div.setAttribute("id", current);
@@ -159,7 +159,7 @@ function changeConversation(conversation_id) {
     // Change title
     const title = document.getElementById("name-title");
     if (title != null)
-        title.textContent = conversation_id;
+        title.textContent = conversation_id.padStart(4, "0");
     $.ajax({
         url: "/replace_conversation",
         method: "GET",

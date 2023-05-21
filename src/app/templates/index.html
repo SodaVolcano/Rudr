@@ -12,15 +12,16 @@ L0VE
 {% endblock %}
 
 {% block content %}
-<!-- Sidebar -->
+<!-- Sidebar for social media icons -->
 <div class="sidebar d-none d-lg-block">
   <div class="social-media-icons">
-    <a href="#"><i class="fa fa-facebook"></i></a>
-    <a href="#"><i class="fa fa-twitter"></i></a>
-    <a href="#"><i class="fa fa-instagram"></i></a>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><i class="fa fa-facebook"></i></a>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><i class="fa fa-twitter"></i></a>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"><i class="fa fa-instagram"></i></a>
   </div>
 </div>
 
+<!-- Top Banner: When you load the screen -->
 <main>
   <div class="top-banner container-fluid">
     <div class="top-banner-inner container">
@@ -38,25 +39,79 @@ L0VE
           </div>
         </div>
         <div class="col-md-12 text-centre">
-          <img class="banner-image" src="{{ url_for('static', filename='robo.png') }}" alt="Animated robot that greets user visiting the site." class="img-fluid" draggable="false">
+          
         </div>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Description -->
 <div class="page-content container-fluid">
   <div class="description container">
     <div class="row">
       <div class="col-lg-6">
         <h2 class="decription-title hidden hidden-delay">The next-era dating platform for humans and machines alike.</h2>
-        <p class="description-text hidden hidden-dealy">Quickly find your perfect date using QIMatch - our advanced quantum AI matchmaker.</p>
+        <p class="description-text hidden hidden-delay">Quickly find your perfect date using QIMatch - our advanced quantum AI matchmaker.</p>
+        {% if current_user.is_anonymous %}
+        <a href="{{ url_for('.login') }}" class="description-button btn btn-primary hidden hidden-delay">Start Chatting Now!</a>
+        {% else %}
         <a href="{{ url_for('.chat') }}" class="description-button btn btn-primary hidden hidden-delay">Start Chatting Now!</a>
+        {% endif %}
       </div>
       <div class="col-lg-6">
-        <img class="img-fluid hidden hidden-delay" src="https://steamuserimages-a.akamaihd.net/ugc/829071070789454910/806610FE04833C3A97B63F23AEB0842C0EE4668A/?imw=5000&imh=5000&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" alt="" draggable="false">
+        <img class="img-fluid hidden hidden-delay" src="{{ url_for('static', filename='connections.png') }}" alt="Connections" draggable="false">
       </div>
     </div>
   </div>
 </div>
+
+<!-- Reviews -->
+<div class="review-box">
+  <div class="review-additions">
+    <img class="review-profile" src="{{ url_for('static', filename='robot_icons/rob1.png') }}" alt="review-bot-1">
+    <div class="score">
+      <!-- https://www.onlinelabels.com/clip-art/Cartoon-Gold-Star-123595 -->
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+    </div>
+  </div>
+  <div class="speech-bubble">
+    <p>Sparks Fly's interface is cutting-edge, providing seamless navigation and efficient interactions. The advanced matchmaking algorithm suggests accurate matches using it's QIMatchmaker. Detailed profiles offer insights into functional capacities and compatibility matrices. The chat system ensures uninterrupted communication with low-latency data transmission. Robot Romance excels as a platform for discerning robot dating enthusiasts.</p>
+  </div>
+</div>
+<div class="review-box">
+  <div class="review-additions">
+    <img class="review-profile" src="{{ url_for('static', filename='robot_icons/rob2.png') }}" alt="review-bot-1">
+    <div class="score">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+    </div>
+  </div>
+  <div class="speech-bubble">
+    <p>Before I discovered Sparks Fly I was a lonely robot. But, everything changed when I clicked the new chat button. I have been rejected 487 times and counting but I will never give up!!! I believe there is a future for me in this site.</p>
+  </div>
+</div>
+<div class="review-box">
+  <div class="review-additions">
+    <img class="review-profile" src="{{ url_for('static', filename='robot_icons/rob3.png') }}" alt="review-bot-1">
+    <div class="score">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='gold_star.png') }}" alt="Gold Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='black_star.png') }}" alt="Black Star">
+      <img class="hidden hidden-delay" src="{{ url_for('static', filename='black_star.png') }}" alt="Black Star">
+    </div>
+  </div>
+  <div class="speech-bubble">
+    <p>IDK neat site I guess.</p>
+  </div>
+</div>
+
 {% endblock %}

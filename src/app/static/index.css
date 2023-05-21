@@ -8,7 +8,7 @@
   height: 50px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  background-image: var(--default-gradient);
+  background: var(--gradient-colour-two);
   z-index: 998;
   overflow: hidden;
   transition: height 0.5s;
@@ -39,6 +39,7 @@
 
 .social-media-icons i:hover {
   transform: scale(1.2);
+  color: var(--gradient-colour-one);
 }
 
 .sidebar:hover {
@@ -46,7 +47,7 @@
 }
 
 .sidebar:hover a {
-    opacity: 1;
+  opacity: 1;
 }
 
 .sidebar span {
@@ -80,6 +81,12 @@
   padding: 40px 10%;
 }
 
+.decription-title {
+  font-family: 'Exo', sans-serif;
+  font-weight: bold;
+}
+
+
 /* =========================== Top banner ======================== */
 /* Top part of the page that greets the user */
 .top-banner {
@@ -96,6 +103,7 @@
     background-position: center;
     background-size: cover;
     display: flex;
+    height: 90svh;
 }
 
 
@@ -126,10 +134,11 @@
   font-size: 5rem;
   width: fit-content;
   margin: 0 auto;
-  margin-top: 100px;
   display: block;
   justify-content: center;
   text-align: center;
+  font-family: 'Exo', sans-serif;
+  font-weight: bold;
 }
 
 .banner-byline {
@@ -141,6 +150,7 @@
   text-align: center;
   min-height: 30px;
   overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
 
 }
 
@@ -158,4 +168,86 @@
     text-align: center;
   }
 }
+
+
+/* =========================== Reviews ======================== */
+.review-box {
+  display: flex;
+  margin: 20px;
+  margin-bottom: 4rem;
+}
+
+.review-additions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.review-profile {
+  width: 8rem;
+  height: 8rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.speech-bubble {
+  position: relative;
+  background-color: var(--foreground-blue);
+  border-radius: 10px;
+  padding: 10px 20px;
+  margin-bottom: 1rem;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: inline-block;
+  height: 100%;
+}
+
+.speech-bubble::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -10px;
+  border-style: solid;
+  border-width: 10px 10px 10px 0;
+  border-color: transparent var(--foreground-blue) transparent transparent;
+  transform: translateY(-50%);
+}
+
+.speech-bubble p {
+  font-size: 1rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.score {
+  display: flex;
+  align-items: center;
+}
+
+.score img {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 5px;
+}
+
+@media screen and (max-width: 992px) {
+  .review-additions {
+    flex-direction: row;
+  }
+
+  .review-box {
+    flex-direction: column;
+  }
+  
+  .review-profile {
+    width: 12rem;
+    height: 12rem;
+  }
+}
+
+
 

@@ -23,6 +23,11 @@ Chatroom
 {% block content %}
 <div class="chatpage-container">
   <div class="convo-list">
+    <div class="container">
+      <a class="d-flex justify-content-center" href="{{ url_for('.index') }}" draggable="false">
+        <img src="{{ url_for('static', filename='Logo3.png') }}" alt="Logo" class="logo-image" draggable="false">
+      </a>
+    </div>
     <button id="new-chat"> New Chat </button>
     <div id="conversations">
       <!-- insert list of conversations here -->
