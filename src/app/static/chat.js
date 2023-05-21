@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 document.addEventListener("DOMContentLoaded", main);
 // ======================== global variables ========================
 // When timer expires, send queued messages to server. reset on each input
@@ -87,47 +78,53 @@ function main() {
     });
     // No Conversation
 }
-
 // ================== conversation init and switiching ====================
 function checkConversationInit(response) {
     if (response.status !== "OK")
         throw new Error("Failed to initialise conversation");
     currentConversationID = response.conversation_id;
     console.log(`SUCCESS: Conversation initialised with id ${response.conversation_id}`);
+    addConversation(response.conversation_id);
+    // append to list
 }
 /**
  * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
  */
-function displayConversations(response) {
+async function displayConversations(response) {
     const conversationList = document.getElementById("conversations");
-    if (conversationList == null || response.status == "EMPTY") {
+    if (response.status == "EMPTY" || conversationList == null) {
         return;
     }
     conversationList.replaceChildren();
-    console.log("Printing Conversations");
     const all_conversations = response.conversations;
     // Loop through each conversation
     for (let i = 0; i < all_conversations.length; i++) {
-        const current = all_conversations[i].toString();
-        console.log(current);
-        // get conversation and add it to the ul list on /chat
-        const div = document.createElement("div");
-        const img = document.createElement("img");
-        img.src = imageSources[parseInt(current) % imageSources.length];
-        img.alt = current;
-        const hue = ((parseInt(current)) * 360) / 10000; //Adjust hue by id
-        img.style.filter = `hue-rotate(${hue}deg)`;
-        div.appendChild(img);
-        const name = document.createElement("h5");
-        name.textContent = current.padStart(4, '0'); ; // Change with Robot Name
-        div.appendChild(name);
-        div.classList.add("conversation-container");
-        div.setAttribute("id", current);
-        div.addEventListener("click", () => {
-            changeConversation(current);
-        });
-        conversationList.appendChild(div);
+        addConversation(all_conversations[i]);
     }
+}
+function addConversation(id) {
+    const conversationList = document.getElementById("conversations");
+    if (conversationList == null) {
+        return;
+    }
+    console.log(id);
+    // get conversation and add it to the ul list on /chat
+    const div = document.createElement("div");
+    const img = document.createElement("img");
+    img.src = imageSources[parseInt(id) % imageSources.length];
+    img.alt = id;
+    const hue = ((parseInt(id)) * 360) / 10000; //Adjust hue by id
+    img.style.filter = `hue-rotate(${hue}deg)`;
+    div.appendChild(img);
+    const name = document.createElement("h5");
+    name.textContent = id.padStart(4, '0'); // Change with Robot Name
+    div.appendChild(name);
+    div.classList.add("conversation-container");
+    div.setAttribute("id", id);
+    div.addEventListener("click", () => {
+        changeConversation(id);
+    });
+    conversationList.appendChild(div);
 }
 function receiveConversation(response) {
     if (response.status !== "OK")
@@ -135,6 +132,7 @@ function receiveConversation(response) {
     // replace current conversation messages with the given ones
     console.log(`SUCCESS: New Conversation initialised with id ${response.conversation_id}`);
     currentConversationID = response.conversation_id;
+    console.log(response.conversation_id);
     clearConversation();
     for (let i = 0; i < response.conversation.length; i++) {
         // check if from robot or user
@@ -181,10 +179,9 @@ function clearConversation() {
     }
 }
 function newChat() {
+    clearConversation();
     $.post("/init_chatbot").done(checkBotInit);
     $.post("/init_conversation").done(checkConversationInit);
-    clearConversation();
-    $.get("/get_conversations").done(displayConversations);
 }
 // ======================== textarea resizing ========================
 /**
@@ -228,17 +225,17 @@ function delay(duration) {
         setTimeout(resolve, duration);
     });
 }
-function recieveBotReply(response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (response.status !== "OK")
-            throw new Error("Failed to recieve bot reply");
-        if (response.messages_conversation_id != currentConversationID)
-            throw new Error("Messages are from another conversation");
-        console.log("recieved bot reply");
-        for (let message of response.messages) {
-            yield displayMessage(message, false);
-        }
-    });
+async function recieveBotReply(response) {
+    if (response.status !== "OK")
+        throw new Error("Failed to recieve bot reply");
+    console.log("current: " + currentConversationID);
+    console.log("response: " + response.conversation_id);
+    if (response.conversation_id != currentConversationID)
+        throw new Error("Messages are from another conversation");
+    console.log("recieved bot reply");
+    for (let message of response.messages) {
+        await displayMessage(message, false);
+    }
 }
 function checkBotInit(response) {
     if (response.status !== "OK")
@@ -303,33 +300,30 @@ function resetTimer() {
  * @param message string of the message to display
  * @param sender  whether the message was sent by the user or the bot
  */
-function displayMessage(message, isFromUser) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-            const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
-            if (isFromUser) {
-                $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
+async function displayMessage(message, isFromUser) {
+    return new Promise(async (resolve) => {
+        const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
+        if (isFromUser) {
+            $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
+        }
+        else {
+            $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`);
+        }
+        if (!scrolledUp) {
+            $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
+        }
+        if (!isFromUser) {
+            const newMessage = document.getElementById("new-message");
+            if (newMessage != null) {
+                console.log("sdajdhajsdk");
+                console.log(message);
+                await typewriterWrite(newMessage, message);
+                newMessage.removeAttribute("id");
             }
-            else {
-                $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`);
-            }
-            if (!scrolledUp) {
-                $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
-            }
-            if (!isFromUser) {
-                const newMessage = document.getElementById("new-message");
-                if (newMessage != null) {
-                    console.log("sdajdhajsdk");
-                    console.log(message);
-                    yield typewriterWrite(newMessage, message);
-                    newMessage.removeAttribute("id");
-                }
-            }
-            resolve();
-        }));
+        }
+        resolve();
     });
 }
-
 /**
  * Append a message to the chat HTML element, but without the typewriter effect for switching between conversations
  * @param message string of the message to display

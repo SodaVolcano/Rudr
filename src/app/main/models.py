@@ -62,6 +62,8 @@ class Conversations(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     robot_id = db.Column(db.Integer, db.ForeignKey("robot.id"))
 
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
     messages = db.relationship("Messages", backref="conversation", lazy="dynamic")
 
     @staticmethod
