@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 document.addEventListener("DOMContentLoaded", main);
 // ======================== global variables ========================
 // When timer expires, send queued messages to server. reset on each input
@@ -90,17 +99,19 @@ function checkConversationInit(response) {
 /**
  * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
  */
-async function displayConversations(response) {
-    const conversationList = document.getElementById("conversations");
-    if (response.status == "EMPTY" || conversationList == null) {
-        return;
-    }
-    conversationList.replaceChildren();
-    const all_conversations = response.conversations;
-    // Loop through each conversation
-    for (let i = 0; i < all_conversations.length; i++) {
-        addConversation(all_conversations[i]);
-    }
+function displayConversations(response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const conversationList = document.getElementById("conversations");
+        if (response.status == "EMPTY" || conversationList == null) {
+            return;
+        }
+        conversationList.replaceChildren();
+        const all_conversations = response.conversations;
+        // Loop through each conversation
+        for (let i = 0; i < all_conversations.length; i++) {
+            addConversation(all_conversations[i]);
+        }
+    });
 }
 function addConversation(id) {
     const conversationList = document.getElementById("conversations");
@@ -225,17 +236,19 @@ function delay(duration) {
         setTimeout(resolve, duration);
     });
 }
-async function recieveBotReply(response) {
-    if (response.status !== "OK")
-        throw new Error("Failed to recieve bot reply");
-    console.log("current: " + currentConversationID);
-    console.log("response: " + response.conversation_id);
-    if (response.conversation_id != currentConversationID)
-        throw new Error("Messages are from another conversation");
-    console.log("recieved bot reply");
-    for (let message of response.messages) {
-        await displayMessage(message, false);
-    }
+function recieveBotReply(response) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (response.status !== "OK")
+            throw new Error("Failed to recieve bot reply");
+        console.log("current: " + currentConversationID);
+        console.log("response: " + response.conversation_id);
+        if (response.conversation_id != currentConversationID)
+            throw new Error("Messages are from another conversation");
+        console.log("recieved bot reply");
+        for (let message of response.messages) {
+            yield displayMessage(message, false);
+        }
+    });
 }
 function checkBotInit(response) {
     if (response.status !== "OK")
@@ -300,28 +313,30 @@ function resetTimer() {
  * @param message string of the message to display
  * @param sender  whether the message was sent by the user or the bot
  */
-async function displayMessage(message, isFromUser) {
-    return new Promise(async (resolve) => {
-        const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
-        if (isFromUser) {
-            $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
-        }
-        else {
-            $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`);
-        }
-        if (!scrolledUp) {
-            $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
-        }
-        if (!isFromUser) {
-            const newMessage = document.getElementById("new-message");
-            if (newMessage != null) {
-                console.log("sdajdhajsdk");
-                console.log(message);
-                await typewriterWrite(newMessage, message);
-                newMessage.removeAttribute("id");
+function displayMessage(message, isFromUser) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+            const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
+            if (isFromUser) {
+                $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`);
             }
-        }
-        resolve();
+            else {
+                $(".chat-history").append(`<div class="${cssClass}"><div class="speech-bubble"><p id="new-message"></p></div></div>`);
+            }
+            if (!scrolledUp) {
+                $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;
+            }
+            if (!isFromUser) {
+                const newMessage = document.getElementById("new-message");
+                if (newMessage != null) {
+                    console.log("sdajdhajsdk");
+                    console.log(message);
+                    yield typewriterWrite(newMessage, message);
+                    newMessage.removeAttribute("id");
+                }
+            }
+            resolve();
+        }));
     });
 }
 /**

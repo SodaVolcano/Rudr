@@ -1,4 +1,13 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 /* ======================= EXPAND NAV ======================= */
 /* Open the overlay when someone clicks on the hamburger menu */
 function openNav() {
@@ -13,19 +22,31 @@ function closeNav() {
         myNav.style.width = "0%";
 }
 /* Open the overlay when someone clicks on the hamburger menu */
-$('.hamburger-menu')[0].addEventListener('click', function (event) {
-    $('#overlay-nav')[0].style.width = "100%";
-});
+const hamburgerMenu = $('.hamburger-menu')[0];
+const overlayNav = $('#overlay-nav')[0];
+
+if (hamburgerMenu && overlayNav) {
+  $(hamburgerMenu).on('click', function (event) {
+    $(overlayNav).css('width', '100%');
+  });
+}
+
 /* Close the overlay when someone clicks on the "x" symbol inside the overlay */
-$('.closebtn')[0].addEventListener('click', function (event) {
-    $('#overlay-nav')[0].style.width = "0%";
-});
+const closeBtn = $('.closebtn')[0];
+
+if (closeBtn && overlayNav) {
+  $(closeBtn).on('click', function (event) {
+    $(overlayNav).css('width', '0%');
+  });
+}
+
 /* ======================= SCROLL FADE ======================= */
 /* Shows elements as you scroll when they appear onscreen */
 document.addEventListener("DOMContentLoaded", function () {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
+                console.log("show");
                 entry.target.classList.add("show");
             }
             else {
@@ -34,34 +55,39 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     const hiddenElements = document.querySelectorAll(".hidden");
+    console.log(hiddenElements.length);
     hiddenElements.forEach((el) => observer.observe(el));
 });
 /* ======================= TYPEWRITER ======================= */
 /* Function that simulates a typewriter writing the given text in the given element */
-async function typewriterWrite(element, text) {
-    console.log(text);
-    const waitCharacter = 25;
-    const characters = text.split("");
-    let currentText = "";
-    element.textContent = "";
-    for (let i = 0; i < characters.length; i++) {
-        await new Promise((resolve) => setTimeout(resolve, waitCharacter));
-        currentText += characters[i];
-        element.textContent = currentText + '|';
-    }
-    element.textContent = currentText;
+function typewriterWrite(element, text) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log(text);
+        const waitCharacter = 25;
+        const characters = text.split("");
+        let currentText = "";
+        element.textContent = "";
+        for (let i = 0; i < characters.length; i++) {
+            yield new Promise((resolve) => setTimeout(resolve, waitCharacter));
+            currentText += characters[i];
+            element.textContent = currentText + '|';
+        }
+        element.textContent = currentText;
+    });
 }
 /* Function that simulates a typewriter deleting the text in the given element */
-async function typeWriterRemove(element) {
-    const waitCharacter = 25;
-    let textContent = element.textContent;
-    if (textContent != null) {
-        const characters = textContent.split("");
-        for (let i = 0; i < characters.length; i++) {
-            await new Promise((resolve) => setTimeout(resolve, waitCharacter));
-            textContent = textContent.slice(0, -1);
-            element.textContent = textContent + "|";
+function typeWriterRemove(element) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const waitCharacter = 25;
+        let textContent = element.textContent;
+        if (textContent != null) {
+            const characters = textContent.split("");
+            for (let i = 0; i < characters.length; i++) {
+                yield new Promise((resolve) => setTimeout(resolve, waitCharacter));
+                textContent = textContent.slice(0, -1);
+                element.textContent = textContent + "|";
+            }
         }
-    }
-    element.textContent = "";
+        element.textContent = "";
+    });
 }
