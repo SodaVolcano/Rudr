@@ -7,6 +7,7 @@ body {
   color: var(--text-colour-primary);
   margin: 0;
   overflow-x: hidden;
+  min-height: 100svh;
   font-family: 'Orbitron', sans-serif;
 }
 
@@ -151,16 +152,23 @@ header {
 /* ======================= TYPEWRITER ======================= */
 /* Syles for typewriter effect */
 .typewriter {
-  display: inline-block;
+  display: flex;
 }
 
 .typewriter-text {
-  display: block;
+  display: flex;
   overflow: hidden;
-  white-space: nowrap;
   font-size: 28px;
   font-family: "Courier", monospace;
   padding-right: 5px;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 3px;
+  animation: blink-caret 0.75s step-end infinite;
+  color: var(--gradient-colour-one);
 }
 
 /* Set the @keyframes for the blinking cursor */
@@ -171,5 +179,48 @@ header {
   }
   50% {
     border-color: var(--gradient-colour-one);
+  }
+}
+
+
+/* ======================= SCROLL EFFECT ======================= */
+.hidden {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateX(100%);
+  transition: none;
+}
+
+.show {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0);
+  transition: opacity 1s, filter 1s, transform 1s;
+}
+
+.hidden-delay:nth-child(2) {
+  transition-delay: 100ms;
+}
+
+.hidden-delay:nth-child(3) {
+  transition-delay: 200ms;
+}
+
+.hidden-delay:nth-child(3) {
+  transition-delay: 300ms;
+}
+
+.hidden-delay:nth-child(4) {
+  transition-delay: 400ms;
+}
+
+.hidden-delay:nth-child(5) {
+  transition-delay: 500ms;
+}
+
+
+@media (prefers-reduced-motion) {
+  .hidden {
+    transition: none;
   }
 }

@@ -87,6 +87,7 @@ function main() {
     });
     // No Conversation
 }
+
 // ================== conversation init and switiching ====================
 function checkConversationInit(response) {
     if (response.status !== "OK")
@@ -328,6 +329,7 @@ function displayMessage(message, isFromUser) {
         }));
     });
 }
+
 /**
  * Append a message to the chat HTML element, but without the typewriter effect for switching between conversations
  * @param message string of the message to display
