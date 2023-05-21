@@ -81,7 +81,7 @@ def get_conversations():
     my_conversations = []
     for conversation in sorted_conversations:
         print(conversation.id)
-        my_conversations.append(conversation.id)
+        my_conversations.append(str(conversation.id))
     # return a list of all conversations
     return jsonify({"status": "OK", "conversations": my_conversations})
 

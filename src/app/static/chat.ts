@@ -25,24 +25,18 @@ interface receiveConversationResponse {
 }
 interface displayConversationListResponse {
   status: string;
-  conversations: conversation[];
+  conversations: string[];
   error: string;
 }
 
 interface message {
   id: BigInteger;
   content: string;
-  conversationID: BigInteger;
+  conversationID: string;
   speaker: string;
   emotion: string;
 }
 
-interface conversation {
-  id: BigInteger;
-  user_id: BigInteger;
-  robot_id: BigInteger;
-  timestamp: EpochTimeStamp;
-}
 
 // ======================== global variables ========================
 
@@ -147,41 +141,52 @@ function checkConversationInit(response: ConversationInitResponse) {
   console.log(
     `SUCCESS: Conversation initialised with id ${response.conversation_id}`
   );
+
+  addConversation(response.conversation_id);
+  // append to list
+
 }
 
 /**
  * Get a list of conversations from the user, and display it in the unorderd list on the chat.html page
  */
-function displayConversations(response: displayConversationListResponse) {
+async function displayConversations(response: displayConversationListResponse) {
   const conversationList = document.getElementById("conversations");
-  if (conversationList == null || response.status == "EMPTY") {
+
+  if (response.status == "EMPTY"|| conversationList == null) {
     return;
   }
   conversationList.replaceChildren();
-  console.log("Printing Conversations");
   const all_conversations = response.conversations;
   // Loop through each conversation
   for (let i = 0; i < all_conversations.length; i++) {
-    const current = all_conversations[i].toString();
-    console.log(current);
-    // get conversation and add it to the ul list on /chat
-    const div = document.createElement("div");
-    const img = document.createElement("img");
-    img.src = imageSources[parseInt(current) % imageSources.length];
-    img.alt = current;
-    const hue = ((parseInt(current)) * 360)/10000; //Adjust hue by id
-    img.style.filter = `hue-rotate(${hue}deg)`;
-    div.appendChild(img);
-    const name = document.createElement("h5");
-    name.textContent = current.padStart(4, '0'); // Change with Robot Name
-    div.appendChild(name);
-    div.classList.add("conversation-container");
-    div.setAttribute("id", current);
-    div.addEventListener("click", () => {
-      changeConversation(current);
-    });
-    conversationList.appendChild(div);
+    addConversation(all_conversations[i])
   }
+}
+
+function addConversation(id: string) {
+  const conversationList = document.getElementById("conversations");
+  if (conversationList == null) {
+    return;
+  }
+  console.log(id);
+  // get conversation and add it to the ul list on /chat
+  const div = document.createElement("div");
+  const img = document.createElement("img");
+  img.src = imageSources[parseInt(id) % imageSources.length];
+  img.alt = id;
+  const hue = ((parseInt(id)) * 360) / 10000; //Adjust hue by id
+  img.style.filter = `hue-rotate(${hue}deg)`;
+  div.appendChild(img);
+  const name = document.createElement("h5");
+  name.textContent = id.padStart(4, '0'); // Change with Robot Name
+  div.appendChild(name);
+  div.classList.add("conversation-container");
+  div.setAttribute("id", id);
+  div.addEventListener("click", () => {
+    changeConversation(id);
+  });
+  conversationList.appendChild(div);
 }
 
 function receiveConversation(response: receiveConversationResponse) {
@@ -243,10 +248,10 @@ function clearConversation() {
   }
 }
 function newChat() {
+  clearConversation();
+
   $.post("/init_chatbot").done(checkBotInit);
   $.post("/init_conversation").done(checkConversationInit);
-  clearConversation();
-  $.get("/get_conversations").done(displayConversations);
 
 }
 
