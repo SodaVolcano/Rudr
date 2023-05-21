@@ -73,12 +73,14 @@ class ChatbotAgent:
                 return response.choices[0].text.strip()
             except openai.error.RateLimitError:
                 print("Rate limit exceeded")
-                return "Sorry, my time has come..."
                 self.mode = "random"
+                return "Sorry, my time has come..."
 
             except openai.error.AuthenticationError:
                 print("Invalid Key")
                 self.mode = "random"
+                return "Sorry, my time has come..."
+
         else:
             return "ERROR: Chatbot mode not implemented yet"
 
