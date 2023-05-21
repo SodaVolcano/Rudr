@@ -184,26 +184,18 @@ header {
 
 
 /* ======================= SCROLL EFFECT ======================= */
-.scroll-div {
-  position: relative;
-  overflow: hidden;
-}
-
 .hidden {
-  visibility: hidden;
   opacity: 0;
   filter: blur(5px);
   transform: translateX(100%);
-  transition: all 1s;
-  position: fixed;
+  transition: none;
 }
 
 .show {
-  visibility: visible;
   opacity: 1;
   filter: blur(0);
   transform: translateX(0);
-  position: static;
+  transition: opacity 1s, filter 1s, transform 1s;
 }
 
 .hidden-delay:nth-child(2) {
@@ -213,6 +205,19 @@ header {
 .hidden-delay:nth-child(3) {
   transition-delay: 200ms;
 }
+
+.hidden-delay:nth-child(3) {
+  transition-delay: 300ms;
+}
+
+.hidden-delay:nth-child(4) {
+  transition-delay: 400ms;
+}
+
+.hidden-delay:nth-child(5) {
+  transition-delay: 500ms;
+}
+
 
 @media (prefers-reduced-motion) {
   .hidden {
