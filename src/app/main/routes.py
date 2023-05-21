@@ -45,7 +45,7 @@ def replace_conversation():
 
     query = Messages.query.filter_by(conversation_ID=(conversation_id)).all()
     session["conversation_id"] = conversation_id
-    session["chatbot"] = ChatbotAgent("random")
+    session["chatbot"] = ChatbotAgent("gpt")
 
     print(query)
 
@@ -156,7 +156,7 @@ def init_conversation():
 @main.route("/init_chatbot", methods=["POST"])
 def init_chatbot():
     """Initialize the chatbot agent when user starts new session"""
-    session["chatbot"] = ChatbotAgent("random")
+    session["chatbot"] = ChatbotAgent("gpt")
     chatbot_id = session["chatbot"].id
 
     # add new robot
