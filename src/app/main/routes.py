@@ -45,7 +45,7 @@ def replace_conversation():
 
     query = Messages.query.filter_by(conversation_ID=(conversation_id)).all()
     session["conversation_id"] = conversation_id
-    session["chatbot"] = ChatbotAgent("random")
+    session["chatbot"] = ChatbotAgent("gpt")
 
     print(query)
 
@@ -89,18 +89,23 @@ def get_conversations():
 @main.route("/process-msg", methods=["POST"])
 def process_msg():
     messages = request.form.get("messages")
+    conversation_id = request.form.get("conversation_id")
 
     if messages is None:
         return jsonify({"status": "ERROR", "message": "No message provided"}), 400
     if "chatbot" not in session:
         return jsonify({"status": "ERROR", "message": "Chatbot not initialized"}), 400
 
+    query_messages = Messages.query.filter_by(conversation_ID=(conversation_id)).all()
+    history = []
+    for msg in query_messages:
+        history.append({"role": "user", "content": msg.body})
     messages = json.loads(messages)
 
     for msg in messages:
         Messages.add_msg(msg, "happy", "user", session["conversation_id"])
 
-    reply = ChatbotMediator.prompt_chatbot(messages, session["chatbot"])
+    reply = ChatbotMediator.prompt_chatbot(messages, history, session["chatbot"])
 
     for msg in reply:
         Messages.add_msg(msg, "happy", "robot", session["conversation_id"])
@@ -150,7 +155,7 @@ def init_conversation():
 @main.route("/init_chatbot", methods=["POST"])
 def init_chatbot():
     """Initialize the chatbot agent when user starts new session"""
-    session["chatbot"] = ChatbotAgent("random")
+    session["chatbot"] = ChatbotAgent("gpt")
     chatbot_id = session["chatbot"].id
 
     # add new robot

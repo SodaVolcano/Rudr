@@ -64,6 +64,8 @@ These commands must be run in the src directory.
 3. flask db upgrade
 
 ### Running the Test Server
+- You must add the gpt-key system variable, named GPTKEY
+    - e.g. export GPTKEY=s89df67vb890f
 - In the command line, **from the top-most directory**, run
 ```bash
 (my-env) $ flask --app ./src/flasky.py run --debug
