@@ -35,7 +35,6 @@ class TestDBCase(unittest.TestCase):
             body="foobar!", emotion="calm", speaker="robot", conversation_ID=0
         )
 
-
         # add test data
         db.session.add(user)
         db.session.add(robot)
@@ -54,7 +53,6 @@ class TestDBCase(unittest.TestCase):
         db.drop_all()
         self.app_context.pop()
 
-
     def test_password(self):
         user1 = Users()
         user1.set_password("bar")
@@ -65,7 +63,6 @@ class TestDBCase(unittest.TestCase):
         user2.set_password("a!@#^&$()!@#")
         self.assertFalse(user2.check_password("dog"))
         self.assertTrue(user2.check_password("a!@#^&$()!@#"))
-
 
     def test_query(self):
         user = Users.query.filter_by(id=0).first()
@@ -79,20 +76,20 @@ class TestDBCase(unittest.TestCase):
         msgs = Messages.query.filter_by(conversation_ID=conv.id).all()
         self.assertTrue(len(msgs) == 4)
 
-
     def test_methods(self):
-        Users.add_user("jeremy","email@email.com","foobar")
+        Users.add_user("jeremy", "email@email.com", "foobar")
         user = Users.query.filter_by(username="jeremy").first()
         self.assertIsNotNone(user)
-        Robot.add_robot("boltz","./path",1234)
+        Robot.add_robot("boltz", "./path", 1234)
         robot = Robot.query.filter_by(id=1234).first()
         self.assertIsNotNone(robot)
-        Conversations.add_conversation(1,user.id,robot.id)
+        Conversations.add_conversation(1, user.id, robot.id)
         conversation = Conversations.query.filter_by(id=1).first()
         self.assertIsNotNone(conversation)
-        Messages.add_msg("NEW WORLD","SADNESS","user", 1)
+        Messages.add_msg("NEW WORLD", "SADNESS", "user", 1)
         msg = Messages.query.filter_by(id=5).first()
         self.assertIsNotNone(msg)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
