@@ -108,10 +108,11 @@ function main() {
   $.get("/get_conversations").done(function(response) {
     displayConversations(response);
     
-    // Change conversation to the first conversation
-    const firstConversation = response.conversations[0];
-    if (firstConversation) {
-        changeConversation(firstConversation);
+    // Change conversation to the last conversation
+    const conversations = response.conversations;
+    const lastConversation = conversations[conversations.length - 1];
+    if (lastConversation) {
+        changeConversation(lastConversation);
     }
 });
   // Reset timer when user types in chatbox
