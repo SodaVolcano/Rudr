@@ -96,7 +96,6 @@ def process_msg():
     if "chatbot" not in session:
         return jsonify({"status": "ERROR", "message": "Chatbot not initialized"}), 400
 
-
     query_messages = Messages.query.filter_by(conversation_ID=(conversation_id)).all()
     history = []
     for msg in query_messages:

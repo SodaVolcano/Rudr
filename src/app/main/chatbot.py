@@ -6,6 +6,7 @@ import re
 
 import openai
 
+
 class ChatbotMediator:
     """Mediator class to handle I/O and prompt with the chatbot"""
 
@@ -13,7 +14,9 @@ class ChatbotMediator:
         pass
 
     @staticmethod
-    def prompt_chatbot(prompts: list[str], history: list[str], bot: "ChatbotAgent") -> list[str]:
+    def prompt_chatbot(
+        prompts: list[str], history: list[str], bot: "ChatbotAgent"
+    ) -> list[str]:
         """Prompt the chatbot with the given prompt"""
         prompt_structured = ChatbotMediator.__generate_prompt(prompts, bot)
         reply = bot.prompt(prompt_structured, history)
@@ -56,7 +59,7 @@ class ChatbotAgent:
             return prompt
         elif self.mode == "gpt":
             openai.api_key = os.environ.get("GPTKEY")
-            try: 
+            try:
                 response = openai.Completion.create(
                     engine="text-davinci-003",
                     prompt=prompt,
