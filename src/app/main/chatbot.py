@@ -61,14 +61,15 @@ class ChatbotAgent:
         sleep(random.uniform(0.25, 3.5))
         n_replies = random.randint(1, 3)
         lines = open(self.random_answers_path, "r").readlines()
-        reply = f"(ID: {self.id})"
+        reply = ""
+        # reply = f"(ID: {self.id})"
         i = 0
 
         for _ in range(n_replies):
             string = random.choice(lines).strip()
             if string == "":
                 continue
-            reply += f"{i} {string} "
+            reply += f" {string} "
             i += 1
         # Include bot ID for debugging
         return reply

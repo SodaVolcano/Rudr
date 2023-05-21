@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", main);
 interface BotResponse {
   status: string;
   messages: string[];
-  messages_conversation_id: string;
+  conversation_id: string;
 }
 
 interface BotInitResponse {
@@ -35,6 +35,13 @@ interface message {
   conversationID: BigInteger;
   speaker: string;
   emotion: string;
+}
+
+interface conversation {
+  id: BigInteger;
+  user_id: BigInteger;
+  robot_id: BigInteger;
+  timestamp: EpochTimeStamp;
 }
 
 // ======================== global variables ========================
@@ -185,6 +192,7 @@ function receiveConversation(response: receiveConversationResponse) {
     `SUCCESS: New Conversation initialised with id ${response.conversation_id}`
   );
   currentConversationID = response.conversation_id;
+  console.log(response.conversation_id)
   clearConversation();
   for (let i = 0; i < response.conversation.length; i++) {
     // check if from robot or user
@@ -297,7 +305,10 @@ function delay(duration: number): Promise<void> {
 
 async function recieveBotReply(response: BotResponse): Promise<void> {
   if (response.status !== "OK") throw new Error("Failed to recieve bot reply");
-  if (response.messages_conversation_id != currentConversationID)
+  console.log("current: " + currentConversationID)
+  console.log("response: " + response.conversation_id)
+
+  if (response.conversation_id != currentConversationID)
     throw new Error("Messages are from another conversation");
   console.log("recieved bot reply");
   for (let message of response.messages) {
