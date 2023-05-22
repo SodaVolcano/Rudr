@@ -73,7 +73,7 @@ In order for the chat and user features to be functional, the databases must be 
 
 ## Running Unit Testing
 > Go to src/tests directory
-- For all tests, run python {your_file}
+- For all tests, run python dbtest.py
 > An output of unit test functions will appear
 
 
