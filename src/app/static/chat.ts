@@ -264,6 +264,8 @@ function newChat() {
   clearConversation();
 
   $.post("/init_chatbot").done(checkBotInit);
+  $.post("/init_conversation").done(checkConversationInit);
+
 
 }
 
@@ -361,7 +363,6 @@ function sendQueuedMessages() {
   });
   console.log(`message list sent to server ${messageQueue}}`);
   messageQueue.length = 0;
-  $.post("/init_conversation").done(checkConversationInit);
 
 }
 
