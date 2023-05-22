@@ -122,34 +122,35 @@ def process_msg():
 @main.route("/init_conversation", methods=["POST"])
 def init_conversation():
     """Initialize the conversation agent when user starts new session"""
-    if session["chatbot"] is None:
-        return jsonify(
-            {
-                "status": "FAILED",
-                "conversation_id": -1,
-                "error": "Chatbot not initialiazed",
-            }
+    try:
+        
+        conversationID = 0
+        while Conversations.conversation_exists(conversationID):
+            conversationID = random.randint(0, 10000)
+
+        session["conversation_id"] = conversationID
+
+        # Add conversation to db
+
+        Conversations.add_conversation(
+            conversationID, current_user.id, session["chatbot"].id
         )
 
-    conversationID = 0
-    while Conversations.conversation_exists(conversationID):
-        conversationID = random.randint(0, 10000)
-
-    session["conversation_id"] = conversationID
-
-    # Add conversation to db
-
-    Conversations.add_conversation(
-        conversationID, current_user.id, session["chatbot"].id
-    )
-
-    return jsonify(
-        {
-            "status": "OK",
-            "conversation_id": str(session["conversation_id"]),
-            "error": "none",
-        }
-    )
+        return jsonify(
+            {
+                "status": "OK",
+                "conversation_id": str(session["conversation_id"]),
+                "error": "none",
+            }
+        )
+    except KeyError:
+            return jsonify(
+                {
+                    "status": "FAILED",
+                    "conversation_id": -1,
+                    "error": "Chatbot not initialiazed",
+                }
+            )
 
 
 @main.route("/init_chatbot", methods=["POST"])
