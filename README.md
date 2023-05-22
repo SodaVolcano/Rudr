@@ -20,8 +20,14 @@ The homepage is divided into a top banner containing the page slogan and the rob
 The chatroom in contrast to the main page uses bright, more vibrant colours in the chosen background image to create a more lively atmosphere for the users to converse in. The chat history view is the biggest element on the page as it is the main focus of the page. The chat bubbles are centered in the middle of the chat history view with the input box on the bottom and past conversations on the left as standard in current messaging platforms.
 
 ## Application Architecture
-> Backend and frontend architecture?
-
+> Boot-strap for css
+> Flask for response handling and html serving
+> Typescript for DOM handling
+> SQLAlchemy for database handling
+- Users
+- Robots
+- Conversations
+- Messages
 
 ## Running the Web Application
 
@@ -66,4 +72,15 @@ In order for the chat and user features to be functional, the databases must be 
 
 
 ## Running Unit Testing
-> How to run unit tests and validations
+> Go to src/tests directory
+- For all tests, run python {your_file}
+> An output of unit test functions will appear
+
+
+# References
+> JS:
+- jQuery
+> CSS
+- Bootstrap
+- https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
+- https://fonts.googleapis.com/css?family=Exo%7COrbitron&display=swap
