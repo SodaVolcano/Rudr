@@ -72,14 +72,14 @@ In order for the chat and user features to be functional, the databases must be 
 
 
 ## Running Unit Testing
-> Go to src/tests directory
-- For all tests, run python dbtest.py
-> An output of unit test functions will appear
+- To run unit testing on the database, run the following in order from the top directory:
+```bash
+(my-env) $ cd ./src/tests
+(my-env) $ python3 dbtest.py
+```
 
-> Use the selenium IDE to import the selenium.side file for selenium tests, and run them
-
-
-# References
+- To run unit testing on the website, ensure that you are using a Chromium browser and that you have the plugin [Selenium IDE](https://www.selenium.dev/selenium-ide/) installed.
+- Then, using the Selenium IDE, import the `selenium.side` file and execute them (make sure the website is running).
 
 ## References
 - The following resources were used to create our website:
