@@ -108,7 +108,16 @@ function main() {
     // cohens code for switching chat
   }
 
-
+  $.get("/get_conversations").done(function(response) {
+    displayConversations(response);
+    
+    // Change conversation to the last conversation
+    const conversations = response.conversations;
+    const lastConversation = conversations[conversations.length - 1];
+    if (lastConversation) {
+        changeConversation(lastConversation);
+    }
+});
   // Reset timer when user types in chatbox
   // Timer is also reset when user presses submit
   $("#chatbox-content").on("keydown", resetTimer);
@@ -190,7 +199,7 @@ function addConversation(id: string) {
   div.addEventListener("click", () => {
     changeConversation(id);
   });
-  conversationList.appendChild(div);
+  conversationList.insertBefore(div, conversationList.firstChild);
 }
 
 function receiveConversation(response: receiveConversationResponse) {

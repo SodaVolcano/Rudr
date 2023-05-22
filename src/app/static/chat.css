@@ -44,6 +44,7 @@ html, body, main {
     background-position: center; /* Center the background image within the container */
 }
 
+
 .scrollbar {
     flex: 9;
     overflow-y: auto;
@@ -75,7 +76,6 @@ html, body, main {
 .chat-history {
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
 }
 
 /* padding and position of the chatbox */
