@@ -39,7 +39,7 @@ html, body, main {
     height: 100%;
     width: 100%;
     position: relative;
-    background-image: url(./chat_background.png);
+    background-image: url("https://opengameart.org/sites/default/files/sunset1.svg");
     background-size: cover; /* Make the background image cover the entire container */
     background-position: center; /* Center the background image within the container */
 }
