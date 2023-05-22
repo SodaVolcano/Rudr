@@ -101,8 +101,11 @@ function main() {
   $.get("/get_conversations").done(displayConversations);
 
   const conversationList = document.getElementById("conversations");
-  if (conversationList == null) {
-    newChat();
+  if (conversationList != null) {
+    if (!conversationList.hasChildNodes()) {
+      newChat();
+    } 
+    // cohens code for switching chat
   }
 
   $.get("/get_conversations").done(function(response) {
@@ -163,7 +166,7 @@ function checkConversationInit(response: ConversationInitResponse) {
 async function displayConversations(response: displayConversationListResponse) {
   const conversationList = document.getElementById("conversations");
 
-  if (response.status == "EMPTY"|| conversationList == null) {
+  if (response.status == "EMPTY" || conversationList == null) {
     return;
   }
   conversationList.replaceChildren();
@@ -262,6 +265,8 @@ function newChat() {
 
   $.post("/init_chatbot").done(checkBotInit);
   $.post("/init_conversation").done(checkConversationInit);
+
+  $.get("/get_conversations").done(displayConversations);
 
 }
 
@@ -439,7 +444,7 @@ async function displayMessage(message: string, isFromUser: boolean) {
 function reDisplayMessage(message: string, isFromUser: boolean) {
   const cssClass = isFromUser ? "msg-user-wrapper" : "msg-bot-wrapper";
   $(".chat-history").append(
-    `<div id="msg" class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
+    `<div class="${cssClass}"><div class="speech-bubble"><p>${message}</p></div></div>`
   );
   if (!scrolledUp) {
     $(".scrollbar")[0].scrollTop = $(".scrollbar")[0].scrollHeight;

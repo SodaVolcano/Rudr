@@ -3,7 +3,6 @@
 {% endblock %}
 {% block script %}{% endblock %}
 {% block content %}
-<main>
   <div class="fullscreen-container">
     <div id="login-box">
       <div id="left" class="col-md-8">
@@ -29,7 +28,7 @@
           Lacking an account? Rectify that oversight - join our esteemed users
           <a href="{{ url_for('.signup') }}">here</a>
         </p>
-        <form id="loginForm" action="" method="post" novalidate>
+        <form id="loginForm" method="post" novalidate>
           {{ form.hidden_tag()}}
           <p>
             {{ form.username(class="input-data", type="text",
@@ -44,7 +43,7 @@
             {% endfor %}
           </p>
           <p>
-            {{ form.remember_me(id="remember-me") }} {{
+            {{ form.remember_me(id="remember_me") }} {{
             form.remember_me.label(class="formLabel") }}<br />
           </p>
           <p>{{ form.submit(id="login-button") }}</p>
