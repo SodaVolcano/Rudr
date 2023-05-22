@@ -78,9 +78,16 @@ In order for the chat and user features to be functional, the databases must be 
 
 
 # References
-> JS:
-- jQuery
-> CSS
-- Bootstrap
-- https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
-- https://fonts.googleapis.com/css?family=Exo%7COrbitron&display=swap
+
+## References
+- The following resources were used to create our website:
+    - ChatGPT3.5 and ChatGPT4 by OpenAI https://chat.openai.com/
+    - W3School https://www.w3schools.com/
+    - Flask Web Development, 2nd Edition by Miguel Grinberg
+    - Chatroom vapourwave sunset https://opengameart.org/sites/default/files/sunset1.svg
+    - Homepage background image https://wallpapers.com/images/featured/y3r21iaunx6u3tml.jpg
+    - Login and Signup background image https://i.gifer.com/QWc9.gif
+    - jQuery
+    - Bootstrap
+    - Code-like font https://fonts.googleapis.com/css?family=Exo%7COrbitron&display=swap
+    - Social media icons on homepage https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
