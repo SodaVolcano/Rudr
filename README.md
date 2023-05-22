@@ -76,6 +76,8 @@ In order for the chat and user features to be functional, the databases must be 
 - For all tests, run python dbtest.py
 > An output of unit test functions will appear
 
+> Use the selenium IDE to import the selenium.side file for selenium tests, and run them
+
 
 # References
 
