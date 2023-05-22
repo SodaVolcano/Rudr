@@ -105,7 +105,6 @@ function main() {
     if (!conversationList.hasChildNodes()) {
       newChat();
     } 
-    // cohens code for switching chat
   }
 
   $.get("/get_conversations").done(function(response) {
@@ -200,6 +199,7 @@ function addConversation(id: string) {
     changeConversation(id);
   });
   conversationList.insertBefore(div, conversationList.firstChild);
+  changeConversation(id);
 }
 
 function receiveConversation(response: receiveConversationResponse) {
