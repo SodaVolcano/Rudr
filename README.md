@@ -84,5 +84,3 @@ In order for the chat and user features to be functional, the databases must be 
 - Bootstrap
 - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css
 - https://fonts.googleapis.com/css?family=Exo%7COrbitron&display=swap
-
-# Git Logs
