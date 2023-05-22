@@ -62,10 +62,8 @@ function main() {
         }
         // cohens code for switching chat
     }
-
-    $.get("/get_conversations").done(function(response) {
+    $.get("/get_conversations").done(function (response) {
         displayConversations(response);
-        
         // Change conversation to the last conversation
         const conversations = response.conversations;
         const lastConversation = conversations[conversations.length - 1];
@@ -196,7 +194,6 @@ function newChat() {
     clearConversation();
     $.post("/init_chatbot").done(checkBotInit);
     $.post("/init_conversation").done(checkConversationInit);
-    $.get("/get_conversations").done(displayConversations);
 }
 // ======================== textarea resizing ========================
 /**

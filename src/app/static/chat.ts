@@ -266,8 +266,6 @@ function newChat() {
   $.post("/init_chatbot").done(checkBotInit);
   $.post("/init_conversation").done(checkConversationInit);
 
-  $.get("/get_conversations").done(displayConversations);
-
 }
 
 // ======================== textarea resizing ========================

@@ -123,7 +123,6 @@ def process_msg():
 def init_conversation():
     """Initialize the conversation agent when user starts new session"""
     try:
-        
         conversationID = 0
         while Conversations.conversation_exists(conversationID):
             conversationID = random.randint(0, 10000)
