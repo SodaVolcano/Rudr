@@ -1,3 +1,9 @@
+import sys
+import os
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(os.path.dirname(SCRIPT_DIR))
+
 import unittest
 from app import create_app, db
 from app.main.models import Users, Robot, Conversations, Messages
