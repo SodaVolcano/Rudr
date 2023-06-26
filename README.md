@@ -1,9 +1,9 @@
 # CITS3403 Web Project
 
 ## Authors
-- Cohen Rafiq 23348918
-- Tin Chi Pang 23301921
-- Martin Evans 23621647
+- Cohen Rafiq 
+- Tin Chi Pang 
+- Martin Evans 
 
 ## Purpose
 This is **Rudr**, a fictitious website set in the future that aims to provide a dating platform for humans and robots. In this future, recent advancement in artificial general intelligence has produced near-human level sentience in robots. In this wave of new sentience, the interest in robot-dating has seen a surge in popularity.
