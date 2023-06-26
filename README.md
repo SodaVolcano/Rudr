@@ -1,5 +1,5 @@
-# CITS3403 Web Project
-
+# Rudr
+A chat-based website project for CITS3403
 ## Authors
 - Cohen Rafiq 
 - Tin Chi Pang 
