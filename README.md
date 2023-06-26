@@ -55,9 +55,9 @@ In order for the chat and user features to be functional, the databases must be 
 
 ```bash
 (my-env) $ cd ./src/
-(my-env) $ cd flask db init    # NOTE: should list roughly the outline and schema of each table in the log
-(my-env) $ cd flask db migrate -m "db init"
-(my-env) $ cd flask db upgrade
+(my-env) $ flask db init    # NOTE: should list roughly the outline and schema of each table in the log
+(my-env) $ flask db migrate -m "db init"
+(my-env) $ flask db upgrade
 (my-env) $ cd ..                # flasky.py should be run from top-most directory so we are changing back
 ```
 
